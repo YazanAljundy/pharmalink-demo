@@ -1,0 +1,80 @@
+const { asyncHandler } = require('../utils/asyncHandler');
+const warehouseReturnService = require('../services/warehouseReturn.service');
+const warehouseReturnViewModel = require('../viewmodels/warehouseReturn.viewmodel');
+const { parseCursorQuery, parseObjectIdCursor, paginationMeta } = require('../utils/pagination');
+const { loadWarehouseOrThrow } = require('../utils/loadWarehouse');
+
+// Two shapes on one endpoint: WarehouseOrderDetailPage's "does this order
+// already have a pending return" lookup calls this with no `limit` and
+// needs the full list - only the Returns management page opts into
+// pagination by sending `limit`/`after`, which is when `pagination` appears.
+const list = asyncHandler(async (req, res) => {
+  const warehouse = await loadWarehouseOrThrow(req.user._id);
+  const status = typeof req.query.status === 'string' ? req.query.status : undefined;
+
+  if (req.query.limit === undefined) {
+    const rows = await warehouseReturnService.listReturnsForWarehouse(warehouse._id, status);
+    res.json({ success: true, ...warehouseReturnViewModel.toWarehouseReturnsResponse(rows) });
+    return;
+  }
+
+  const { limit, after } = parseCursorQuery(req.query, 15);
+  const cursor = parseObjectIdCursor(after);
+  const { rows, hasMore, nextCursor } = await warehouseReturnService.listPaginatedReturnsForWarehouse(
+    warehouse._id,
+    status,
+    { limit, after: cursor }
+  );
+  res.json({
+    success: true,
+    ...warehouseReturnViewModel.toWarehouseReturnsResponse(rows),
+    pagination: paginationMeta(hasMore, nextCursor),
+  });
+});
+
+const getDetail = asyncHandler(async (req, res) => {
+  const warehouse = await loadWarehouseOrThrow(req.user._id);
+  const data = await warehouseReturnService.getReturnDetailForWarehouse(req.params.id, warehouse._id);
+  res.json({ success: true, ...warehouseReturnViewModel.toWarehouseReturnDetailResponse(data) });
+});
+
+// Money-Flow V2: approving credits the pharmacy's account. There is no
+// replacement order and no resolution to choose - credit is the only outcome.
+const approve = asyncHandler(async (req, res) => {
+  const warehouse = await loadWarehouseOrThrow(req.user._id);
+  const { returnRequest, creditEntry } = await warehouseReturnService.approveReturn(
+    req.params.id,
+    warehouse._id,
+    req.user._id
+  );
+  res.json({
+    success: true,
+    message: 'Return approved. The pharmacy has been credited.',
+    ...warehouseReturnViewModel.toResolvedReturnResponse(returnRequest, creditEntry),
+  });
+});
+
+// Read-only: what approving would credit, and the working behind it, so the
+// operator sees the figure before committing to it.
+const previewCredit = asyncHandler(async (req, res) => {
+  const warehouse = await loadWarehouseOrThrow(req.user._id);
+  const preview = await warehouseReturnService.previewReturnCredit(req.params.id, warehouse._id);
+  res.json({ success: true, ...warehouseReturnViewModel.toReturnCreditPreviewResponse(preview) });
+});
+
+const reject = asyncHandler(async (req, res) => {
+  const warehouse = await loadWarehouseOrThrow(req.user._id);
+  const returnRequest = await warehouseReturnService.rejectReturn(
+    req.params.id,
+    warehouse._id,
+    req.user._id,
+    req.body.rejectionNote
+  );
+  res.json({
+    success: true,
+    message: 'Return rejected.',
+    ...warehouseReturnViewModel.toResolvedReturnResponse(returnRequest),
+  });
+});
+
+module.exports = { list, getDetail, approve, reject, previewCredit };

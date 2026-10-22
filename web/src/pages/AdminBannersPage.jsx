@@ -1,0 +1,530 @@
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { api } from '../api/client';
+import { ProductPicker } from '../components/CatalogPickers';
+import { LoadMoreControl } from '../components/LoadMoreControl';
+import { usePaginatedData } from '../hooks/usePaginatedData';
+import { REALTIME_EVENTS, useRealtimeSync } from '../realtime/useRealtimeSync';
+import { AdvertisementsSubNav } from '../components/AdvertisementsSubNav';
+import { displayName } from '../utils/displayName';
+
+const PAGE_SIZE = 20;
+
+// Section: the admin-only upload accepts image/GIF/video (see
+// upload.middleware.js's resolveAdminBannerMediaType on the backend) - a
+// local object-URL preview before submit, picking <img> vs <video> off the
+// picked File's own MIME type. Revoked on unmount/replacement so picking a
+// few files in a row doesn't leak blob URLs.
+function useFilePreviewUrl(file) {
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const previewUrlRef = useRef(null);
+
+  useEffect(() => {
+    if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current);
+    const next = file ? URL.createObjectURL(file) : null;
+    previewUrlRef.current = next;
+    setPreviewUrl(next);
+    return () => {
+      if (next) URL.revokeObjectURL(next);
+    };
+  }, [file]);
+
+  return previewUrl;
+}
+
+function BannerFilePreview({ file }) {
+  const previewUrl = useFilePreviewUrl(file);
+  if (!previewUrl) return null;
+
+  return file.type.startsWith('video/') ? (
+    <video className="return-photo-thumb" src={previewUrl} style={{ width: 96, height: 96 }} muted loop autoPlay playsInline />
+  ) : (
+    <img className="return-photo-thumb" src={previewUrl} alt="" style={{ width: 96, height: 96 }} />
+  );
+}
+
+// Section: always-visible composer (mockup frame 1e) rather than a
+// "Publish new banner" button opening a modal - same state/validation/
+// submit-to-createAdminBanner logic as the old CreateBannerModal, just
+// without the modal wrapper/cancel button, matching the warehouse Discounts
+// page's earlier modal->inline conversion.
+// The linked product is searched for (ProductPicker), never picked from a
+// list of every product on the platform (catalog overhaul Phase 10).
+const searchAdminProducts = (q) => api.adminProducts({ search: q, limit: 20 }).then((data) => data.products);
+const adminProductLabel = (product) =>
+  `${displayName(product.nameEn, product.nameAr)} · ${product.warehouseNameEn ?? ''}`;
+
+function BannerComposer({ onCreated }) {
+  const { t } = useTranslation();
+  const [imageFile, setImageFile] = useState(null);
+  const [title, setTitle] = useState('');
+  const [product, setProduct] = useState(null);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState(null);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setError(null);
+
+    if (!imageFile || !title.trim() || !startDate || !endDate) {
+      setError(t('common.requiredFields'));
+      return;
+    }
+    if (new Date(endDate) <= new Date(startDate)) {
+      setError(t('common.endAfterStart'));
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const formData = new FormData();
+      formData.append('image', imageFile);
+      formData.append('title', title.trim());
+      formData.append('startDate', startDate);
+      formData.append('endDate', endDate);
+      if (product) formData.append('productId', product.id);
+      await api.createAdminBanner(formData);
+      setImageFile(null);
+      setTitle('');
+      setProduct(null);
+      setStartDate('');
+      setEndDate('');
+      event.target.reset();
+      onCreated();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  return (
+    <div className="adm-detail-card">
+      <h2 className="adm-detail-card-title">{t('banners.admin.modalTitle')}</h2>
+      <p className="adm-detail-card-hint">{t('banners.admin.composerHint')}</p>
+      <form onSubmit={handleSubmit} className="product-form">
+        <label>
+          {t('banners.image')}
+          <input
+            type="file"
+            accept="image/*,video/*"
+            onChange={(e) => setImageFile(e.target.files?.[0] ?? null)}
+            required
+          />
+        </label>
+        <BannerFilePreview file={imageFile} />
+        <label>
+          {t('banners.title')}
+          <input value={title} onChange={(e) => setTitle(e.target.value)} required />
+        </label>
+        <label>
+          {t('banners.linkedProductOptional')}
+          <ProductPicker
+            search={searchAdminProducts}
+            selected={product}
+            onChange={setProduct}
+            renderLabel={adminProductLabel}
+            allowClear
+          />
+        </label>
+        <div className="form-row">
+          <label>
+            {t('common.startDate')}
+            <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} required />
+          </label>
+          <label>
+            {t('common.endDate')}
+            <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} required />
+          </label>
+        </div>
+
+        {error && <p className="error-text">{error}</p>}
+
+        <button type="submit" className="btn-primary" style={{ width: '100%' }} disabled={isSaving}>
+          {isSaving ? t('banners.publishing') : t('banners.admin.publishBanner')}
+        </button>
+      </form>
+    </div>
+  );
+}
+
+function bannerStatusBadgeClass(banner) {
+  if (banner.status === 'approved') return 'status-delivered';
+  if (banner.status === 'rejected') return 'status-cancelled';
+  return 'status-pending';
+}
+
+function useBannerStatusLabel() {
+  const { t } = useTranslation();
+  return (banner) => {
+    if (banner.status === 'approved') return t('banners.statusApproved');
+    if (banner.status === 'rejected') return t('banners.statusRejected');
+    return t('banners.statusPending');
+  };
+}
+
+const STATUS_FILTERS = ['all', 'pending', 'approved', 'rejected'];
+
+function useStatusFilterLabel() {
+  const { t } = useTranslation();
+  return (status) => {
+    if (status === 'all') return t('banners.admin.filterAll');
+    if (status === 'approved') return t('banners.statusApproved');
+    if (status === 'rejected') return t('banners.statusRejected');
+    return t('banners.statusPending');
+  };
+}
+
+function EditBannerModal({ banner, onClose, onSaved }) {
+  const { t } = useTranslation();
+  const [title, setTitle] = useState(banner.title);
+  const [startDate, setStartDate] = useState(banner.startDate.slice(0, 10));
+  const [endDate, setEndDate] = useState(banner.endDate.slice(0, 10));
+  const [imageFile, setImageFile] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState(null);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setError(null);
+
+    if (!title.trim() || !startDate || !endDate) {
+      setError(t('common.fillAllFields'));
+      return;
+    }
+    if (new Date(endDate) <= new Date(startDate)) {
+      setError(t('common.endAfterStart'));
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      await api.updateAdminBanner(banner.id, { title: title.trim(), startDate, endDate }, imageFile);
+      onSaved();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal" onClick={(event) => event.stopPropagation()}>
+        <h2>{t('banners.admin.editBanner')}</h2>
+        <form onSubmit={handleSubmit} className="product-form">
+          {banner.imageUrl &&
+            (banner.mediaType === 'video' ? (
+              <video
+                className="return-photo-thumb"
+                src={banner.imageUrl}
+                style={{ width: 96, height: 96 }}
+                muted
+                loop
+                autoPlay
+                playsInline
+              />
+            ) : (
+              <img
+                className="return-photo-thumb"
+                src={banner.imageUrl}
+                alt={banner.title}
+                style={{ width: 96, height: 96 }}
+              />
+            ))}
+          <label>
+            {t('banners.admin.replaceImageOptional')}
+            <input
+              type="file"
+              accept="image/*,video/*"
+              onChange={(e) => setImageFile(e.target.files?.[0] ?? null)}
+            />
+          </label>
+          <BannerFilePreview file={imageFile} />
+          <label>
+            {t('banners.title')}
+            <input value={title} onChange={(e) => setTitle(e.target.value)} required />
+          </label>
+          <div className="form-row">
+            <label>
+              {t('common.startDate')}
+              <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} required />
+            </label>
+            <label>
+              {t('common.endDate')}
+              <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} required />
+            </label>
+          </div>
+
+          {error && <p className="error-text">{error}</p>}
+
+          <div className="modal-actions">
+            <button type="button" className="btn-secondary" onClick={onClose}>
+              {t('common.cancel')}
+            </button>
+            <button type="submit" className="btn-primary" disabled={isSaving}>
+              {isSaving ? t('common.saving') : t('common.save')}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+// Section: every banner regardless of status - approve/reject apply to the
+// pending ones, edit (dates/title/image) applies to pending or approved, and
+// delete works across all three statuses (admin has full authority, unlike
+// a warehouse's own banner which can't delete once approved).
+export function AdminBannersPage() {
+  const { t } = useTranslation();
+  const bannerStatusLabel = useBannerStatusLabel();
+  const statusFilterLabel = useStatusFilterLabel();
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [busyId, setBusyId] = useState(null);
+  const [actionError, setActionError] = useState(null);
+  const [editingBanner, setEditingBanner] = useState(null);
+
+  const fetchPage = useCallback(
+    (cursor) =>
+      api.adminBanners(statusFilter, { limit: PAGE_SIZE, after: cursor }).then((data) => ({
+        rows: data.banners,
+        hasMore: data.pagination.hasMore,
+        nextCursor: data.pagination.nextCursor,
+      })),
+    [statusFilter]
+  );
+
+  const { data: banners, isLoading, isLoadingMore, hasMore, error, loadMore, reset } =
+    usePaginatedData(fetchPage);
+
+  useEffect(() => {
+    reset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [statusFilter]);
+
+  // Realtime: same moderation-queue reasoning as offers - a warehouse's banner
+  // stays unpublished until an admin decides, and a second admin shouldn't be
+  // looking at a row that's already been handled.
+  useRealtimeSync(
+    [REALTIME_EVENTS.BANNER_PENDING, REALTIME_EVENTS.BANNER_STATUS_UPDATED],
+    () => reset(),
+    { grouped: true }
+  );
+
+  const handleApprove = async (banner) => {
+    const confirmed = window.confirm(
+      t('banners.admin.confirmApprove', { title: banner.title, warehouse: banner.warehouseNameEn }),
+    );
+    if (!confirmed) return;
+
+    setBusyId(banner.id);
+    setActionError(null);
+    try {
+      await api.approveBanner(banner.id);
+      reset();
+    } catch (err) {
+      setActionError(err.message);
+    } finally {
+      setBusyId(null);
+    }
+  };
+
+  const handleReject = async (banner) => {
+    const rejectionNote = window.prompt(t('banners.admin.promptReject', { title: banner.title }));
+    if (!rejectionNote || !rejectionNote.trim()) return;
+
+    setBusyId(banner.id);
+    setActionError(null);
+    try {
+      await api.rejectBanner(banner.id, rejectionNote.trim());
+      reset();
+    } catch (err) {
+      setActionError(err.message);
+    } finally {
+      setBusyId(null);
+    }
+  };
+
+  const handleDelete = async (banner) => {
+    const confirmed = window.confirm(t('banners.admin.confirmDelete', { title: banner.title }));
+    if (!confirmed) return;
+
+    setBusyId(banner.id);
+    setActionError(null);
+    try {
+      await api.deleteAdminBanner(banner.id);
+      reset();
+    } catch (err) {
+      setActionError(err.message);
+    } finally {
+      setBusyId(null);
+    }
+  };
+
+  const handleSaved = () => {
+    setEditingBanner(null);
+    reset();
+  };
+
+  return (
+    <div>
+      <AdvertisementsSubNav basePath="/admin/advertisements" variant="adm" />
+
+      <div className="adm-page-head">
+        <h1>{t('nav.advertisements')}</h1>
+      </div>
+
+      <div className="adm-pills">
+        {STATUS_FILTERS.map((filter) => (
+          <button
+            key={filter}
+            type="button"
+            className={`adm-pill${statusFilter === filter ? ' active' : ''}`}
+            onClick={() => setStatusFilter(filter)}
+          >
+            {statusFilterLabel(filter)}
+          </button>
+        ))}
+      </div>
+
+      {(error || actionError) && <p className="error-text">{error || actionError}</p>}
+
+      {isLoading ? (
+        <p className="hint">{t('common.loading')}</p>
+      ) : (
+        <div className="adm-detail-grid">
+          <div style={{ minWidth: 0 }}>
+            {banners.length === 0 ? (
+              <div className="adm-empty-state">
+                <div className="adm-empty-state-icon">&#128247;</div>
+                <div className="adm-empty-state-title">{t('banners.admin.noBanners')}</div>
+              </div>
+            ) : (
+              <>
+                <div className="adm-card table-scroll">
+                  <table className="adm-table">
+                    <thead>
+                      <tr>
+                        <th>{t('banners.admin.numberColumn')}</th>
+                        <th>{t('banners.warehouse.thumbnailColumn')}</th>
+                        <th>{t('banners.admin.warehouseTitleColumn')}</th>
+                        <th>{t('banners.admin.rangeColumn')}</th>
+                        <th>{t('common.status')}</th>
+                        <th>{t('admin.pendingAccounts.actionColumn')}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {banners.map((banner) => (
+                        <tr key={banner.id}>
+                          <td className="adm-num">{banner.bannerNumber}</td>
+                          <td>
+                            {banner.imageUrl ? (
+                              banner.mediaType === 'video' ? (
+                                <video className="adm-table-thumb" src={banner.imageUrl} muted loop playsInline preload="metadata" />
+                              ) : (
+                                <img className="adm-table-thumb" src={banner.imageUrl} alt={banner.title} />
+                              )
+                            ) : (
+                              <span className="hint">{t('banners.admin.noImageYet')}</span>
+                            )}
+                          </td>
+                          <td>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                              {banner.warehouseNameEn ? (
+                                <span>{banner.warehouseNameEn}</span>
+                              ) : (
+                                <span className="adm-tag">{t('banners.admin.adminTag')}</span>
+                              )}
+                            </div>
+                            <div className="adm-table-sub">
+                              {banner.title}
+                              {banner.productNameEn && (
+                                <> &middot; {displayName(banner.productNameEn, banner.productNameAr)}</>
+                              )}
+                            </div>
+                            {banner.status === 'rejected' && banner.rejectionNote && (
+                              <div className="adm-table-sub">
+                                {t('common.rejectionReason', { reason: banner.rejectionNote })}
+                              </div>
+                            )}
+                          </td>
+                          <td className="adm-num">
+                            {new Date(banner.startDate).toLocaleDateString()} &ndash;{' '}
+                            {new Date(banner.endDate).toLocaleDateString()}
+                          </td>
+                          <td>
+                            <span className={`status-badge ${bannerStatusBadgeClass(banner)}`}>
+                              {bannerStatusLabel(banner)}
+                            </span>
+                          </td>
+                          <td>
+                            <div className="adm-row-actions">
+                              {banner.status === 'pending' && (
+                                <>
+                                  <button
+                                    className="btn-approve"
+                                    disabled={busyId === banner.id}
+                                    onClick={() => handleApprove(banner)}
+                                  >
+                                    {t('common.approve')}
+                                  </button>
+                                  <button
+                                    className="btn-reject"
+                                    disabled={busyId === banner.id}
+                                    onClick={() => handleReject(banner)}
+                                  >
+                                    {t('common.reject')}
+                                  </button>
+                                </>
+                              )}
+                              {(banner.status === 'pending' || banner.status === 'approved') && (
+                                <button
+                                  className="adm-row-action"
+                                  disabled={busyId === banner.id}
+                                  onClick={() => setEditingBanner(banner)}
+                                >
+                                  {t('common.edit')}
+                                </button>
+                              )}
+                              <button
+                                className="adm-row-action adm-row-action-danger"
+                                disabled={busyId === banner.id}
+                                onClick={() => handleDelete(banner)}
+                              >
+                                {t('common.delete')}
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <p className="adm-table-hint">{t('banners.admin.editDeleteHint')}</p>
+                <LoadMoreControl
+                  hasMore={hasMore}
+                  isLoadingMore={isLoadingMore}
+                  onLoadMore={loadMore}
+                  pageSize={PAGE_SIZE}
+                />
+              </>
+            )}
+          </div>
+
+          <BannerComposer onCreated={reset} />
+        </div>
+      )}
+
+      {editingBanner && (
+        <EditBannerModal
+          banner={editingBanner}
+          onClose={() => setEditingBanner(null)}
+          onSaved={handleSaved}
+        />
+      )}
+    </div>
+  );
+}

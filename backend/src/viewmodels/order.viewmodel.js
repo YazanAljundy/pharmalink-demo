@@ -1,0 +1,243 @@
+const { serializeProductWithOffer } = require('./product.viewmodel');
+const { serializeOrderDiscountCode } = require('./discountCode.viewmodel');
+
+function serializeOrder(order) {
+  return {
+    id: order._id,
+    orderNumber: order.orderNumber,
+    status: order.status,
+    totalPrice: order.totalPrice,
+    discountAmount: order.discountAmount,
+    commissionAmount: order.commissionAmount,
+    // The package discount from a warehouse advertisement, kept as its own
+    // line so it never silently disappears into the platform discount above.
+    // null/0 on a normal order.
+    advertisementId: order.advertisementId ?? null,
+    advertisementDiscountAmount: order.advertisementDiscountAmount ?? 0,
+    // The discount code this order used - its own line, taken off after every
+    // discount above. null without a code.
+    discountCode: serializeOrderDiscountCode(order.discountCode),
+    finalPrice: order.finalPrice,
+    notes: order.notes,
+    warehouseId: order.warehouseId,
+  };
+}
+
+function toOrderResponse(order) {
+  return { order: serializeOrder(order) };
+}
+
+// Section 6.7/6.8: the tracking screen needs the warehouse name (for display
+// context) and the full statusHistory (every change's recorded time); the
+// digital invoice needs the full line items. Both are served from this one
+// detail response rather than two separate endpoints for the same order.
+// (commissionAmount still rides along via serializeOrder below - it's the
+// Flutter invoice widget's job to not render a platform-internal figure on a
+// pharmacy-facing receipt, not this endpoint's job to strip it.)
+// Section 6.9: `returnRequest` (if any) is the order's linked return - shown
+// as a compact status summary here, not the full items/photos (that's the
+// returns feature's own detail, fetched separately if the pharmacist opens it).
+function serializeLinkedReturn(returnRequest) {
+  if (!returnRequest) return null;
+  return {
+    id: returnRequest._id,
+    status: returnRequest.status,
+    rejectionNote: returnRequest.rejectionNote,
+    // What an approved return credited back against this order (Money-Flow V2).
+    creditSyp: returnRequest.creditSyp ?? null,
+    creditUsd: returnRequest.creditUsd ?? null,
+  };
+}
+
+// Section 8/13c: the pharmacy's own rating of the warehouse for this order,
+// if submitted - just enough for the tracking screen to show "already
+// rated" and skip the form, not the full review list shape used elsewhere.
+function serializeMyReview(review) {
+  if (!review) return null;
+  return {
+    id: review._id,
+    rating: review.rating,
+    comment: review.comment,
+    createdAt: review.createdAt,
+  };
+}
+
+// Complaint Section 9: the complaints filed about this order, shown as a
+// section on the tracking screen. Compact list rows - number/subject/status -
+// with the full detail fetched on tap.
+function serializeOrderComplaint(complaint) {
+  return {
+    id: complaint._id,
+    complaintNumber: complaint.complaintNumber,
+    subject: complaint.subject,
+    status: complaint.status,
+    createdAt: complaint.createdAt,
+  };
+}
+
+function toOrderDetailResponse(
+  order,
+  warehouse,
+  items = [],
+  returnRequest = null,
+  myReview = null,
+  complaints = []
+) {
+  return {
+    order: {
+      ...serializeOrder(order),
+      cancelReason: order.cancelReason,
+      warehouseNameAr: warehouse.nameAr,
+      warehouseNameEn: warehouse.nameEn,
+      // Section: optional delivery seal photo, decided per order.
+      // `requiresDeliverySealPhoto` tells the tracking screen whether to prompt
+      // the pharmacist while the order is out for delivery; the other two are
+      // the stored result. All three are null/false on every pre-existing order.
+      requiresDeliverySealPhoto: order.requiresDeliverySealPhoto ?? false,
+      deliverySealPhoto: order.deliverySealPhoto ?? null,
+      deliverySealConfirmedAt: order.deliverySealConfirmedAt ?? null,
+      statusHistory: (order.statusHistory || []).map((entry) => ({
+        status: entry.status,
+        changedAt: entry.changedAt,
+        note: entry.note ?? null,
+      })),
+      createdAt: order.createdAt,
+      complaints: (complaints || []).map(serializeOrderComplaint),
+      items: items.map((item) => ({
+        id: item._id,
+        productId: item.productId,
+        productNameAr: item.productNameAr,
+        productNameEn: item.productNameEn,
+        manufacturerAr: item.manufacturerAr,
+        manufacturerEn: item.manufacturerEn,
+        quantity: item.quantity,
+        unitPrice: item.unitPrice,
+        discountPrice: item.discountPrice,
+        lineTotal: item.discountPrice * item.quantity,
+        savingsUsd: item.savingsUsd,
+        // Free bonus units delivered on top of `quantity` (never charged), and
+        // the tier that earned them - additive (catalog overhaul Phase 8).
+        freeQuantity: item.freeQuantity ?? 0,
+        bonusApplied: item.bonusApplied ? { buy: item.bonusApplied.buy, free: item.bonusApplied.free } : null,
+      })),
+      linkedReturn: serializeLinkedReturn(returnRequest),
+      myReview: serializeMyReview(myReview),
+    },
+  };
+}
+
+// Section 6.8: list summaries skip the heavier per-order lookups (no items,
+// no full statusHistory - the full detail above is fetched on demand when
+// the pharmacist opens one) but still carry the same pricing fields as
+// serializeOrder, so the Flutter client can parse both responses through one
+// OrderModel instead of two slightly-different shapes.
+function toOrderListItemSummary(order, warehouse) {
+  return {
+    id: order._id,
+    orderNumber: order.orderNumber,
+    status: order.status,
+    totalPrice: order.totalPrice,
+    discountAmount: order.discountAmount,
+    commissionAmount: order.commissionAmount,
+    // The package discount from a warehouse advertisement, kept as its own
+    // line so it never silently disappears into the platform discount above.
+    // null/0 on a normal order.
+    advertisementId: order.advertisementId ?? null,
+    advertisementDiscountAmount: order.advertisementDiscountAmount ?? 0,
+    finalPrice: order.finalPrice,
+    warehouseNameAr: warehouse ? warehouse.nameAr : null,
+    warehouseNameEn: warehouse ? warehouse.nameEn : null,
+    createdAt: order.createdAt,
+  };
+}
+
+function toOrderListResponse(items) {
+  return { orders: items.map(({ order, warehouse }) => toOrderListItemSummary(order, warehouse)) };
+}
+
+// Section: "Reorder" - the cart-ready shape returned by
+// order.service.prepareReorder. `items` are the ORIGINAL order's quantities
+// against the CURRENT products (serialized exactly like the catalog browse,
+// plus a `quantity`), so the cart can build CartItems straight from them with
+// live prices. `unavailableItems` are lines the warehouse no longer sells -
+// shown to the pharmacist, never added to the cart. No order id / number /
+// status here: reorder creates nothing.
+function toReorderResponse({ warehouse, items = [], unavailableItems = [] }, usdToSyp = null) {
+  return {
+    reorder: {
+      warehouseId: warehouse ? warehouse._id : null,
+      warehouseNameAr: warehouse ? warehouse.nameAr : null,
+      warehouseNameEn: warehouse ? warehouse.nameEn : null,
+      items: items.map(({ quantity, ...productItem }) => ({
+        ...serializeProductWithOffer(productItem, usdToSyp),
+        quantity,
+      })),
+      unavailableItems: unavailableItems.map((item) => ({
+        productId: item.productId,
+        productNameAr: item.productNameAr,
+        productNameEn: item.productNameEn,
+        quantity: item.quantity,
+      })),
+    },
+  };
+}
+
+// Account History "Money Saved" card.
+//
+// Money-Flow V2: SYP is the primary figure and it is a sum of FROZEN per-order
+// amounts, so the number stops moving every time the exchange rate does. The
+// three components are broken out because they answer different questions -
+// "the warehouse discounted this", "this was a package deal", "Feniq
+// subsidised this" - while `totalSavingsSyp` is the headline.
+function toSavingsSummaryResponse(summary) {
+  return {
+    savings: {
+      offerAndManufacturerSyp: summary.offerAndManufacturerSyp,
+      advertisementSyp: summary.advertisementSyp,
+      platformDiscountSyp: summary.platformDiscountSyp,
+      discountCodeSyp: summary.discountCodeSyp ?? 0,
+      totalSavingsSyp: summary.totalSavingsSyp,
+      // A frozen hint beside the SYP total, not a live conversion of it.
+      totalSavingsUsd: summary.totalSavingsUsd,
+    },
+  };
+}
+
+module.exports = {
+  toOrderResponse,
+  toOrderDetailResponse,
+  toOrderListResponse,
+  toReorderResponse,
+  toSavingsSummaryResponse,
+};
+
+// Section: an order the pharmacy could still return (order.service.js's
+// listReturnableOrders). hoursRemaining is computed on the server - the
+// client only renders it, so a device with a wrong clock can't widen or
+// shrink the window it sees.
+function serializeReturnableOrder({ order, deliveredAt, hoursRemaining, items, warehouse }) {
+  return {
+    id: order._id,
+    orderNumber: order.orderNumber,
+    warehouseId: order.warehouseId,
+    warehouseNameAr: warehouse ? warehouse.nameAr : null,
+    warehouseNameEn: warehouse ? warehouse.nameEn : null,
+    finalPrice: order.finalPrice,
+    deliveredAt,
+    hoursRemaining,
+    items: items.map((item) => ({
+      orderItemId: item._id,
+      productId: item.productId,
+      productNameAr: item.productNameAr,
+      productNameEn: item.productNameEn,
+      quantity: item.quantity,
+      discountPrice: item.discountPrice,
+    })),
+  };
+}
+
+function toReturnableOrdersResponse(rows) {
+  return { orders: rows.map(serializeReturnableOrder) };
+}
+
+module.exports.toReturnableOrdersResponse = toReturnableOrdersResponse;

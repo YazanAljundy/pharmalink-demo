@@ -1,0 +1,140 @@
+import 'package:flutter_test/flutter_test.dart';
+import 'package:feniq/features/auth/data/models/pharmacy_model.dart';
+
+void main() {
+  group('PharmacyModel', () {
+    group('constructor', () {
+      test('creates instance with all parameters', () {
+        const pharmacy = PharmacyModel(
+          id: 'pharm1',
+          nameAr: 'صيدلية الأمل',
+          nameEn: 'Hope Pharmacy',
+          ownerName: 'John Doe',
+          address: 'Main Street 123',
+          city: 'Damascus',
+          phone: '0993123456',
+          areaType: 'city',
+        );
+
+        expect(pharmacy.id, equals('pharm1'));
+        expect(pharmacy.nameAr, equals('صيدلية الأمل'));
+        expect(pharmacy.nameEn, equals('Hope Pharmacy'));
+        expect(pharmacy.ownerName, equals('John Doe'));
+        expect(pharmacy.address, equals('Main Street 123'));
+        expect(pharmacy.city, equals('Damascus'));
+        expect(pharmacy.phone, equals('0993123456'));
+        expect(pharmacy.areaType, equals('city'));
+      });
+    });
+
+    group('fromJson', () {
+      test('creates instance from JSON correctly', () {
+        final json = {
+          'id': 'pharm123',
+          'nameAr': 'صيدلية الشفاء',
+          'nameEn': 'Healing Pharmacy',
+          'ownerName': 'Jane Smith',
+          'address': 'Mezzeh Street',
+          'city': 'Aleppo',
+          'phone': '+96593456789',
+          'areaType': 'city_ring',
+        };
+
+        final pharmacy = PharmacyModel.fromJson(json);
+
+        expect(pharmacy.id, equals('pharm123'));
+        expect(pharmacy.nameAr, equals('صيدلية الشفاء'));
+        expect(pharmacy.nameEn, equals('Healing Pharmacy'));
+        expect(pharmacy.ownerName, equals('Jane Smith'));
+        expect(pharmacy.address, equals('Mezzeh Street'));
+        expect(pharmacy.city, equals('Aleppo'));
+        expect(pharmacy.phone, equals('+96593456789'));
+        expect(pharmacy.areaType, equals('city_ring'));
+      });
+
+      test('handles all fields from JSON', () {
+        final json = {
+          'id': 'p999',
+          'nameAr': 'اسم عربي',
+          'nameEn': 'English Name',
+          'ownerName': 'Owner Name',
+          'address': 'Some Address',
+          'city': 'City Name',
+          'phone': '0991234567',
+          'areaType': 'rural',
+        };
+
+        final pharmacy = PharmacyModel.fromJson(json);
+
+        expect(pharmacy.id, isNotEmpty);
+        expect(pharmacy.nameAr, isNotEmpty);
+        expect(pharmacy.nameEn, isNotEmpty);
+        expect(pharmacy.ownerName, isNotEmpty);
+        expect(pharmacy.address, isNotEmpty);
+        expect(pharmacy.city, isNotEmpty);
+        expect(pharmacy.phone, isNotEmpty);
+        expect(pharmacy.areaType, isNotEmpty);
+      });
+    });
+
+    group('legacy rows (no areaType)', () {
+      // A pharmacy row created before areaType existed has no value for it, so
+      // the backend omits the key entirely. This used to be a hard
+      // `as String` cast: it threw a TypeError, which is not a Failure, so
+      // auth_cubit.dart let it escape and the login spinner ran forever with
+      // no error - locking every pre-areaType account out of the app while the
+      // server was answering 200 the whole time.
+      test('parses a payload with the areaType key missing', () {
+        final json = {
+          'id': 'legacy1',
+          'nameAr': 'صيدلية قديمة',
+          'nameEn': 'Old Pharmacy',
+          'ownerName': 'Old Owner',
+          'address': 'Somewhere',
+          'city': 'Latakia',
+          'phone': '0912222222',
+        };
+
+        final pharmacy = PharmacyModel.fromJson(json);
+
+        expect(pharmacy.id, equals('legacy1'));
+        expect(pharmacy.areaType, equals('city'));
+      });
+
+      test('parses a payload with an explicitly null areaType', () {
+        final json = {
+          'id': 'legacy2',
+          'nameAr': 'صيدلية',
+          'nameEn': 'Pharmacy',
+          'ownerName': 'Owner',
+          'address': 'Address',
+          'city': 'Latakia',
+          'phone': '0912222223',
+          'areaType': null,
+        };
+
+        expect(PharmacyModel.fromJson(json).areaType, equals('city'));
+      });
+    });
+
+    group('equality', () {
+      test('two identical pharmacies are equal', () {
+        final json = {
+          'id': 'pharm1',
+          'nameAr': 'صيدلية',
+          'nameEn': 'Pharmacy',
+          'ownerName': 'Owner',
+          'address': 'Address',
+          'city': 'City',
+          'phone': '0993123456',
+          'areaType': 'city',
+        };
+
+        final pharmacy1 = PharmacyModel.fromJson(json);
+        final pharmacy2 = PharmacyModel.fromJson(json);
+
+        expect(pharmacy1.id, equals(pharmacy2.id));
+      });
+    });
+  });
+}
