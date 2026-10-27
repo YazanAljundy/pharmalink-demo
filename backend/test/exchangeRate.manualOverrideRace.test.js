@@ -62,7 +62,7 @@ async function waitFor(predicate, what) {
 let logs;
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-fx-override-race-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-fx-override-race-test' });
 });
 
 test.after(async () => {

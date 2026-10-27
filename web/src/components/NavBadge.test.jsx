@@ -127,6 +127,7 @@ describe('badges in the admin sidebar', () => {
     badges.counts = { '/admin/offers': 4, '/admin/accounts': 2, '/admin/complaints': 150 };
     const html = renderAt('/admin/notifications', <AdminPanel />, EN);
 
+    expect(html).toContain('class="demo-badge"');
     expect(badgeIn(html, 'Offers')).toBe('4');
     expect(badgeIn(html, 'Accounts')).toBe('2');
     expect(badgeIn(html, 'Complaints')).toBe('99+');
@@ -161,6 +162,7 @@ describe('badges in the warehouse sidebar', () => {
     };
     const html = renderAt('/warehouse/settings', <WarehousePanel />);
 
+    expect(html).toContain('class="demo-badge"');
     expect(badgeIn(html, 'الطلبات')).toBe('3');
     expect(badgeIn(html, 'الترويج')).toBe('7');
     expect(badgeIn(html, 'الملاحظات')).toBe('2');

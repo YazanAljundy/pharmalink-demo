@@ -60,7 +60,7 @@ async function listSerialized() {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-offer-active-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-offer-active-test' });
 
   const userA = new mongoose.Types.ObjectId();
   const userB = new mongoose.Types.ObjectId();

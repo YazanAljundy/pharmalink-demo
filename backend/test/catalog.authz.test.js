@@ -80,7 +80,7 @@ async function call(method, path, token) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-catalog-authz-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-catalog-authz-test' });
   const users = await User.create([
     { name: 'AD', phone: '0952001201', role: 'admin', status: 'active' },
     { name: 'WH', phone: '0942001201', role: 'warehouse', status: 'active' },

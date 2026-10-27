@@ -130,7 +130,7 @@ async function freshProduct(price = 10) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-exchange-rate-validation-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-exchange-rate-validation-test' });
   await setRate(RATE);
 
   const [whUser, adminUser] = await User.create([

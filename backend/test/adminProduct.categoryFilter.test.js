@@ -2,7 +2,7 @@
 // management pages - both were searchable before but had no way to narrow by
 // category despite Product/ProductCatalog already carrying categoryId.
 //
-// Runs against its own database (feniq-admin-category-test) and drops it at
+// Runs against its own database (pharmalink_demo-admin-category-test) and drops it at
 // the end, same pattern as catalog.search.test.js.
 process.env.JWT_SECRET = process.env.JWT_SECRET || 'test-secret-for-admin-category-tests';
 process.env.NODE_ENV = 'test';
@@ -24,7 +24,7 @@ const catalogService = require('../src/services/productCatalog.service');
 const ids = {};
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-admin-category-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-admin-category-test' });
 
   const warehouseUser = await User.create({
     name: 'WH', phone: '0940000001', role: 'warehouse', status: 'active',
@@ -43,8 +43,8 @@ test.before(async () => {
   ids.vitamins = vitamins._id;
 
   const [panadolCatalog, vitaminCCatalog, uncategorizedCatalog] = await ProductCatalog.create([
-    { nameAr: 'بانادول', nameEn: 'Panadol', manufacturerAr: 'جي اس كي', manufacturerEn: 'GSK', categoryId: painkillers._id },
-    { nameAr: 'فيتامين سي', nameEn: 'Vitamin C', manufacturerAr: 'باير', manufacturerEn: 'Bayer', categoryId: vitamins._id },
+    { nameAr: 'بانادول', nameEn: 'Panadol', manufacturerAr: 'مختبر تجريبي ألف', manufacturerEn: 'Sample Pharma Labs A', categoryId: painkillers._id },
+    { nameAr: 'فيتامين سي', nameEn: 'Vitamin C', manufacturerAr: 'مختبر تجريبي باء', manufacturerEn: 'Sample Pharma Labs B', categoryId: vitamins._id },
     { nameAr: 'غير مصنّف', nameEn: 'Uncategorized', manufacturerAr: 'اخرى', manufacturerEn: 'Other' },
   ]);
   ids.panadolCatalog = panadolCatalog._id;

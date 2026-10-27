@@ -40,7 +40,7 @@ function requireStrongSecret(name) {
 
 module.exports = {
   nodeEnv: process.env.NODE_ENV || 'development',
-  port: parseInt(process.env.PORT, 10) || 4000,
+  port: parseInt(process.env.PORT, 10) || 5000,
   mongodbUri: required('MONGODB_URI'),
   jwtSecret: requireStrongSecret('JWT_SECRET'),
   // 24h, down from 7d (audit F-03). A stolen access token is now useful for

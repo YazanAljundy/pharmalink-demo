@@ -61,7 +61,7 @@ async function pendingRequest(warehouseId, extra = {}) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-catalog-requests-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-catalog-requests-test' });
   await syncIndexes(Product, Manufacturer, WarehouseProductAlias, CatalogRequest);
   await ProductCatalog.init();
 });
@@ -117,8 +117,8 @@ test('approving a request that names an existing item is refused as a merge cand
 
 test('merging links the request to an existing item', async () => {
   const warehouseId = await makeWarehouse();
-  const existing = await ProductCatalog.create({ nameAr: 'بنادول', manufacturerAr: 'جي اس كي' });
-  const request = await pendingRequest(warehouseId, { nameAr: 'بانادول تابلت', manufacturerAr: 'GSK' });
+  const existing = await ProductCatalog.create({ nameAr: 'بنادول', manufacturerAr: 'مختبر تجريبي ألف' });
+  const request = await pendingRequest(warehouseId, { nameAr: 'بانادول تابلت', manufacturerAr: 'Sample Pharma Labs A' });
   const merged = await requestService.mergeRequest(request._id, adminId, { masterProductId: String(existing._id) });
   assert.strictEqual(merged.status, 'merged');
   const product = await Product.findOne({ warehouseId, masterProductId: existing._id }).lean();

@@ -59,7 +59,7 @@ function post(account, overrides) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-ledger-replay-race-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-ledger-replay-race-test' });
   await syncIndexes(LedgerAccount, LedgerEntry);
   ids.warehouse = new mongoose.Types.ObjectId();
 });

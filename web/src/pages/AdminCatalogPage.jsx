@@ -7,6 +7,7 @@ import { api } from '../api/client';
 import { LoadMoreControl } from '../components/LoadMoreControl';
 import { SearchableSelect } from '../components/SearchableSelect';
 import { usePaginatedData } from '../hooks/usePaginatedData';
+import { DEMO_IMAGE_FALLBACK, handleImageFallback } from '../utils/imageFallback';
 
 const PAGE_SIZE = 30;
 
@@ -576,9 +577,14 @@ export function AdminCatalogPage() {
                 {items.map((item) => (
                   <tr key={item.id} className={item.isActive ? '' : 'row-inactive'}>
                     <td>
-                      {item.imageUrl && (
-                        <img src={item.imageUrl} alt="" width="32" height="32" style={{ objectFit: 'contain', marginInlineEnd: 8 }} />
-                      )}
+                      <img
+                        src={item.imageUrl || DEMO_IMAGE_FALLBACK}
+                        alt=""
+                        width="32"
+                        height="32"
+                        style={{ objectFit: 'contain', marginInlineEnd: 8 }}
+                        onError={handleImageFallback}
+                      />
                       {item.nameAr}
                     </td>
                     <td>{item.manufacturerAr}</td>

@@ -33,7 +33,7 @@ export function LoginPage() {
             for the <h1> that used to repeat the brand name underneath it.
             Kept as an h1 for the document outline and screen readers. */}
         <h1 className="brand">
-          <img className="auth-logo" src="/images/feniq-logo-light.png" alt={t('app.brand')} />
+          <img className="auth-logo" src="/images/demo-logo-light.png" alt={t('app.brand')} />
         </h1>
 
         <form onSubmit={handleSubmit}>

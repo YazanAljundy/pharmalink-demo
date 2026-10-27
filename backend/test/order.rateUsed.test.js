@@ -84,7 +84,7 @@ async function call(method, path, body) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-order-rate-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-order-rate-test' });
   await syncIndexes(Order, OrderItem);
   await ExchangeRate.create({ _id: 'singleton', usdToSyp: RATE, source: 'manual' });
 

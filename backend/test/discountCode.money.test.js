@@ -113,7 +113,7 @@ async function commissionRow() {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-discount-code-money' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-discount-code-money' });
   await syncIndexes(
     Order, OrderItem, Return, LedgerAccount, LedgerEntry, DiscountCode, DiscountCodePharmacyUsage, CommissionCollection
   );

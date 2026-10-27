@@ -39,15 +39,16 @@
     "view": "عرض"
   },
   "app": {
-    "brand": "فينيق - لوحة الإدارة"
+    "brand": "PharmaLink Demo - لوحة الإدارة"
   },
   "nav": {
     "adminTitle": "الإدارة",
     "warehouseTitleFallback": "لوحة المستودع",
-    "brandName": "فينيق",
+    "brandName": "PharmaLink Demo",
     "openMenu": "فتح القائمة",
     "dashboard": "لوحة التحكم",
     "accounts": "الحسابات",
+    "ledger": "دفتر الأستاذ",
     "pendingAccounts": "الحسابات المعلّقة",
     "offers": "العروض",
     "products": "المنتجات",
@@ -189,8 +190,8 @@
     "warehouseNetLabel": "صافي ما تستلمه",
     "discountCodeLabel": "كود الخصم {{code}}",
     "discountCodeFundedBy_warehouse": "على حساب مستودعك",
-    "discountCodeFundedBy_platform": "على حساب فينيق",
-    "platformCompensationLabel": "تعويض فينيق"
+    "discountCodeFundedBy_platform": "على حساب PharmaLink Demo",
+    "platformCompensationLabel": "تعويض PharmaLink Demo"
   },
   "returns": {
     "filterAll": "الكل",
@@ -798,7 +799,7 @@
     "credited": "المرتجعات",
     "creditedHint": "أُضيفت لحسابات الصيدليات",
     "commission": "عمولة المنصة",
-    "commissionHint": "المستحقة لفينيق عن هذه الفترة",
+    "commissionHint": "المستحقة لPharmaLink Demo عن هذه الفترة",
     "commissionAfterClawback": "{{gross}} ناقص {{clawback}} عن المرتجعات",
     "net": "صافي ما تستلمه",
     "netHint": "المبيعات ناقص المرتجعات والعمولة",
@@ -812,7 +813,7 @@
     "orderNet": "صافي ما تستلمه",
     "footnote": "المبيعات هي ما تمت مطالبة الصيدليات به، وليس ما تم تحصيله فعلياً — راجع الفواتير لمعرفة الأرصدة المستحقة.",
     "compensation": "تعويض أكواد الخصم",
-    "compensationHint": "تدفع لك فينيق قيمة الخصم على أكواد الخصم الخاصة بها",
+    "compensationHint": "تدفع لك PharmaLink Demo قيمة الخصم على أكواد الخصم الخاصة بها",
     "orderCompensation": "التعويض"
   },
   "commission": {
@@ -822,7 +823,7 @@
     "returns": "المرتجعات",
     "returnsHint": "ما تمت إعادته كرصيد عند قبول المرتجع",
     "owed": "العمولة المستحقة",
-    "owedHint": "مستحقة لـ Feniq بعد خصم المرتجعات",
+    "owedHint": "مستحقة لـ PharmaLink Demo بعد خصم المرتجعات",
     "collected": "المحصّل",
     "outstanding": "المتبقّي",
     "collectedSoFar": "تم تحصيل {{amount}} حتى الآن",
@@ -846,14 +847,14 @@
     "reverseReasonRequired": "يجب ذكر سبب لعكس التحصيل.",
     "reverseReasonPlaceholder": "مثال: ارتدّت الحوالة",
     "reverseButton": "عكس التحصيل",
-    "platformOwes": "فينيق مدينة للمستودع",
-    "platformOwesHint": "بالسالب: تعويض أكواد الخصم المستحق على فينيق أكبر من العمولة، أو أن المستودع دفع عن فترة أوسع.",
+    "platformOwes": "PharmaLink Demo مدينة للمستودع",
+    "platformOwesHint": "بالسالب: تعويض أكواد الخصم المستحق على PharmaLink Demo أكبر من العمولة، أو أن المستودع دفع عن فترة أوسع.",
     "direction": "الاتجاه",
-    "direction_from_warehouse": "المستودع دفع لفينيق (عمولة)",
-    "direction_to_warehouse": "فينيق دفعت للمستودع (تعويض)",
+    "direction_from_warehouse": "المستودع دفع لPharmaLink Demo (عمولة)",
+    "direction_to_warehouse": "PharmaLink Demo دفعت للمستودع (تعويض)",
     "recordPayoutButton": "تسجيل الدفعة للمستودع",
     "compensation": "تعويض الأكواد",
-    "compensationHint": "ما تدين به فينيق عن أكواد خصم الإدارة، بعد المرتجعات",
+    "compensationHint": "ما تدين به PharmaLink Demo عن أكواد خصم الإدارة، بعد المرتجعات",
     "compensationForCode": "الكود {{code}}",
     "paidOut": "المدفوع للمستودع",
     "settledSoFar": "المحصّل {{collected}} - المدفوع للمستودع {{paidOut}}"
@@ -882,6 +883,12 @@
     "kindMigrationAdjustment": "تسوية افتتاحية",
     "kindOpeningBalance": "الرصيد الافتتاحي",
     "kindOther": "تسوية"
+  },
+  "ledger": {
+    "pharmacy": "الصيدلية",
+    "warehouse": "المستودع",
+    "closingBalance": "الرصيد الختامي",
+    "noAccounts": "لا توجد حسابات نشطة للصيدليات والمستودعات."
   },
   "exchangeRateChange": {
     "notice": "تغيّر سعر الصرف أثناء التعديل: كان 1$ = {{from}} وأصبح {{to}}. القيم بالدولار تُحسب الآن بالسعر الجديد — راجعها ثم أكّد الحفظ.",
@@ -1088,7 +1095,7 @@
     },
     "fundedBy": {
       "warehouse": "على حساب المستودع",
-      "platform": "على حساب فينيق"
+      "platform": "على حساب PharmaLink Demo"
     },
     "columns": {
       "code": "الكود",
@@ -1108,7 +1115,7 @@
         "admin": "أكواد الإدارة",
         "all": "كل الأكواد"
       },
-      "fundingHint": "أكواد الإدارة تعمل على كل المستودعات فور إنشائها، وتتحمّل فينيق قيمتها: يُعوَّض المستودع بالكامل (انظر صفحة العمولة). أكواد المستودعات على حساب المستودع.",
+      "fundingHint": "أكواد الإدارة تعمل على كل المستودعات فور إنشائها، وتتحمّل PharmaLink Demo قيمتها: يُعوَّض المستودع بالكامل (انظر صفحة العمولة). أكواد المستودعات على حساب المستودع.",
       "allWarehouses": "الإدارة - كل المستودعات",
       "confirmApprove": "الموافقة على الكود {{code}}؟",
       "rejectPrompt": "سبب رفض الكود {{code}}؟ سيظهر السبب للمستودع.",

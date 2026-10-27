@@ -35,7 +35,7 @@ const {
 const ids = {};
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-banner-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-banner-test' });
 
   const [whUser, adminUser] = await User.create([
     { name: 'WH', phone: '0942000501', role: 'warehouse', status: 'active' },

@@ -58,7 +58,7 @@ async function newProduct(price = 10) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-one-offer-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-one-offer-test' });
   await syncIndexes(Order, OrderItem, Offer);
   await ExchangeRate.create({ _id: 'singleton', usdToSyp: RATE, source: 'manual' });
   const [phUser, whUser, admin] = await User.create([

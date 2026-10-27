@@ -2,7 +2,7 @@
 // Banners - both pages previously always showed every status at once, unlike
 // their Admin equivalents which already supported filtering.
 //
-// Runs against its own database (feniq-wh-status-filter-test) and drops it
+// Runs against its own database (pharmalink_demo-wh-status-filter-test) and drops it
 // at the end, same pattern as adminProduct.categoryFilter.test.js.
 process.env.JWT_SECRET = process.env.JWT_SECRET || 'test-secret-for-wh-status-filter-tests';
 process.env.NODE_ENV = 'test';
@@ -30,7 +30,7 @@ function withCode(expected) {
 const ids = {};
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-wh-status-filter-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-wh-status-filter-test' });
 
   const [whUser, adminUser] = await User.create([
     { name: 'WH', phone: '0960000001', role: 'warehouse', status: 'active' },

@@ -81,7 +81,7 @@ function buy({ advertisementId, copies = 1, items = [], ...extra }) {
 const groupIdOf = (order) => order.orderPackageGroups[0]._id.toString();
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-package-groups-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-package-groups-test' });
   await syncIndexes(Order);
   await ExchangeRate.create({ _id: 'singleton', usdToSyp: RATE, source: 'manual' });
 

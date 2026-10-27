@@ -25,7 +25,7 @@ const { buildOfferStatusFilter, OFFER_STATUS_VALUES } = require('../src/services
 let matchesOfferFilter;
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-offer-statusfilter-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-offer-statusfilter-test' });
   // offersFilters.js is an ESM file (web/ is "type": "module") - dynamic
   // import works regardless of this file's own CommonJS module system,
   // unlike require(), which would depend on Node/flag support for it.

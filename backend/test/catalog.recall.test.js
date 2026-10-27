@@ -89,7 +89,7 @@ async function workbookBuffer(manufacturerAr, rows) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-catalog-recall-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-catalog-recall-test' });
   await syncIndexes(Product, ProductCatalog, Offer, Advertisement);
   const category = await Category.create({ nameAr: 'فئة', nameEn: 'Category' });
   ids.category = String(category._id);

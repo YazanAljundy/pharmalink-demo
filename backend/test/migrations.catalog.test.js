@@ -42,7 +42,7 @@ async function snapshot() {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-catalog-migrations-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-catalog-migrations-test' });
   db = mongoose.connection.db;
   // Model compilation already ran autoIndex on the empty collection; drop the
   // new unique identityKey index so the legacy rows (which have no key yet) can

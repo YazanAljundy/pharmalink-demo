@@ -111,7 +111,7 @@ function record(overrides = {}) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-commission-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-commission-test' });
   await syncIndexes(LedgerEntry, LedgerAccount, Order, Return, CommissionCollection);
   await ExchangeRate.create({ _id: 'singleton', usdToSyp: RATE, source: 'manual' });
 

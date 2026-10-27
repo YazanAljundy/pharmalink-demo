@@ -73,7 +73,7 @@ node backend/scripts/start-dev-replset.js
 Then point the backend at it:
 
 ```
-MONGODB_URI=mongodb://127.0.0.1:27018/phoenix
+MONGODB_URI=mongodb://127.0.0.1:27018/pharmalink_demo?replicaSet=rs0
 ```
 
 The script creates the dbPath, starts `mongod --replSet rs0 --port 27018`,

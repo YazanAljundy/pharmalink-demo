@@ -25,7 +25,7 @@ const { MongoClient } = require(require.resolve('mongodb', { paths: [backendDir]
 
 const PROBE_URL = process.env.PROBE_URL || 'http://127.0.0.1:9999/';
 const MONGO_URI = process.env.LOAD_TEST_MONGODB_URI || 'mongodb://localhost:27017';
-const DB_NAME = process.env.LOAD_TEST_DB || 'phoenix';
+const DB_NAME = process.env.LOAD_TEST_DB || 'pharmalink_demo';
 
 function cpuTotals() {
   let idle = 0;

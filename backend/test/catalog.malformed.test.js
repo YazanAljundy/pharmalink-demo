@@ -38,7 +38,7 @@ async function call(method, path, { token, body, rawBody } = {}) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-catalog-malformed-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-catalog-malformed-test' });
   const [whUser, adminUser, pharmacyUser] = await User.create([
     { name: 'WH', phone: '0942001101', role: 'warehouse', status: 'active' },
     { name: 'AD', phone: '0952001101', role: 'admin', status: 'active' },

@@ -1,0 +1,1764 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for English (`en`).
+class AppLocalizationsEn extends AppLocalizations {
+  AppLocalizationsEn([String locale = 'en']) : super(locale);
+
+  @override
+  String get appName => 'PharmaLink Demo';
+
+  @override
+  String get login => 'Login';
+
+  @override
+  String get logout => 'Logout';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get theme => 'Theme';
+
+  @override
+  String get light => 'Light';
+
+  @override
+  String get dark => 'Dark';
+
+  @override
+  String get system => 'System';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get welcome => 'Welcome';
+
+  @override
+  String get home => 'Home';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get registrationTitle => 'Create your pharmacy account';
+
+  @override
+  String get registrationSubtitle =>
+      'Fill in the details below - your account is activated once the administration reviews your documents.';
+
+  @override
+  String get fullNameLabel => 'Full name';
+
+  @override
+  String get fullNameHint => 'e.g. Dr. Samer Halabi';
+
+  @override
+  String get pharmacyNameLabel => 'Pharmacy name';
+
+  @override
+  String get pharmacyNameHint => 'e.g. Al-Noor Pharmacy';
+
+  @override
+  String get phoneLabel => 'Phone number';
+
+  @override
+  String get addressLabel => 'Address';
+
+  @override
+  String get pickLocationHint =>
+      'Move the map to fine-tune the pin\'s position';
+
+  @override
+  String get resolvingAddressText => 'Resolving address...';
+
+  @override
+  String get locationPermissionDeniedMessage =>
+      'Couldn\'t access your location - you can still drag the map manually.';
+
+  @override
+  String get addressNotResolvedYetMessage =>
+      'Please wait for the map to resolve an address, or adjust the pin\'s position.';
+
+  @override
+  String get useCurrentLocationTooltip => 'My current location';
+
+  @override
+  String get areaTypeLabel => 'Area type';
+
+  @override
+  String get areaTypeCity => 'City';
+
+  @override
+  String get areaTypeCityRing => 'City ring';
+
+  @override
+  String get areaTypeRural => 'Rural';
+
+  @override
+  String get confirmPasswordLabel => 'Confirm password';
+
+  @override
+  String get confirmPasswordHint => 'Re-enter your password';
+
+  @override
+  String passwordHint(String min) {
+    return 'At least $min characters';
+  }
+
+  @override
+  String get passwordTooShort => 'Password must be at least 8 characters.';
+
+  @override
+  String get passwordMismatch => 'Passwords do not match.';
+
+  @override
+  String get alreadyHaveAccountLink =>
+      'Already have an account? Log in with password';
+
+  @override
+  String get sendCodeButton => 'Send verification code';
+
+  @override
+  String get createAccountButton => 'Create account';
+
+  @override
+  String get termsAgreementLabel =>
+      'I agree to the Terms of Use and Privacy Policy.';
+
+  @override
+  String get termsAgreementRequiredError =>
+      'You must agree to the terms to continue.';
+
+  @override
+  String get passwordsMustMatchHint => 'Both passwords must match.';
+
+  @override
+  String get passwordLoginTitle => 'Log in with password';
+
+  @override
+  String get passwordLoginSubtitle => 'Enter your phone number and password';
+
+  @override
+  String get backToRegistrationLink => 'New here? Create an account';
+
+  @override
+  String get forgotPasswordSupportLink =>
+      'Forgot your password? Contact support on WhatsApp';
+
+  @override
+  String get forgotPasswordSupportMessage =>
+      'Hello, I would like to recover the password for my account. Pharmacy/warehouse name: ___ Registered phone number: ___';
+
+  @override
+  String whatsAppUnavailable(String phone) {
+    return 'Couldn\'t open WhatsApp. Support number: $phone';
+  }
+
+  @override
+  String get copyAction => 'Copy';
+
+  @override
+  String get phoneCopied => 'Number copied.';
+
+  @override
+  String get otpTitle => 'Enter verification code';
+
+  @override
+  String get otpInstructionsPrefix => 'Enter the 6-digit code sent to';
+
+  @override
+  String get otpCodeLabel => 'Verification code';
+
+  @override
+  String get verifyButton => 'Verify';
+
+  @override
+  String get resendCodeButton => 'Didn\'t get the code? Resend';
+
+  @override
+  String get codeResent => 'A new code has been sent.';
+
+  @override
+  String get approvalPendingTitle => 'Your account is under review';
+
+  @override
+  String get approvalPendingMessage =>
+      'We\'re reviewing your registration. You\'ll be able to order as soon as it\'s approved.';
+
+  @override
+  String approvalPendingMessageWithName(String pharmacyName) {
+    return 'We\'re currently reviewing $pharmacyName\'s documents. You\'ll be able to order as soon as it\'s approved.';
+  }
+
+  @override
+  String get approvalPendingBlockedTitle => 'Account blocked';
+
+  @override
+  String get approvalPendingBlockedMessage =>
+      'This account has been blocked. Please contact support for help.';
+
+  @override
+  String get approvalChecklistReceived => 'Data and documents received';
+
+  @override
+  String get approvalChecklistReview => 'Under administration review';
+
+  @override
+  String get approvalChecklistActivate => 'Account activation and ordering';
+
+  @override
+  String get refreshStatusButton => 'Check status';
+
+  @override
+  String get contactSupportButton => 'Contact support';
+
+  @override
+  String get contactSupportDialogTitle => 'Contact support';
+
+  @override
+  String get contactSupportDialogMessage =>
+      'For help with your account, please contact Al-Najah Warehouse support.';
+
+  @override
+  String get fieldRequired => 'This field is required.';
+
+  @override
+  String get invalidPhoneNumber => 'Please enter a valid phone number.';
+
+  @override
+  String get invalidOtpCode => 'Please enter the 6-digit code.';
+
+  @override
+  String get close => 'Close';
+
+  @override
+  String get errorState => 'Something went wrong.';
+
+  @override
+  String get errorNetwork =>
+      'Unable to connect to the internet. Check your connection and try again.';
+
+  @override
+  String get errorTimeout =>
+      'The request took longer than expected. Please try again.';
+
+  @override
+  String get errorServer => 'A server error occurred. Please try again later.';
+
+  @override
+  String get errorNotFound => 'The requested data could not be found.';
+
+  @override
+  String get errorSessionExpired =>
+      'Your session has expired. Please sign in again.';
+
+  @override
+  String get errorNoPermission =>
+      'You don\'t have permission to perform this action.';
+
+  @override
+  String get noMoreResultsText => 'No more results';
+
+  @override
+  String get retryButton => 'Retry';
+
+  @override
+  String get warehouseSelectionTitle => 'Choose a warehouse';
+
+  @override
+  String get selectWarehouseButton => 'Select';
+
+  @override
+  String get noWarehousesAvailable => 'No warehouses available yet.';
+
+  @override
+  String warehouseSelectedMessage(String name) {
+    return '$name selected. The product catalog is coming soon.';
+  }
+
+  @override
+  String warehousesAvailableSubtitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count warehouses available for your pharmacy',
+      one: '1 warehouse available for your pharmacy',
+      zero: 'No warehouses available for your pharmacy',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get searchWarehouseHint => 'Search by warehouse or city';
+
+  @override
+  String get noSearchResultsFound => 'No results match your search.';
+
+  @override
+  String get warehouseProfileButtonLabel => 'Profile';
+
+  @override
+  String get warehousesScopeMyCity => 'My city';
+
+  @override
+  String get warehousesScopeAllCities => 'All cities';
+
+  @override
+  String get viewAllCitiesButton => 'View all cities';
+
+  @override
+  String get noWarehousesInYourCity => 'No warehouses in your city';
+
+  @override
+  String get noWarehousesInYourCitySubtitle =>
+      'Try broadening the search to other cities.';
+
+  @override
+  String get noManufacturersFound =>
+      'No manufacturers available for this warehouse.';
+
+  @override
+  String manufacturersCountSubtitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count manufacturers',
+      one: '1 manufacturer',
+      zero: 'No manufacturers',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String companyDiscountValue(String percent) {
+    return 'Company Discount: $percent%';
+  }
+
+  @override
+  String get warehouseProfileTooltip => 'Warehouse info';
+
+  @override
+  String get deliveryInfoTitle => 'Delivery Information';
+
+  @override
+  String deliveryHoursValue(String start, String end) {
+    return 'From $start to $end';
+  }
+
+  @override
+  String get deliveryHoursNotSet => 'Not specified';
+
+  @override
+  String get deliveryTypeSelfLabel => 'Delivered by the warehouse itself';
+
+  @override
+  String get deliveryTypeThirdPartyLabel =>
+      'Delivered by a third-party courier';
+
+  @override
+  String get deliveryInfoDisclaimer =>
+      'This information is for display only and doesn\'t prevent placing an order.';
+
+  @override
+  String get warehouseReviewsTitle => 'Reviews';
+
+  @override
+  String get noWarehouseReviewsYet => 'No reviews yet.';
+
+  @override
+  String get anonymousReviewerName => 'User';
+
+  @override
+  String get browseWarehouseProductsButton =>
+      'Browse this warehouse\'s products';
+
+  @override
+  String get searchProductsHint => 'Search by name or manufacturer';
+
+  @override
+  String get searchWarehouseProductsHint =>
+      'Search all of this warehouse\'s products';
+
+  @override
+  String get addToCartButton => 'Add';
+
+  @override
+  String get unavailableLabel => 'Unavailable';
+
+  @override
+  String get offerBadgeLabel => 'Offer';
+
+  @override
+  String get toggleDensityTooltip => 'Toggle view';
+
+  @override
+  String get noProductsFound => 'No products found.';
+
+  @override
+  String catalogItemsCountSubtitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items',
+      one: '1 item',
+      zero: 'No items',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get currencySuffix => 'SYP';
+
+  @override
+  String addedToCartMessage(String name) {
+    return '$name added to cart.';
+  }
+
+  @override
+  String get cartTitle => 'Cart';
+
+  @override
+  String get cartEmptyMessage => 'Your cart is empty.';
+
+  @override
+  String get cartEmptyHint =>
+      'Choose a warehouse and start adding medicines to your cart.';
+
+  @override
+  String get browseCatalogButton => 'Browse products';
+
+  @override
+  String get quantityLabel => 'Quantity';
+
+  @override
+  String get decreaseQuantityLabel => 'Decrease quantity';
+
+  @override
+  String get increaseQuantityLabel => 'Increase quantity';
+
+  @override
+  String get notesLabel => 'Notes (optional)';
+
+  @override
+  String get subtotalLabel => 'Subtotal';
+
+  @override
+  String get submitOrderButton => 'Submit order';
+
+  @override
+  String get submitOrderTitle => 'Submit order?';
+
+  @override
+  String submitOrderConfirmation(String warehouseName) {
+    return 'Send this order to $warehouseName?';
+  }
+
+  @override
+  String get orderSubmittedTitle => 'Order submitted';
+
+  @override
+  String orderSubmittedMessage(String orderNumber) {
+    return 'Your order #$orderNumber has been submitted.';
+  }
+
+  @override
+  String get removeItemTitle => 'Remove item?';
+
+  @override
+  String removeItemConfirmation(String name) {
+    return 'Remove $name from your cart?';
+  }
+
+  @override
+  String get removeButton => 'Remove';
+
+  @override
+  String get clearCartButton => 'Clear cart';
+
+  @override
+  String get clearCartTitle => 'Clear cart?';
+
+  @override
+  String get clearCartConfirmation =>
+      'Are you sure you want to clear all the contents of your cart?';
+
+  @override
+  String get cartConflictTitle => 'Start a new cart?';
+
+  @override
+  String cartConflictMessage(String name) {
+    return 'Your cart has items from $name. Adding this item will clear it and start a new order.';
+  }
+
+  @override
+  String get cartConflictConfirmButton => 'Start new cart';
+
+  @override
+  String get cartIconTooltip => 'Cart';
+
+  @override
+  String get reorderButton => 'Reorder';
+
+  @override
+  String get addProductButton => 'Add product';
+
+  @override
+  String get reorderReplaceCartTitle => 'Replace your cart?';
+
+  @override
+  String get reorderReplaceCartMessage =>
+      'Your current cart will be replaced with the items from this order. You can still edit everything before checkout.';
+
+  @override
+  String get reorderReplaceCartConfirm => 'Replace cart';
+
+  @override
+  String get reorderUnavailableTitle => 'Some items are unavailable';
+
+  @override
+  String get reorderNoItemsMessage =>
+      'None of this order\'s products are available from this warehouse anymore.';
+
+  @override
+  String reorderSomeItemsUnavailable(String names) {
+    return 'These items are no longer sold by this warehouse and were not added: $names';
+  }
+
+  @override
+  String get advertisementsSectionTitle => 'Special packages';
+
+  @override
+  String get advertisementPackageTotal => 'Package price';
+
+  @override
+  String advertisementSavingPercent(int percent) {
+    return 'Save $percent%';
+  }
+
+  @override
+  String advertisementProductCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count products',
+      one: '1 product',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String advertisementItemQuantity(int count) {
+    return '× $count';
+  }
+
+  @override
+  String get packageBadge => 'Package';
+
+  @override
+  String get packageCopiesLabel => 'package copies';
+
+  @override
+  String get advertisementDiscountLabel => 'Package discount';
+
+  @override
+  String get advertisementTotalToPay => 'Total to pay';
+
+  @override
+  String get advertisementAddToCartButton => 'Add package to cart';
+
+  @override
+  String get advertisementReplaceCartTitle => 'Replace your cart?';
+
+  @override
+  String get advertisementReplaceCartMessage =>
+      'Your current cart will be replaced with this package. You can still edit everything before checkout.';
+
+  @override
+  String get advertisementReplaceCartConfirm => 'Replace cart';
+
+  @override
+  String get advertisementUnavailableTitle => 'Package unavailable';
+
+  @override
+  String get advertisementUnavailableMessage =>
+      'This package is no longer available. It may have expired or been withdrawn.';
+
+  @override
+  String get packageUnavailableBanner =>
+      'This package is no longer available. You won\'t be able to place the order with it.';
+
+  @override
+  String packageUnavailableCheckoutMessage(String names) {
+    return 'No longer available: $names. The order wasn\'t placed — remove it from your cart to continue.';
+  }
+
+  @override
+  String get errorPackageUnavailable => 'This package is no longer available.';
+
+  @override
+  String get errorIdempotencyKeyReused =>
+      'An earlier attempt already placed an order from this cart before you changed it. Check My Orders, then submit again to place your updated cart as a new order.';
+
+  @override
+  String get removeUnavailablePackagesButton => 'Remove from cart';
+
+  @override
+  String advertisementIncompleteMessage(String names) {
+    return 'Some products in this package are no longer sold by this warehouse, so it can\'t be added: $names';
+  }
+
+  @override
+  String get advertisementPackageBrokenMessage =>
+      'Removing a product ends the package price. The remaining items are now priced normally.';
+
+  @override
+  String get advertisementsLoading => 'Loading packages...';
+
+  @override
+  String get advertisementsEmpty => 'No packages are running right now.';
+
+  @override
+  String get advertisementsError => 'Packages couldn\'t be loaded.';
+
+  @override
+  String get notificationsTitle => 'Notifications';
+
+  @override
+  String get noNotificationsYet => 'No notifications yet';
+
+  @override
+  String get noNotificationsYetHint =>
+      'Order updates and offers will show up here.';
+
+  @override
+  String get markAllAsRead => 'Mark all as read';
+
+  @override
+  String get errorInvalidRequest =>
+      'Something about this request wasn\'t valid. Please try again.';
+
+  @override
+  String get errorInvalidCredentials =>
+      'The phone number or password is incorrect.';
+
+  @override
+  String get errorAccountBlocked =>
+      'This account has been blocked. Please contact support.';
+
+  @override
+  String get errorAccountNotFound =>
+      'No account found for this phone number. Please create one first.';
+
+  @override
+  String get errorPharmacyNotFound =>
+      'We couldn\'t find your pharmacy profile. Please contact support.';
+
+  @override
+  String get errorWarehouseNotFound => 'This warehouse is no longer available.';
+
+  @override
+  String get errorExchangeRateUnavailable =>
+      'Prices can\'t be confirmed right now. Please try again shortly.';
+
+  @override
+  String get errorStockCheckFailedGeneric =>
+      'Some items in your cart are no longer available as requested.';
+
+  @override
+  String errorProductUnavailable(String name) {
+    return '$name is currently unavailable.';
+  }
+
+  @override
+  String errorProductNotFound(String name) {
+    return '$name is no longer available.';
+  }
+
+  @override
+  String get errorPriceChangedGeneric =>
+      'Some prices in your cart have changed.';
+
+  @override
+  String get errorBonusChangedGeneric =>
+      'The bonus changed on some items in your cart.';
+
+  @override
+  String bonusValue(String tiers) {
+    return 'Bonus $tiers';
+  }
+
+  @override
+  String freeUnits(int count) {
+    return '+$count free';
+  }
+
+  @override
+  String get noBonus => 'No bonus';
+
+  @override
+  String bonusChangedLine(String name, String bonus) {
+    return '$name: $bonus';
+  }
+
+  @override
+  String errorPriceChanged(String name, String newPrice, String oldPrice) {
+    return '$name is now $newPrice (was $oldPrice).';
+  }
+
+  @override
+  String get priceChangedConfirmHint =>
+      'Submit again to place the order at the new prices.';
+
+  @override
+  String get errorRateChangedTitle => 'The exchange rate changed';
+
+  @override
+  String rateChangedTotals(String newTotal, String oldTotal) {
+    return 'Your order comes to $newTotal at the new rate, instead of $oldTotal.';
+  }
+
+  @override
+  String get rateChangedConfirmHint =>
+      'Submit again to place the order at the new rate.';
+
+  @override
+  String get thisItemFallback => 'This item';
+
+  @override
+  String get loading => 'Loading...';
+
+  @override
+  String get orderTrackingTitle => 'Order Tracking';
+
+  @override
+  String orderNumberLabel(String number) {
+    return 'Order #$number';
+  }
+
+  @override
+  String get stageSent => 'Sent';
+
+  @override
+  String get stageUnderReview => 'Waiting for Approval';
+
+  @override
+  String get stagePreparing => 'Preparing';
+
+  @override
+  String get stageOutForDelivery => 'On the Way';
+
+  @override
+  String get stageDelivered => 'Delivered';
+
+  @override
+  String get stageCancelled => 'Cancelled';
+
+  @override
+  String get stageModified => 'Order modified';
+
+  @override
+  String get stageUnderReviewDesc => 'Your order has reached the warehouse';
+
+  @override
+  String get stagePreparingDesc => 'The warehouse is preparing your order';
+
+  @override
+  String get stageOutForDeliveryDesc => 'Your order has left the warehouse';
+
+  @override
+  String get stageDeliveredDesc => 'You received the order';
+
+  @override
+  String get statusHistoryTitle => 'Status history';
+
+  @override
+  String lastUpdatedLabel(String time) {
+    return 'Last updated: $time';
+  }
+
+  @override
+  String get cancelOrderTitle => 'Cancel order?';
+
+  @override
+  String get cancelOrderConfirmation =>
+      'Are you sure you want to cancel this order?';
+
+  @override
+  String get cancelOrderButton => 'Cancel order';
+
+  @override
+  String get orderCancelledMessage => 'This order has been cancelled.';
+
+  @override
+  String get contactWarehouseForChanges =>
+      'For any changes now, please contact the warehouse directly.';
+
+  @override
+  String get orderModifiedBannerTitle =>
+      'This order was modified by the warehouse';
+
+  @override
+  String get errorOrderNotFound => 'This order could not be found.';
+
+  @override
+  String get errorOrderNotCancellable =>
+      'This order can no longer be cancelled from the app.';
+
+  @override
+  String get myOrdersTitle => 'My Orders';
+
+  @override
+  String myOrdersCountSubtitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count orders · pull down to refresh',
+      one: '1 order · pull down to refresh',
+      zero: 'No orders yet',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get refreshTooltip => 'Refresh';
+
+  @override
+  String get noOrdersYet => 'You haven\'t placed any orders yet.';
+
+  @override
+  String get browseWarehousesButton => 'Browse warehouses';
+
+  @override
+  String get invoiceTitle => 'Order items';
+
+  @override
+  String get discountLabel => 'Discount';
+
+  @override
+  String get invoiceTotalLabel => 'Total';
+
+  @override
+  String youSavedLabel(String amount) {
+    return '💰 You saved $amount';
+  }
+
+  @override
+  String totalSavingsLabel(String amount) {
+    return '💰 Total savings: $amount (including offer discounts and manufacturer discount)';
+  }
+
+  @override
+  String get returnsTitle => 'Returns';
+
+  @override
+  String returnsCountSubtitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count return requests',
+      one: '1 return request',
+      zero: 'No return requests',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noReturnsYet => 'You haven\'t requested any returns yet.';
+
+  @override
+  String get noReturnsYetHint =>
+      'Once you request a return on a delivered order, it will show up here so you can follow its status.';
+
+  @override
+  String get noReturnableOrdersTitle => 'No orders eligible for return';
+
+  @override
+  String get myReturnsListSectionTitle => 'Your return requests';
+
+  @override
+  String get newReturnRequestButton => 'New return request';
+
+  @override
+  String get selectOrderForReturnTitle =>
+      'Select the order you want to return items from';
+
+  @override
+  String get noEligibleOrdersForReturn =>
+      'No delivered orders are currently eligible for a return.';
+
+  @override
+  String get requestReturnTitle => 'Request a return';
+
+  @override
+  String get requestReturnButton => 'Submit return request';
+
+  @override
+  String get requestReturnAction => 'Request Return';
+
+  @override
+  String get accountHistoryTitle => 'Account History';
+
+  @override
+  String get moneySavedTitle => 'Money Saved';
+
+  @override
+  String get fromDiscountsLabel => 'From Discounts';
+
+  @override
+  String get debtsTitle => 'Debts';
+
+  @override
+  String get outstandingBalanceLabel => 'Outstanding Balance';
+
+  @override
+  String get viewReturnsLabel => 'View Returns';
+
+  @override
+  String returnsRequestsShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count requests',
+      one: '1 request',
+      zero: 'No requests',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get returnQuantityLabel => 'Quantity';
+
+  @override
+  String get returnReasonLabel => 'Reason';
+
+  @override
+  String get reasonDamaged => 'Damaged';
+
+  @override
+  String get reasonWrongItem => 'Wrong item';
+
+  @override
+  String get reasonOther => 'Other';
+
+  @override
+  String get multipleReasonsLabel => 'Multiple reasons';
+
+  @override
+  String get customReasonLabel => 'Please specify';
+
+  @override
+  String get returnSubmittedTitle => 'Return requested';
+
+  @override
+  String get returnSubmittedMessage =>
+      'Your return request has been submitted. The warehouse will review it.';
+
+  @override
+  String get returnStatusPending => 'Pending review';
+
+  @override
+  String get returnStatusApproved => 'Approved';
+
+  @override
+  String get returnStatusRejected => 'Rejected';
+
+  @override
+  String get returnPickItemsLabel => 'Select the items you\'re returning';
+
+  @override
+  String get returnRejectionNoteLabel => 'Rejection reason';
+
+  @override
+  String returnCreditedLabel(String amount) {
+    return 'Credited to your account: $amount';
+  }
+
+  @override
+  String get editButton => 'Edit';
+
+  @override
+  String get deleteReturnButton => 'Delete';
+
+  @override
+  String get deleteReturnConfirmTitle => 'Delete return request?';
+
+  @override
+  String get deleteReturnConfirmMessage =>
+      'Are you sure you want to delete this return request?';
+
+  @override
+  String get returnApprovedBanner =>
+      'Return approved — your account has been credited';
+
+  @override
+  String get returnPendingReviewBanner =>
+      'Return submitted, awaiting the warehouse\'s review';
+
+  @override
+  String get returnRejectedBanner => 'Return rejected';
+
+  @override
+  String get errorOrderNotDelivered => 'This order hasn\'t been delivered yet.';
+
+  @override
+  String get errorOrderNotReorderable =>
+      'Only delivered orders can be reordered.';
+
+  @override
+  String get errorOrderItemNotFound =>
+      'This item could not be found in the order.';
+
+  @override
+  String get errorReturnQuantityExceeded =>
+      'The return quantity exceeds what\'s available to return for this item.';
+
+  @override
+  String get errorCustomReasonRequired =>
+      'Please describe the reason for this return.';
+
+  @override
+  String get errorTooManyReturnPhotos => 'You can attach up to 5 photos.';
+
+  @override
+  String get errorInvalidReturnPhoto =>
+      'One of the attached photos is not a valid image.';
+
+  @override
+  String get errorReturnAlreadyExists =>
+      'A return request has already been submitted for this order.';
+
+  @override
+  String get errorReturnNotEditable =>
+      'This return request has already been decided and can no longer be changed.';
+
+  @override
+  String get errorReturnItemsEmpty =>
+      'Please select at least one item to return.';
+
+  @override
+  String get errorDuplicateReturnItem =>
+      'Each item can only appear once in a return request.';
+
+  @override
+  String get errorRejectionNoteRequired =>
+      'Please explain why this return is being rejected.';
+
+  @override
+  String get returnPhotosLabel => 'Photos (optional)';
+
+  @override
+  String get returnPhotosHint =>
+      'Optionally add photos of the item to help the warehouse verify the reason';
+
+  @override
+  String get addPhotoButton => 'Add photo';
+
+  @override
+  String get cameraOption => 'Take a photo';
+
+  @override
+  String get galleryOption => 'Choose from gallery';
+
+  @override
+  String get permissionRequiredTitle => 'Permission needed';
+
+  @override
+  String get cameraPermissionDenied =>
+      'Camera access is needed to take a photo. You can enable it in Settings.';
+
+  @override
+  String get openSettings => 'Open Settings';
+
+  @override
+  String get navWarehouses => 'Warehouses';
+
+  @override
+  String get profileTitle => 'Profile';
+
+  @override
+  String get personalInfoTitle => 'Personal information';
+
+  @override
+  String get cityLabel => 'City';
+
+  @override
+  String get logoutConfirmTitle => 'Log out?';
+
+  @override
+  String get logoutConfirmMessage => 'Are you sure you want to log out?';
+
+  @override
+  String get dangerZoneTitle => 'Danger zone';
+
+  @override
+  String get deleteAccount => 'Delete account';
+
+  @override
+  String get deleteAccountSubtitle => 'Permanently delete your account';
+
+  @override
+  String get deleteAccountConfirmTitle => 'Delete your account permanently?';
+
+  @override
+  String get deleteAccountConfirmMessage =>
+      'Your account will be deleted permanently and you will not be able to sign in again. This cannot be undone.\n\nYour past orders and financial records will remain in the records of the warehouses you dealt with.\n\nEnter your password to confirm.';
+
+  @override
+  String get deleteAccountPasswordLabel => 'Password';
+
+  @override
+  String get deleteAccountPasswordRequired =>
+      'Enter your password to continue.';
+
+  @override
+  String get deleteAccountConfirmAction => 'Delete permanently';
+
+  @override
+  String get deleteAccountSuccess => 'Your account has been deleted.';
+
+  @override
+  String get errorPhoneAlreadyRegistered =>
+      'An account already exists for this phone number. Please sign in instead.';
+
+  @override
+  String get errorInvalidCurrentPassword => 'That password is incorrect.';
+
+  @override
+  String get yourRatingTitle => 'Your rating';
+
+  @override
+  String get ratingsTitle => 'Ratings';
+
+  @override
+  String get viewRatingsLabel => 'View Ratings';
+
+  @override
+  String get noRatingsYet => 'No warehouse has rated you yet.';
+
+  @override
+  String ratingSummary(String average, String count) {
+    return '$average average ($count ratings)';
+  }
+
+  @override
+  String get myDebtsTitle => 'My Debts';
+
+  @override
+  String get noDebtsYet => 'No debts right now.';
+
+  @override
+  String get totalDebtsLabel => 'Total debts';
+
+  @override
+  String get totalOrdersLabel => 'Total orders';
+
+  @override
+  String get totalPaidLabel => 'Total paid';
+
+  @override
+  String get currentBalanceLabel => 'Current balance';
+
+  @override
+  String get creditBalanceLabel => 'Credit balance';
+
+  @override
+  String get deliveredOrdersTitle => 'Delivered orders';
+
+  @override
+  String get paymentsTitle => 'Payments';
+
+  @override
+  String get noPaymentsYet => 'No payments recorded yet.';
+
+  @override
+  String get rateWarehouseTitle => 'Rate the warehouse';
+
+  @override
+  String get rateWarehouseCommentLabel => 'Comment (optional)';
+
+  @override
+  String get submitReviewButton => 'Submit rating';
+
+  @override
+  String get submitReviewConfirmTitle => 'Submit rating?';
+
+  @override
+  String get submitReviewConfirmMessage =>
+      'You won\'t be able to change this rating after sending it. Continue?';
+
+  @override
+  String reviewThankYouTitle(String rating) {
+    return 'Thanks — you rated this order $rating stars';
+  }
+
+  @override
+  String get errorAlreadyReviewed => 'This order has already been rated.';
+
+  @override
+  String minOrderLabel(String amount) {
+    return 'Minimum order: $amount';
+  }
+
+  @override
+  String maxOrderLabel(String amount) {
+    return 'Maximum order: $amount';
+  }
+
+  @override
+  String addMoreToReachMinimum(String amount) {
+    return 'Add $amount more to reach the minimum';
+  }
+
+  @override
+  String removeToMeetMaximum(String amount) {
+    return 'Over the $amount maximum — remove some items';
+  }
+
+  @override
+  String orderBelowMinimum(String amount) {
+    return 'The minimum order from this warehouse is $amount.';
+  }
+
+  @override
+  String orderAboveMaximum(String amount) {
+    return 'The maximum order from this warehouse is $amount.';
+  }
+
+  @override
+  String get loadingOrderLimits => 'Updating the order limits';
+
+  @override
+  String get returnableSectionTitle => 'Orders eligible for return';
+
+  @override
+  String get returnableSectionSubtitle =>
+      'You can request a return within 24 hours of delivery';
+
+  @override
+  String returnableDeliveredOnLabel(String date) {
+    return 'Delivered $date';
+  }
+
+  @override
+  String returnableOrderNumber(String number) {
+    return 'Order #$number';
+  }
+
+  @override
+  String returnableHoursLeft(String hours) {
+    return '${hours}h left';
+  }
+
+  @override
+  String get returnableEndingSoon => 'Ending soon';
+
+  @override
+  String get returnableRequestButton => 'Request a return';
+
+  @override
+  String returnableMoreItems(String count) {
+    return '+$count more';
+  }
+
+  @override
+  String get returnWindowExpired =>
+      'A return must be requested within 24 hours of delivery.';
+
+  @override
+  String get privacyPolicy => 'Privacy Policy';
+
+  @override
+  String privacyPolicyLastUpdated(String date) {
+    return 'Last updated: $date';
+  }
+
+  @override
+  String get complaintsTitle => 'Complaints';
+
+  @override
+  String get complaintsProfileSubtitle =>
+      'File a complaint about a warehouse and follow its status';
+
+  @override
+  String complaintsCountSubtitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count complaints',
+      one: '1 complaint',
+      zero: 'No complaints yet',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noComplaintsYet => 'You haven\'t filed any complaints yet.';
+
+  @override
+  String get noComplaintsYetHint =>
+      'If you run into a problem with a warehouse, you can file a complaint for the administration to review.';
+
+  @override
+  String get submitComplaintCta => 'Submit a complaint';
+
+  @override
+  String get submitComplaintTitle => 'Submit a complaint';
+
+  @override
+  String get submitComplaintButton => 'Submit complaint';
+
+  @override
+  String get complaintSubmittedMessage =>
+      'Your complaint has been submitted. The administration will review it.';
+
+  @override
+  String get complaintWarehouseLabel => 'Warehouse';
+
+  @override
+  String get complaintWarehouseHint =>
+      'Choose the warehouse this complaint is about';
+
+  @override
+  String get complaintSubjectLabel => 'Complaint subject';
+
+  @override
+  String get complaintSubjectHint => 'Summarize the issue in a short sentence';
+
+  @override
+  String get complaintDescriptionLabel => 'Complaint details';
+
+  @override
+  String get complaintDescriptionHint => 'Describe the problem in detail';
+
+  @override
+  String get complaintOrderNumberLabel => 'Related order number (optional)';
+
+  @override
+  String get complaintOrderNumberHint =>
+      'Enter the order number if this complaint is about an order';
+
+  @override
+  String get complaintExtraDetailsLabel => 'Additional details (optional)';
+
+  @override
+  String get complaintExtraDetailsHint =>
+      'Any other information that could help resolve the complaint';
+
+  @override
+  String get complaintFormFooterHint =>
+      'Your warehouse\'s information is attached to the complaint automatically.';
+
+  @override
+  String get complaintDetailTitle => 'Complaint details';
+
+  @override
+  String get complaintYourComplaintTitle => 'Your complaint';
+
+  @override
+  String get complaintResponseTitle => 'Response';
+
+  @override
+  String complaintNumberLabel(String number) {
+    return 'Complaint #$number';
+  }
+
+  @override
+  String complaintFiledOnLabel(String date) {
+    return 'Filed on $date';
+  }
+
+  @override
+  String complaintRelatedOrderLabel(String number) {
+    return 'Related order: #$number';
+  }
+
+  @override
+  String get complaintAboutWarehouseLabel => 'About this warehouse';
+
+  @override
+  String get complaintHasResponseHint => 'Reply received';
+
+  @override
+  String get complaintNoResponseYet =>
+      'The administration hasn\'t responded yet. You\'ll be notified when a reply arrives.';
+
+  @override
+  String get complaintAdminResponseLabel => 'Administration\'s response';
+
+  @override
+  String complaintRespondedOnLabel(String date) {
+    return 'Responded on $date';
+  }
+
+  @override
+  String complaintRespondedByLabel(String name) {
+    return 'Responded by $name';
+  }
+
+  @override
+  String get complaintStatusPending => 'Pending';
+
+  @override
+  String get complaintStatusInReview => 'In review';
+
+  @override
+  String get complaintStatusResolved => 'Resolved';
+
+  @override
+  String get complaintStatusClosed => 'Closed';
+
+  @override
+  String get errorComplaintWarehouseRequired =>
+      'Please choose the warehouse this complaint is about.';
+
+  @override
+  String get errorComplaintSubjectRequired =>
+      'Please enter a subject for the complaint.';
+
+  @override
+  String get errorComplaintDescriptionRequired =>
+      'Please describe the complaint.';
+
+  @override
+  String get errorComplaintOrderNotFound =>
+      'No order with that number was found for this warehouse.';
+
+  @override
+  String get errorComplaintTooLong =>
+      'One of the fields is longer than allowed. Please shorten it.';
+
+  @override
+  String get errorComplaintNotFound => 'This complaint could not be found.';
+
+  @override
+  String get errorComplaintContextMismatch =>
+      'This complaint can\'t be linked to that warehouse.';
+
+  @override
+  String get submitComplaintOnWarehouseTitle => 'Complaint about warehouse';
+
+  @override
+  String get submitComplaintAboutOrderTitle => 'Complaint about order';
+
+  @override
+  String get complaintContextGeneral => 'General complaint';
+
+  @override
+  String get complaintGeneralContextNote =>
+      'This isn\'t about a specific warehouse or order.';
+
+  @override
+  String get complaintOnWarehouseLabel => 'Complaint about';
+
+  @override
+  String get complaintAboutOrderLabel => 'Complaint about order';
+
+  @override
+  String complaintOrderWarehouseLine(String name) {
+    return 'Warehouse: $name';
+  }
+
+  @override
+  String get submitComplaintOnWarehouseCta =>
+      'File a complaint about this warehouse';
+
+  @override
+  String get submitComplaintAboutOrderCta =>
+      'File a complaint about this order';
+
+  @override
+  String get orderComplaintsSectionTitle => 'Complaints about this order';
+
+  @override
+  String get orderComplaintsEmptyPrompt =>
+      'Have a problem with this order? You can file a complaint and the administration will review it.';
+
+  @override
+  String get updateAvailable => 'New Update Available';
+
+  @override
+  String get updateAvailableMessage =>
+      'A new version of PharmaLink Demo is available. Update now to get the latest features and improvements.';
+
+  @override
+  String get updateRequired => 'Mandatory Update';
+
+  @override
+  String get updateRequiredMessage =>
+      'Your current version of PharmaLink Demo is no longer supported. Please update the application to continue.';
+
+  @override
+  String get updateNow => 'Update Now';
+
+  @override
+  String get later => 'Later';
+
+  @override
+  String get updateOpenStoreFailed =>
+      'Unable to open Google Play. Please try again.';
+
+  @override
+  String get deliverySealRequiredTitle => 'Confirm delivery';
+
+  @override
+  String get deliverySealRequiredMessage =>
+      'This warehouse asks for a photo of the shipment seal before the order is completed. Take a clear photo of the seal/stamp on the package.';
+
+  @override
+  String get takeSealPhoto => 'Add seal photo';
+
+  @override
+  String get retakeSealPhoto => 'Retake photo';
+
+  @override
+  String get confirmDeliveryButton => 'Confirm delivery';
+
+  @override
+  String get sealPhotoLabel => 'Delivery seal photo';
+
+  @override
+  String deliverySealConfirmedOn(String date) {
+    return 'Delivery confirmed on $date';
+  }
+
+  @override
+  String get errorDeliverySealPhotoRequired =>
+      'A seal photo is required to confirm delivery.';
+
+  @override
+  String get errorInvalidDeliverySealPhoto =>
+      'That file isn\'t a valid image. Please choose another photo.';
+
+  @override
+  String get errorOrderNotAwaitingDelivery =>
+      'This order isn\'t awaiting a delivery confirmation right now.';
+
+  @override
+  String get statementTitle => 'Account statement';
+
+  @override
+  String get statementEmpty => 'No activity yet.';
+
+  @override
+  String get statementOpening => 'Opening balance';
+
+  @override
+  String get statementCharges => 'Charged';
+
+  @override
+  String get statementPayments => 'Paid';
+
+  @override
+  String get statementReturnCredits => 'Returned';
+
+  @override
+  String get statementKindCharge => 'Order delivered';
+
+  @override
+  String get statementKindChargeReversal => 'Delivery reversed';
+
+  @override
+  String get statementKindPayment => 'Payment received';
+
+  @override
+  String get statementKindPaymentReversal => 'Payment reversed';
+
+  @override
+  String get statementKindReturnCredit => 'Return credited';
+
+  @override
+  String get statementKindReturnCreditReversal => 'Return credit reversed';
+
+  @override
+  String get statementKindManualCredit => 'Credit added';
+
+  @override
+  String get statementKindManualDebit => 'Charge added';
+
+  @override
+  String get statementKindOther => 'Adjustment';
+
+  @override
+  String statementInvoiceRef(String number) {
+    return 'Invoice INV-$number';
+  }
+
+  @override
+  String statementPaymentRef(String number) {
+    return 'Payment PAY-$number';
+  }
+
+  @override
+  String creditBalanceShort(String amount) {
+    return 'Credit: $amount';
+  }
+
+  @override
+  String get navOffers => 'Offers';
+
+  @override
+  String get offersAndAdsTitle => 'Offers & Ads';
+
+  @override
+  String promotionsCountSubtitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count running now',
+      one: '1 running now',
+      zero: 'Nothing running right now',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get promotionsAllTitle => 'All offers & packages';
+
+  @override
+  String get promotionsFilterAllTypes => 'All';
+
+  @override
+  String get promotionsFilterOffers => 'Offers';
+
+  @override
+  String get promotionsFilterPackages => 'Packages';
+
+  @override
+  String get promotionsAllWarehouses => 'All warehouses';
+
+  @override
+  String get promotionsWarehouseFilterTitle => 'Filter by warehouse';
+
+  @override
+  String get promotionsPackageBadge => 'Package';
+
+  @override
+  String get promotionsEmptyTitle => 'Nothing on offer right now';
+
+  @override
+  String get promotionsEmptyMessage =>
+      'Offers and packages from your warehouses will show up here.';
+
+  @override
+  String get promotionsNoFilterResults => 'Nothing matches these filters.';
+
+  @override
+  String get promotionsClearFilters => 'Clear filters';
+
+  @override
+  String get promotionsError => 'Offers couldn\'t be loaded.';
+
+  @override
+  String offerDiscountPercent(int percent) {
+    return '$percent% off';
+  }
+
+  @override
+  String offerEndsOn(String date) {
+    return 'Until $date';
+  }
+
+  @override
+  String get offerPermanent => 'Ongoing';
+
+  @override
+  String get addToCartFullButton => 'Add to cart';
+
+  @override
+  String get warehouseOffersTitle => 'Warehouse offers';
+
+  @override
+  String get discountCodeFieldLabel => 'Discount code';
+
+  @override
+  String get discountCodeHint => 'Enter a discount code';
+
+  @override
+  String get discountCodeApply => 'Apply';
+
+  @override
+  String get discountCodeRemove => 'Remove';
+
+  @override
+  String discountCodeApplied(String code) {
+    return 'Code $code applied';
+  }
+
+  @override
+  String discountCodeLine(String code) {
+    return 'Discount code ($code)';
+  }
+
+  @override
+  String get discountCodeUpdating => 'Updating the discount';
+
+  @override
+  String get discountCodeChangedTitle => 'Discount code changed';
+
+  @override
+  String discountCodeRemovedMessage(String reason) {
+    return '$reason The code was removed from your cart - check the total, then submit again.';
+  }
+
+  @override
+  String discountCodeEditedMessage(String code, String discount, String total) {
+    return 'The discount code $code changed. The discount is now $discount and the total $total.';
+  }
+
+  @override
+  String get errorDiscountCodeInvalid => 'This discount code is not valid.';
+
+  @override
+  String get errorDiscountCodeNotStarted =>
+      'This discount code is not active yet.';
+
+  @override
+  String get errorDiscountCodeExpired => 'This discount code has expired.';
+
+  @override
+  String get errorDiscountCodeLimitReached =>
+      'This discount code has reached its usage limit.';
+
+  @override
+  String get errorDiscountCodePharmacyLimitReached =>
+      'You have already used this code the maximum number of times.';
+
+  @override
+  String get errorDiscountCodeNotForPharmacy =>
+      'This code is not for your pharmacy.';
+
+  @override
+  String get errorDiscountCodeNotForWarehouse =>
+      'This code does not work on orders to this warehouse.';
+
+  @override
+  String get errorDiscountCodePendingApproval =>
+      'This discount code is still waiting for approval.';
+
+  @override
+  String get errorDiscountCodeStopped => 'This discount code has been stopped.';
+
+  @override
+  String get errorDiscountCodeEdited =>
+      'The terms of this discount code changed.';
+
+  @override
+  String get cartQuoteUnavailable => 'Couldn\'t work out the total.';
+}

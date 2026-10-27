@@ -110,7 +110,7 @@ async function freshAccount(overrides = {}) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-auth-security-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-auth-security-test' });
   registerSmsProvider('test-recorder', () => new RecordingSmsProvider());
   process.env.SMS_PROVIDER = 'test-recorder';
   // env.js already read the old value at require time, so point the resolver

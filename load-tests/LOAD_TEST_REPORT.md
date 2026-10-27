@@ -1,4 +1,4 @@
-# Feniq — Full-System Load & Stress Test Report
+# PharmaLink Demo — Full-System Load & Stress Test Report
 
 **Date:** 2026-08-28
 **Target:** local backend (`http://localhost:5000/api`), local MongoDB 7.0.34
@@ -40,7 +40,7 @@ A separate, non-capacity finding that matters more operationally: **the deployed
 | RAM | 15.9 GB total, 5.4 GB free at start |
 | OS | Windows 10 Pro 19045 |
 | Node.js | v24.14.0 |
-| MongoDB | 7.0.34, standalone `mongod` on `127.0.0.1:27017`, database `phoenix` |
+| MongoDB | 7.0.34, standalone `mongod` on `127.0.0.1:27017`, database `pharmalink_demo` |
 | Backend | Express 4.21, Mongoose 8.9, Socket.IO 4.8.3, single process, `NODE_ENV=development`, port 5000 |
 | Mongoose pool | `maxPoolSize` 100 (driver default; never configured in `config/db.js`) |
 | Load generator | k6 v2.2.0 **on the same machine** |
@@ -125,7 +125,7 @@ Measured separately, because each is a different kind of number:
 - **Uploads** — `POST /returns` (Cloudinary), at low concurrency by design.
 - **Catalog scaling** — every read endpoint at concurrency 1 against 200 / 1,000 / 5,000-product catalogs.
 
-**Scenario C note:** Feniq has no cart API. `lib/features/cart` holds the basket in client state and submits it as `items` on `POST /orders`, so "add to cart", "change quantity" and "remove item" generate no server traffic and cannot be load-tested as endpoints. The scenario models what the server actually sees: repeated catalog reads, then one order write. See `LOAD_TEST_GAPS.md`.
+**Scenario C note:** PharmaLink Demo has no cart API. `lib/features/cart` holds the basket in client state and submits it as `items` on `POST /orders`, so "add to cart", "change quantity" and "remove item" generate no server traffic and cannot be load-tested as endpoints. The scenario models what the server actually sees: repeated catalog reads, then one order write. See `LOAD_TEST_GAPS.md`.
 
 ### Rate limiting
 
@@ -372,7 +372,7 @@ Two findings had to be established before this could even be run, and both matte
 1. **There is no notification read API.** `Notification` documents are written on every order-status change and every broadcast, and `notification.model.js` carries a `{ userId, isRead }` index that only a list query would use — but no route exposes them, and the Flutter `Endpoints` class has no entry for one. The data is currently write-only.
 2. **FCM delivery is out of scope, correctly.** The test asserts that *no* user has a registered device token and refuses to run otherwise, so a load test can never push to a real device. Actual delivery is Firebase's to measure and needs a separate device/integration test.
 
-What Feniq owns is the fan-out. Broadcasting to **535 recipients**, three runs:
+What PharmaLink Demo owns is the fan-out. Broadcasting to **535 recipients**, three runs:
 
 | Run | HTTP time | Notifications written | Writes/s | ms per recipient |
 | ---: | ---: | ---: | ---: | ---: |
@@ -552,7 +552,7 @@ Two caveats that dominate any such estimate:
 
 ## Testing production
 
-**Production was not tested, deliberately.** The Flutter app defaults to `https://phoenix-1-p2qi.onrender.com/api`; that host was never contacted by this suite, and the seeder refuses any non-local MongoDB target.
+**Production was not tested, deliberately.** The Flutter app targets the local Android emulator API by default; remote hosts were not contacted by this suite, and the seeder refuses any non-local MongoDB target.
 
 If a production or staging test is wanted:
 

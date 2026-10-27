@@ -7,7 +7,17 @@
 
 # Environment variables (keep .env.example tracked)
 **/.env
+**/.env.*
 !**/.env.example
+**/serviceAccount.json
+**/google-services.json
+**/GoogleService-Info.plist
+**/*.jks
+**/*.keystore
+**/*.p12
+**/*.pfx
+**/key.properties
+**/firebase_options.dart
 
 # Build output
 **/build/
@@ -15,4 +25,3 @@
 # Flutter/Dart
 **/.dart_tool/
 .flutter_temp/
-backend/.env.example

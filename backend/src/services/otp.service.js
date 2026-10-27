@@ -44,7 +44,7 @@ function codesMatch(expected, supplied) {
 // default `console` provider prints the message instead of sending it, so the
 // whole flow is exercisable locally. See services/sms/smsProvider.js.
 async function deliverSms(phone, code) {
-  const message = `Your Feniq verification code is ${code}. It expires in ${EXPIRY_MINUTES} minutes.`;
+  const message = `Your PharmaLink Demo verification code is ${code}. It expires in ${EXPIRY_MINUTES} minutes.`;
   await getSmsProvider().send(phone, message);
 }
 

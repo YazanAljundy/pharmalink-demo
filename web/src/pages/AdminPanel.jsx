@@ -3,6 +3,7 @@ import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../auth/AuthContext';
 import { LanguageToggle } from '../components/LanguageToggle';
+import { DemoBadge } from '../components/DemoBadge';
 import { NavBadge } from '../components/NavBadge';
 import { useUnreadBadges } from '../realtime/UnreadBadgesProvider';
 import { AdminDashboardPage } from './AdminDashboardPage';
@@ -22,13 +23,14 @@ import { AdminExchangeRatePage } from './AdminExchangeRatePage';
 import { AdminNotificationsPage } from './AdminNotificationsPage';
 import { AdminComplaintsPage } from './AdminComplaintsPage';
 import { AdminComplaintDetailPage } from './AdminComplaintDetailPage';
+import { AdminLedgerPage } from './AdminLedgerPage';
 
 function navLinkClassName({ isActive }) {
   return `adm-nav-link${isActive ? ' active' : ''}`;
 }
 
 // Section 13c: the admin side of the shared React panel - same real-routes
-// sidebar shell as the warehouse side (Feniq Design import), under its own
+// sidebar shell as the warehouse side (PharmaLink Demo Design import), under its own
 // ".admin-shell" scope in index.css so restyling this can't touch
 // WarehousePanel.jsx's look, same guarantee in reverse.
 export function AdminPanel() {
@@ -41,6 +43,7 @@ export function AdminPanel() {
   const TABS = [
     { path: '/admin/dashboard', label: t('nav.dashboard') },
     { path: '/admin/accounts', label: t('nav.accounts') },
+    { path: '/admin/ledger', label: t('nav.ledger') },
     { path: '/admin/offers', label: t('nav.offers') },
     // Review queue for warehouse codes, the platform's own codes, every code.
     { path: '/admin/discount-codes', label: t('nav.discountCodes') },
@@ -78,7 +81,7 @@ export function AdminPanel() {
       />
       <aside className={`adm-sidebar${isSidebarOpen ? ' adm-sidebar-open' : ''}`}>
         <div className="adm-sidebar-header">
-          <img className="adm-sidebar-logo" src="/images/feniq-mark-dark.png" alt={t('nav.brandName')} />
+          <img className="adm-sidebar-logo" src="/images/demo-mark-dark.png" alt={t('nav.brandName')} />
           <div className="adm-sidebar-brand">{t('nav.brandName')}</div>
           <div className="adm-sidebar-subtitle">{t('nav.adminTitle')}</div>
         </div>
@@ -108,6 +111,7 @@ export function AdminPanel() {
             <div className="adm-topbar-title">{t('nav.adminTitle')}</div>
           </div>
           <div className="adm-topbar-actions">
+            <DemoBadge />
             <span className="user-name">{user?.name}</span>
             <LanguageToggle />
             <button className="adm-logout-btn" onClick={logout}>
@@ -120,6 +124,7 @@ export function AdminPanel() {
           <Routes>
             <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
             <Route path="/admin/accounts" element={<AccountsPage />} />
+            <Route path="/admin/ledger" element={<AdminLedgerPage />} />
             {/* Old bookmark - the section was renamed Pending Accounts -> Accounts. */}
             <Route path="/admin/pending-accounts" element={<Navigate to="/admin/accounts" replace />} />
             <Route path="/admin/offers" element={<AdminOffersPage />} />

@@ -30,7 +30,7 @@ async function run({ apply = false, log = () => {} } = {}) {
   // The identity key is built from the Arabic name - none may be missing.
   const catalogItemsWithoutNameAr = await requireArabicNames(db, { apply, log });
 
-  // Manufacturers: the English key the warehouse import resolves "GSK" by.
+  // Manufacturers: the English key the warehouse import resolves by.
   const manufacturerOps = [];
   for await (const manufacturer of manufacturersCollection.find({}, { projection: { nameEn: 1, enKey: 1 } })) {
     const enKey = keyOf(manufacturer.nameEn);

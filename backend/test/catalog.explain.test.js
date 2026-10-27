@@ -13,7 +13,7 @@ let results;
 let seeded;
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-catalog-explain-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-catalog-explain-test' });
   seeded = await seedCatalog({ warehouses: 3, productsPerWarehouse: 1500, catalogSize: 2000 });
   results = await explainCatalogQueries(seeded);
 });

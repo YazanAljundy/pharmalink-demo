@@ -18,7 +18,7 @@ const ADMIN_USER = new mongoose.Types.ObjectId();
 const DAY = 24 * 60 * 60 * 1000;
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-commission-pagination-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-commission-pagination-test' });
 });
 
 test.after(async () => {

@@ -7,6 +7,7 @@ import { usePaginatedData } from '../hooks/usePaginatedData';
 import { REALTIME_EVENTS, useRealtimeSync } from '../realtime/useRealtimeSync';
 import { AdvertisementsSubNav } from '../components/AdvertisementsSubNav';
 import { displayName } from '../utils/displayName';
+import { DEMO_IMAGE_FALLBACK, handleImageFallback } from '../utils/imageFallback';
 
 const PAGE_SIZE = 20;
 
@@ -229,9 +230,10 @@ function EditBannerModal({ banner, onClose, onSaved }) {
             ) : (
               <img
                 className="return-photo-thumb"
-                src={banner.imageUrl}
+                src={banner.imageUrl || DEMO_IMAGE_FALLBACK}
                 alt={banner.title}
                 style={{ width: 96, height: 96 }}
+                onError={handleImageFallback}
               />
             ))}
           <label>
@@ -421,14 +423,15 @@ export function AdminBannersPage() {
                         <tr key={banner.id}>
                           <td className="adm-num">{banner.bannerNumber}</td>
                           <td>
-                            {banner.imageUrl ? (
-                              banner.mediaType === 'video' ? (
-                                <video className="adm-table-thumb" src={banner.imageUrl} muted loop playsInline preload="metadata" />
-                              ) : (
-                                <img className="adm-table-thumb" src={banner.imageUrl} alt={banner.title} />
-                              )
+                            {banner.mediaType === 'video' && banner.imageUrl ? (
+                              <video className="adm-table-thumb" src={banner.imageUrl} muted loop playsInline preload="metadata" />
                             ) : (
-                              <span className="hint">{t('banners.admin.noImageYet')}</span>
+                              <img
+                                className="adm-table-thumb"
+                                src={banner.imageUrl || DEMO_IMAGE_FALLBACK}
+                                alt={banner.title}
+                                onError={handleImageFallback}
+                              />
                             )}
                           </td>
                           <td>

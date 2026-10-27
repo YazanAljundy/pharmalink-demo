@@ -4,7 +4,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import ar from './locales/ar/translation.json';
 import en from './locales/en/translation.json';
 
-const LANG_STORAGE_KEY = 'phoenix_lang';
+const LANG_STORAGE_KEY = 'pharmalink_demo_lang';
 
 i18n
   .use(LanguageDetector)

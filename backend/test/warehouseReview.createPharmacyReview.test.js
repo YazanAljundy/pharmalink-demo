@@ -38,7 +38,7 @@ async function deliver(order) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-pharmacy-review-save-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-pharmacy-review-save-test' });
   await ExchangeRate.create({ _id: 'singleton', usdToSyp: 10000, source: 'manual' });
 
   const [phUser, whUser] = await User.create([

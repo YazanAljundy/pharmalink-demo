@@ -1,4 +1,6 @@
 const cloudinary = require('../config/cloudinary');
+const env = require('../config/env');
+const { ApiError } = require('../utils/ApiError');
 
 // Uploads one file buffer to Cloudinary under `folder` (e.g. 'banners',
 // 'returns') and resolves to its permanent https delivery URL. Rejects on
@@ -7,6 +9,16 @@ const cloudinary = require('../config/cloudinary');
 // Cloudinary keeps an animated GIF's frames under the 'image' resource type
 // too) and 'video' only for an admin banner's video upload.
 function uploadMedia(fileBuffer, folder, resourceType = 'image') {
+  const { cloudName, apiKey, apiSecret } = env.cloudinary;
+  if (!cloudName || !apiKey || !apiSecret) {
+    return Promise.reject(
+      ApiError.serviceUnavailable(
+        'Image uploads are unavailable until Cloudinary is configured.',
+        'IMAGE_UPLOADS_UNAVAILABLE'
+      )
+    );
+  }
+
   return new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
       { folder, resource_type: resourceType },

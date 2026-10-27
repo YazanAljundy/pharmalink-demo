@@ -43,7 +43,7 @@ async function productsOf(manufacturerAr, options = {}) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-warehouse-manufacturers-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-warehouse-manufacturers-test' });
 
   const [whUser, otherWhUser] = await User.create([
     { name: 'WH', phone: '0942000601', role: 'warehouse', status: 'active' },

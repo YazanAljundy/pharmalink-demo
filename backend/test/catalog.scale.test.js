@@ -56,7 +56,7 @@ async function queriesFor(fn) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-catalog-scale-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-catalog-scale-test' });
   await syncIndexes(Product, ProductCatalog);
 
   const user = await User.create({ name: 'WH', phone: '0944000001', role: 'warehouse', status: 'active' });

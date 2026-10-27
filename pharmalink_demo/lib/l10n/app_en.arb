@@ -1,0 +1,969 @@
+{
+  "@@locale": "en",
+  "appName": "PharmaLink Demo",
+  "login": "Login",
+  "logout": "Logout",
+  "email": "Email",
+  "password": "Password",
+  "settings": "Settings",
+  "language": "Language",
+  "theme": "Theme",
+  "light": "Light",
+  "dark": "Dark",
+  "system": "System",
+  "save": "Save",
+  "cancel": "Cancel",
+  "welcome": "Welcome",
+  "home": "Home",
+  "profile": "Profile",
+  "registrationTitle": "Create your pharmacy account",
+  "registrationSubtitle": "Fill in the details below - your account is activated once the administration reviews your documents.",
+  "fullNameLabel": "Full name",
+  "fullNameHint": "e.g. Dr. Samer Halabi",
+  "pharmacyNameLabel": "Pharmacy name",
+  "pharmacyNameHint": "e.g. Al-Noor Pharmacy",
+  "phoneLabel": "Phone number",
+  "addressLabel": "Address",
+  "pickLocationHint": "Move the map to fine-tune the pin's position",
+  "resolvingAddressText": "Resolving address...",
+  "locationPermissionDeniedMessage": "Couldn't access your location - you can still drag the map manually.",
+  "addressNotResolvedYetMessage": "Please wait for the map to resolve an address, or adjust the pin's position.",
+  "useCurrentLocationTooltip": "My current location",
+  "areaTypeLabel": "Area type",
+  "areaTypeCity": "City",
+  "areaTypeCityRing": "City ring",
+  "areaTypeRural": "Rural",
+  "confirmPasswordLabel": "Confirm password",
+  "confirmPasswordHint": "Re-enter your password",
+  "passwordHint": "At least {min} characters",
+  "@passwordHint": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      }
+    }
+  },
+  "passwordTooShort": "Password must be at least 8 characters.",
+  "passwordMismatch": "Passwords do not match.",
+  "alreadyHaveAccountLink": "Already have an account? Log in with password",
+  "sendCodeButton": "Send verification code",
+  "createAccountButton": "Create account",
+  "termsAgreementLabel": "I agree to the Terms of Use and Privacy Policy.",
+  "termsAgreementRequiredError": "You must agree to the terms to continue.",
+  "passwordsMustMatchHint": "Both passwords must match.",
+  "passwordLoginTitle": "Log in with password",
+  "passwordLoginSubtitle": "Enter your phone number and password",
+  "backToRegistrationLink": "New here? Create an account",
+  "forgotPasswordSupportLink": "Forgot your password? Contact support on WhatsApp",
+  "forgotPasswordSupportMessage": "Hello, I would like to recover the password for my account. Pharmacy/warehouse name: ___ Registered phone number: ___",
+  "whatsAppUnavailable": "Couldn't open WhatsApp. Support number: {phone}",
+  "@whatsAppUnavailable": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "copyAction": "Copy",
+  "phoneCopied": "Number copied.",
+  "otpTitle": "Enter verification code",
+  "otpInstructionsPrefix": "Enter the 6-digit code sent to",
+  "otpCodeLabel": "Verification code",
+  "verifyButton": "Verify",
+  "resendCodeButton": "Didn't get the code? Resend",
+  "codeResent": "A new code has been sent.",
+  "approvalPendingTitle": "Your account is under review",
+  "approvalPendingMessage": "We're reviewing your registration. You'll be able to order as soon as it's approved.",
+  "approvalPendingMessageWithName": "We're currently reviewing {pharmacyName}'s documents. You'll be able to order as soon as it's approved.",
+  "@approvalPendingMessageWithName": {
+    "placeholders": {
+      "pharmacyName": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalPendingBlockedTitle": "Account blocked",
+  "approvalPendingBlockedMessage": "This account has been blocked. Please contact support for help.",
+  "approvalChecklistReceived": "Data and documents received",
+  "approvalChecklistReview": "Under administration review",
+  "approvalChecklistActivate": "Account activation and ordering",
+  "refreshStatusButton": "Check status",
+  "contactSupportButton": "Contact support",
+  "contactSupportDialogTitle": "Contact support",
+  "contactSupportDialogMessage": "For help with your account, please contact Al-Najah Warehouse support.",
+  "fieldRequired": "This field is required.",
+  "invalidPhoneNumber": "Please enter a valid phone number.",
+  "invalidOtpCode": "Please enter the 6-digit code.",
+  "close": "Close",
+  "errorState": "Something went wrong.",
+  "errorNetwork": "Unable to connect to the internet. Check your connection and try again.",
+  "errorTimeout": "The request took longer than expected. Please try again.",
+  "errorServer": "A server error occurred. Please try again later.",
+  "errorNotFound": "The requested data could not be found.",
+  "errorSessionExpired": "Your session has expired. Please sign in again.",
+  "errorNoPermission": "You don't have permission to perform this action.",
+  "noMoreResultsText": "No more results",
+  "retryButton": "Retry",
+  "warehouseSelectionTitle": "Choose a warehouse",
+  "selectWarehouseButton": "Select",
+  "noWarehousesAvailable": "No warehouses available yet.",
+  "warehouseSelectedMessage": "{name} selected. The product catalog is coming soon.",
+  "@warehouseSelectedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "warehousesAvailableSubtitle": "{count, plural, zero{No warehouses available for your pharmacy} one{1 warehouse available for your pharmacy} other{{count} warehouses available for your pharmacy}}",
+  "@warehousesAvailableSubtitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "searchWarehouseHint": "Search by warehouse or city",
+  "noSearchResultsFound": "No results match your search.",
+  "warehouseProfileButtonLabel": "Profile",
+  "warehousesScopeMyCity": "My city",
+  "warehousesScopeAllCities": "All cities",
+  "viewAllCitiesButton": "View all cities",
+  "noWarehousesInYourCity": "No warehouses in your city",
+  "noWarehousesInYourCitySubtitle": "Try broadening the search to other cities.",
+  "noManufacturersFound": "No manufacturers available for this warehouse.",
+  "manufacturersCountSubtitle": "{count, plural, zero{No manufacturers} one{1 manufacturer} other{{count} manufacturers}}",
+  "@manufacturersCountSubtitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "companyDiscountValue": "Company Discount: {percent}%",
+  "@companyDiscountValue": {
+    "description": "The warehouse's standing discount for a manufacturer, shown on its company card. Pre-formatted by the caller so the exact stored figure is preserved: 0 shows as 0%, a whole number as e.g. 15%, a fractional one as e.g. 25.5%.",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "warehouseProfileTooltip": "Warehouse info",
+  "deliveryInfoTitle": "Delivery Information",
+  "deliveryHoursValue": "From {start} to {end}",
+  "@deliveryHoursValue": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "deliveryHoursNotSet": "Not specified",
+  "deliveryTypeSelfLabel": "Delivered by the warehouse itself",
+  "deliveryTypeThirdPartyLabel": "Delivered by a third-party courier",
+  "deliveryInfoDisclaimer": "This information is for display only and doesn't prevent placing an order.",
+  "warehouseReviewsTitle": "Reviews",
+  "noWarehouseReviewsYet": "No reviews yet.",
+  "anonymousReviewerName": "User",
+  "browseWarehouseProductsButton": "Browse this warehouse's products",
+  "searchProductsHint": "Search by name or manufacturer",
+  "searchWarehouseProductsHint": "Search all of this warehouse's products",
+  "addToCartButton": "Add",
+  "unavailableLabel": "Unavailable",
+  "offerBadgeLabel": "Offer",
+  "toggleDensityTooltip": "Toggle view",
+  "noProductsFound": "No products found.",
+  "catalogItemsCountSubtitle": "{count, plural, zero{No items} one{1 item} other{{count} items}}",
+  "@catalogItemsCountSubtitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "currencySuffix": "SYP",
+  "addedToCartMessage": "{name} added to cart.",
+  "@addedToCartMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "cartTitle": "Cart",
+  "cartEmptyMessage": "Your cart is empty.",
+  "cartEmptyHint": "Choose a warehouse and start adding medicines to your cart.",
+  "browseCatalogButton": "Browse products",
+  "quantityLabel": "Quantity",
+  "decreaseQuantityLabel": "Decrease quantity",
+  "increaseQuantityLabel": "Increase quantity",
+  "notesLabel": "Notes (optional)",
+  "subtotalLabel": "Subtotal",
+  "submitOrderButton": "Submit order",
+  "submitOrderTitle": "Submit order?",
+  "submitOrderConfirmation": "Send this order to {warehouseName}?",
+  "@submitOrderConfirmation": {
+    "placeholders": {
+      "warehouseName": {
+        "type": "String"
+      }
+    }
+  },
+  "orderSubmittedTitle": "Order submitted",
+  "orderSubmittedMessage": "Your order #{orderNumber} has been submitted.",
+  "@orderSubmittedMessage": {
+    "placeholders": {
+      "orderNumber": {
+        "type": "String"
+      }
+    }
+  },
+  "removeItemTitle": "Remove item?",
+  "removeItemConfirmation": "Remove {name} from your cart?",
+  "@removeItemConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "removeButton": "Remove",
+  "clearCartButton": "Clear cart",
+  "clearCartTitle": "Clear cart?",
+  "clearCartConfirmation": "Are you sure you want to clear all the contents of your cart?",
+  "cartConflictTitle": "Start a new cart?",
+  "cartConflictMessage": "Your cart has items from {name}. Adding this item will clear it and start a new order.",
+  "@cartConflictMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "cartConflictConfirmButton": "Start new cart",
+  "cartIconTooltip": "Cart",
+  "reorderButton": "Reorder",
+  "addProductButton": "Add product",
+  "reorderReplaceCartTitle": "Replace your cart?",
+  "reorderReplaceCartMessage": "Your current cart will be replaced with the items from this order. You can still edit everything before checkout.",
+  "reorderReplaceCartConfirm": "Replace cart",
+  "reorderUnavailableTitle": "Some items are unavailable",
+  "reorderNoItemsMessage": "None of this order's products are available from this warehouse anymore.",
+  "reorderSomeItemsUnavailable": "These items are no longer sold by this warehouse and were not added: {names}",
+  "@reorderSomeItemsUnavailable": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "advertisementsSectionTitle": "Special packages",
+  "advertisementPackageTotal": "Package price",
+  "advertisementSavingPercent": "Save {percent}%",
+  "@advertisementSavingPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "advertisementProductCount": "{count, plural, =1{1 product} other{{count} products}}",
+  "@advertisementProductCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "advertisementItemQuantity": "× {count}",
+  "@advertisementItemQuantity": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "packageBadge": "Package",
+  "packageCopiesLabel": "package copies",
+  "advertisementDiscountLabel": "Package discount",
+  "advertisementTotalToPay": "Total to pay",
+  "advertisementAddToCartButton": "Add package to cart",
+  "advertisementReplaceCartTitle": "Replace your cart?",
+  "advertisementReplaceCartMessage": "Your current cart will be replaced with this package. You can still edit everything before checkout.",
+  "advertisementReplaceCartConfirm": "Replace cart",
+  "advertisementUnavailableTitle": "Package unavailable",
+  "advertisementUnavailableMessage": "This package is no longer available. It may have expired or been withdrawn.",
+  "packageUnavailableBanner": "This package is no longer available. You won't be able to place the order with it.",
+  "packageUnavailableCheckoutMessage": "No longer available: {names}. The order wasn't placed — remove it from your cart to continue.",
+  "@packageUnavailableCheckoutMessage": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "errorPackageUnavailable": "This package is no longer available.",
+  "errorIdempotencyKeyReused": "An earlier attempt already placed an order from this cart before you changed it. Check My Orders, then submit again to place your updated cart as a new order.",
+  "removeUnavailablePackagesButton": "Remove from cart",
+  "advertisementIncompleteMessage": "Some products in this package are no longer sold by this warehouse, so it can't be added: {names}",
+  "@advertisementIncompleteMessage": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "advertisementPackageBrokenMessage": "Removing a product ends the package price. The remaining items are now priced normally.",
+  "advertisementsLoading": "Loading packages...",
+  "advertisementsEmpty": "No packages are running right now.",
+  "advertisementsError": "Packages couldn't be loaded.",
+  "notificationsTitle": "Notifications",
+  "noNotificationsYet": "No notifications yet",
+  "noNotificationsYetHint": "Order updates and offers will show up here.",
+  "markAllAsRead": "Mark all as read",
+  "errorInvalidRequest": "Something about this request wasn't valid. Please try again.",
+  "errorInvalidCredentials": "The phone number or password is incorrect.",
+  "errorAccountBlocked": "This account has been blocked. Please contact support.",
+  "errorAccountNotFound": "No account found for this phone number. Please create one first.",
+  "errorPharmacyNotFound": "We couldn't find your pharmacy profile. Please contact support.",
+  "errorWarehouseNotFound": "This warehouse is no longer available.",
+  "errorExchangeRateUnavailable": "Prices can't be confirmed right now. Please try again shortly.",
+  "errorStockCheckFailedGeneric": "Some items in your cart are no longer available as requested.",
+  "errorProductUnavailable": "{name} is currently unavailable.",
+  "@errorProductUnavailable": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "errorProductNotFound": "{name} is no longer available.",
+  "@errorProductNotFound": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "errorPriceChangedGeneric": "Some prices in your cart have changed.",
+  "errorBonusChangedGeneric": "The bonus changed on some items in your cart.",
+  "bonusValue": "Bonus {tiers}",
+  "@bonusValue": { "placeholders": { "tiers": { "type": "String" } } },
+  "freeUnits": "+{count} free",
+  "@freeUnits": { "placeholders": { "count": { "type": "int" } } },
+  "noBonus": "No bonus",
+  "bonusChangedLine": "{name}: {bonus}",
+  "@bonusChangedLine": { "placeholders": { "name": { "type": "String" }, "bonus": { "type": "String" } } },
+  "errorPriceChanged": "{name} is now {newPrice} (was {oldPrice}).",
+  "@errorPriceChanged": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "newPrice": {
+        "type": "String"
+      },
+      "oldPrice": {
+        "type": "String"
+      }
+    }
+  },
+  "priceChangedConfirmHint": "Submit again to place the order at the new prices.",
+  "errorRateChangedTitle": "The exchange rate changed",
+  "rateChangedTotals": "Your order comes to {newTotal} at the new rate, instead of {oldTotal}.",
+  "@rateChangedTotals": {
+    "placeholders": {
+      "newTotal": {
+        "type": "String"
+      },
+      "oldTotal": {
+        "type": "String"
+      }
+    }
+  },
+  "rateChangedConfirmHint": "Submit again to place the order at the new rate.",
+  "thisItemFallback": "This item",
+  "loading": "Loading...",
+  "orderTrackingTitle": "Order Tracking",
+  "orderNumberLabel": "Order #{number}",
+  "@orderNumberLabel": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "stageSent": "Sent",
+  "stageUnderReview": "Waiting for Approval",
+  "@stageUnderReview": {
+    "description": "Order status label for order.status == 'confirmed'. The order has reached the warehouse and is waiting for it to accept/prepare it."
+  },
+  "stagePreparing": "Preparing",
+  "stageOutForDelivery": "On the Way",
+  "@stageOutForDelivery": {
+    "description": "Order status label for order.status == 'out_for_delivery'. The order has left the warehouse and is being delivered."
+  },
+  "stageDelivered": "Delivered",
+  "stageCancelled": "Cancelled",
+  "stageModified": "Order modified",
+  "stageUnderReviewDesc": "Your order has reached the warehouse",
+  "stagePreparingDesc": "The warehouse is preparing your order",
+  "stageOutForDeliveryDesc": "Your order has left the warehouse",
+  "stageDeliveredDesc": "You received the order",
+  "statusHistoryTitle": "Status history",
+  "lastUpdatedLabel": "Last updated: {time}",
+  "@lastUpdatedLabel": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "cancelOrderTitle": "Cancel order?",
+  "cancelOrderConfirmation": "Are you sure you want to cancel this order?",
+  "cancelOrderButton": "Cancel order",
+  "orderCancelledMessage": "This order has been cancelled.",
+  "contactWarehouseForChanges": "For any changes now, please contact the warehouse directly.",
+  "orderModifiedBannerTitle": "This order was modified by the warehouse",
+  "errorOrderNotFound": "This order could not be found.",
+  "errorOrderNotCancellable": "This order can no longer be cancelled from the app.",
+  "myOrdersTitle": "My Orders",
+  "myOrdersCountSubtitle": "{count, plural, zero{No orders yet} one{1 order · pull down to refresh} other{{count} orders · pull down to refresh}}",
+  "@myOrdersCountSubtitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "refreshTooltip": "Refresh",
+  "noOrdersYet": "You haven't placed any orders yet.",
+  "browseWarehousesButton": "Browse warehouses",
+  "invoiceTitle": "Order items",
+  "discountLabel": "Discount",
+  "invoiceTotalLabel": "Total",
+  "youSavedLabel": "💰 You saved {amount}",
+  "@youSavedLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "totalSavingsLabel": "💰 Total savings: {amount} (including offer discounts and manufacturer discount)",
+  "@totalSavingsLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "returnsTitle": "Returns",
+  "returnsCountSubtitle": "{count, plural, zero{No return requests} one{1 return request} other{{count} return requests}}",
+  "@returnsCountSubtitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noReturnsYet": "You haven't requested any returns yet.",
+  "noReturnsYetHint": "Once you request a return on a delivered order, it will show up here so you can follow its status.",
+  "noReturnableOrdersTitle": "No orders eligible for return",
+  "myReturnsListSectionTitle": "Your return requests",
+  "newReturnRequestButton": "New return request",
+  "selectOrderForReturnTitle": "Select the order you want to return items from",
+  "noEligibleOrdersForReturn": "No delivered orders are currently eligible for a return.",
+  "requestReturnTitle": "Request a return",
+  "requestReturnButton": "Submit return request",
+  "requestReturnAction": "Request Return",
+  "accountHistoryTitle": "Account History",
+  "moneySavedTitle": "Money Saved",
+  "fromDiscountsLabel": "From Discounts",
+  "debtsTitle": "Debts",
+  "outstandingBalanceLabel": "Outstanding Balance",
+  "viewReturnsLabel": "View Returns",
+  "returnsRequestsShort": "{count, plural, zero{No requests} one{1 request} other{{count} requests}}",
+  "@returnsRequestsShort": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "returnQuantityLabel": "Quantity",
+  "returnReasonLabel": "Reason",
+  "reasonDamaged": "Damaged",
+  "reasonWrongItem": "Wrong item",
+  "reasonOther": "Other",
+  "multipleReasonsLabel": "Multiple reasons",
+  "customReasonLabel": "Please specify",
+  "returnSubmittedTitle": "Return requested",
+  "returnSubmittedMessage": "Your return request has been submitted. The warehouse will review it.",
+  "returnStatusPending": "Pending review",
+  "returnStatusApproved": "Approved",
+  "returnStatusRejected": "Rejected",
+  "returnPickItemsLabel": "Select the items you're returning",
+  "returnRejectionNoteLabel": "Rejection reason",
+  "returnCreditedLabel": "Credited to your account: {amount}",
+  "@returnCreditedLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "editButton": "Edit",
+  "deleteReturnButton": "Delete",
+  "deleteReturnConfirmTitle": "Delete return request?",
+  "deleteReturnConfirmMessage": "Are you sure you want to delete this return request?",
+  "returnApprovedBanner": "Return approved — your account has been credited",
+  "returnPendingReviewBanner": "Return submitted, awaiting the warehouse's review",
+  "returnRejectedBanner": "Return rejected",
+  "errorOrderNotDelivered": "This order hasn't been delivered yet.",
+  "errorOrderNotReorderable": "Only delivered orders can be reordered.",
+  "errorOrderItemNotFound": "This item could not be found in the order.",
+  "errorReturnQuantityExceeded": "The return quantity exceeds what's available to return for this item.",
+  "errorCustomReasonRequired": "Please describe the reason for this return.",
+  "errorTooManyReturnPhotos": "You can attach up to 5 photos.",
+  "errorInvalidReturnPhoto": "One of the attached photos is not a valid image.",
+  "errorReturnAlreadyExists": "A return request has already been submitted for this order.",
+  "errorReturnNotEditable": "This return request has already been decided and can no longer be changed.",
+  "errorReturnItemsEmpty": "Please select at least one item to return.",
+  "errorDuplicateReturnItem": "Each item can only appear once in a return request.",
+  "errorRejectionNoteRequired": "Please explain why this return is being rejected.",
+  "returnPhotosLabel": "Photos (optional)",
+  "returnPhotosHint": "Optionally add photos of the item to help the warehouse verify the reason",
+  "addPhotoButton": "Add photo",
+  "cameraOption": "Take a photo",
+  "galleryOption": "Choose from gallery",
+  "permissionRequiredTitle": "Permission needed",
+  "cameraPermissionDenied": "Camera access is needed to take a photo. You can enable it in Settings.",
+  "openSettings": "Open Settings",
+  "navWarehouses": "Warehouses",
+  "profileTitle": "Profile",
+  "personalInfoTitle": "Personal information",
+  "cityLabel": "City",
+  "logoutConfirmTitle": "Log out?",
+  "logoutConfirmMessage": "Are you sure you want to log out?",
+  "dangerZoneTitle": "Danger zone",
+  "deleteAccount": "Delete account",
+  "deleteAccountSubtitle": "Permanently delete your account",
+  "deleteAccountConfirmTitle": "Delete your account permanently?",
+  "deleteAccountConfirmMessage": "Your account will be deleted permanently and you will not be able to sign in again. This cannot be undone.\n\nYour past orders and financial records will remain in the records of the warehouses you dealt with.\n\nEnter your password to confirm.",
+  "deleteAccountPasswordLabel": "Password",
+  "deleteAccountPasswordRequired": "Enter your password to continue.",
+  "deleteAccountConfirmAction": "Delete permanently",
+  "deleteAccountSuccess": "Your account has been deleted.",
+  "errorPhoneAlreadyRegistered": "An account already exists for this phone number. Please sign in instead.",
+  "errorInvalidCurrentPassword": "That password is incorrect.",
+  "yourRatingTitle": "Your rating",
+  "ratingsTitle": "Ratings",
+  "viewRatingsLabel": "View Ratings",
+  "noRatingsYet": "No warehouse has rated you yet.",
+  "ratingSummary": "{average} average ({count} ratings)",
+  "@ratingSummary": {
+    "placeholders": {
+      "average": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "myDebtsTitle": "My Debts",
+  "noDebtsYet": "No debts right now.",
+  "totalDebtsLabel": "Total debts",
+  "totalOrdersLabel": "Total orders",
+  "totalPaidLabel": "Total paid",
+  "currentBalanceLabel": "Current balance",
+  "creditBalanceLabel": "Credit balance",
+  "deliveredOrdersTitle": "Delivered orders",
+  "paymentsTitle": "Payments",
+  "noPaymentsYet": "No payments recorded yet.",
+  "rateWarehouseTitle": "Rate the warehouse",
+  "rateWarehouseCommentLabel": "Comment (optional)",
+  "submitReviewButton": "Submit rating",
+  "submitReviewConfirmTitle": "Submit rating?",
+  "submitReviewConfirmMessage": "You won't be able to change this rating after sending it. Continue?",
+  "reviewThankYouTitle": "Thanks — you rated this order {rating} stars",
+  "@reviewThankYouTitle": {
+    "placeholders": {
+      "rating": {
+        "type": "String"
+      }
+    }
+  },
+  "errorAlreadyReviewed": "This order has already been rated.",
+  "minOrderLabel": "Minimum order: {amount}",
+  "maxOrderLabel": "Maximum order: {amount}",
+  "addMoreToReachMinimum": "Add {amount} more to reach the minimum",
+  "removeToMeetMaximum": "Over the {amount} maximum — remove some items",
+  "orderBelowMinimum": "The minimum order from this warehouse is {amount}.",
+  "orderAboveMaximum": "The maximum order from this warehouse is {amount}.",
+  "loadingOrderLimits": "Updating the order limits",
+  "@minOrderLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@maxOrderLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@addMoreToReachMinimum": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@removeToMeetMaximum": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@orderBelowMinimum": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@orderAboveMaximum": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "returnableSectionTitle": "Orders eligible for return",
+  "returnableSectionSubtitle": "You can request a return within 24 hours of delivery",
+  "returnableDeliveredOnLabel": "Delivered {date}",
+  "@returnableDeliveredOnLabel": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "returnableOrderNumber": "Order #{number}",
+  "returnableHoursLeft": "{hours}h left",
+  "returnableEndingSoon": "Ending soon",
+  "returnableRequestButton": "Request a return",
+  "returnableMoreItems": "+{count} more",
+  "returnWindowExpired": "A return must be requested within 24 hours of delivery.",
+  "privacyPolicy": "Privacy Policy",
+  "privacyPolicyLastUpdated": "Last updated: {date}",
+  "@privacyPolicyLastUpdated": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@returnableOrderNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "@returnableHoursLeft": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "@returnableMoreItems": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "complaintsTitle": "Complaints",
+  "complaintsProfileSubtitle": "File a complaint about a warehouse and follow its status",
+  "complaintsCountSubtitle": "{count, plural, zero{No complaints yet} one{1 complaint} other{{count} complaints}}",
+  "@complaintsCountSubtitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noComplaintsYet": "You haven't filed any complaints yet.",
+  "noComplaintsYetHint": "If you run into a problem with a warehouse, you can file a complaint for the administration to review.",
+  "submitComplaintCta": "Submit a complaint",
+  "submitComplaintTitle": "Submit a complaint",
+  "submitComplaintButton": "Submit complaint",
+  "complaintSubmittedMessage": "Your complaint has been submitted. The administration will review it.",
+  "complaintWarehouseLabel": "Warehouse",
+  "complaintWarehouseHint": "Choose the warehouse this complaint is about",
+  "complaintSubjectLabel": "Complaint subject",
+  "complaintSubjectHint": "Summarize the issue in a short sentence",
+  "complaintDescriptionLabel": "Complaint details",
+  "complaintDescriptionHint": "Describe the problem in detail",
+  "complaintOrderNumberLabel": "Related order number (optional)",
+  "complaintOrderNumberHint": "Enter the order number if this complaint is about an order",
+  "complaintExtraDetailsLabel": "Additional details (optional)",
+  "complaintExtraDetailsHint": "Any other information that could help resolve the complaint",
+  "complaintFormFooterHint": "Your warehouse's information is attached to the complaint automatically.",
+  "complaintDetailTitle": "Complaint details",
+  "complaintYourComplaintTitle": "Your complaint",
+  "complaintResponseTitle": "Response",
+  "complaintNumberLabel": "Complaint #{number}",
+  "@complaintNumberLabel": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "complaintFiledOnLabel": "Filed on {date}",
+  "@complaintFiledOnLabel": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "complaintRelatedOrderLabel": "Related order: #{number}",
+  "@complaintRelatedOrderLabel": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "complaintAboutWarehouseLabel": "About this warehouse",
+  "complaintHasResponseHint": "Reply received",
+  "complaintNoResponseYet": "The administration hasn't responded yet. You'll be notified when a reply arrives.",
+  "complaintAdminResponseLabel": "Administration's response",
+  "complaintRespondedOnLabel": "Responded on {date}",
+  "@complaintRespondedOnLabel": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "complaintRespondedByLabel": "Responded by {name}",
+  "@complaintRespondedByLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "complaintStatusPending": "Pending",
+  "complaintStatusInReview": "In review",
+  "complaintStatusResolved": "Resolved",
+  "complaintStatusClosed": "Closed",
+  "errorComplaintWarehouseRequired": "Please choose the warehouse this complaint is about.",
+  "errorComplaintSubjectRequired": "Please enter a subject for the complaint.",
+  "errorComplaintDescriptionRequired": "Please describe the complaint.",
+  "errorComplaintOrderNotFound": "No order with that number was found for this warehouse.",
+  "errorComplaintTooLong": "One of the fields is longer than allowed. Please shorten it.",
+  "errorComplaintNotFound": "This complaint could not be found.",
+  "errorComplaintContextMismatch": "This complaint can't be linked to that warehouse.",
+  "submitComplaintOnWarehouseTitle": "Complaint about warehouse",
+  "submitComplaintAboutOrderTitle": "Complaint about order",
+  "complaintContextGeneral": "General complaint",
+  "complaintGeneralContextNote": "This isn't about a specific warehouse or order.",
+  "complaintOnWarehouseLabel": "Complaint about",
+  "complaintAboutOrderLabel": "Complaint about order",
+  "complaintOrderWarehouseLine": "Warehouse: {name}",
+  "@complaintOrderWarehouseLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "submitComplaintOnWarehouseCta": "File a complaint about this warehouse",
+  "submitComplaintAboutOrderCta": "File a complaint about this order",
+  "orderComplaintsSectionTitle": "Complaints about this order",
+  "orderComplaintsEmptyPrompt": "Have a problem with this order? You can file a complaint and the administration will review it.",
+  "updateAvailable": "New Update Available",
+  "updateAvailableMessage": "A new version of PharmaLink Demo is available. Update now to get the latest features and improvements.",
+  "updateRequired": "Mandatory Update",
+  "updateRequiredMessage": "Your current version of PharmaLink Demo is no longer supported. Please update the application to continue.",
+  "updateNow": "Update Now",
+  "later": "Later",
+  "updateOpenStoreFailed": "Unable to open Google Play. Please try again.",
+  "deliverySealRequiredTitle": "Confirm delivery",
+  "deliverySealRequiredMessage": "This warehouse asks for a photo of the shipment seal before the order is completed. Take a clear photo of the seal/stamp on the package.",
+  "takeSealPhoto": "Add seal photo",
+  "retakeSealPhoto": "Retake photo",
+  "confirmDeliveryButton": "Confirm delivery",
+  "sealPhotoLabel": "Delivery seal photo",
+  "deliverySealConfirmedOn": "Delivery confirmed on {date}",
+  "@deliverySealConfirmedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "errorDeliverySealPhotoRequired": "A seal photo is required to confirm delivery.",
+  "errorInvalidDeliverySealPhoto": "That file isn't a valid image. Please choose another photo.",
+  "errorOrderNotAwaitingDelivery": "This order isn't awaiting a delivery confirmation right now.",
+  "statementTitle": "Account statement",
+  "statementEmpty": "No activity yet.",
+  "statementOpening": "Opening balance",
+  "statementCharges": "Charged",
+  "statementPayments": "Paid",
+  "statementReturnCredits": "Returned",
+  "statementKindCharge": "Order delivered",
+  "statementKindChargeReversal": "Delivery reversed",
+  "statementKindPayment": "Payment received",
+  "statementKindPaymentReversal": "Payment reversed",
+  "statementKindReturnCredit": "Return credited",
+  "statementKindReturnCreditReversal": "Return credit reversed",
+  "statementKindManualCredit": "Credit added",
+  "statementKindManualDebit": "Charge added",
+  "statementKindOther": "Adjustment",
+  "statementInvoiceRef": "Invoice INV-{number}",
+  "@statementInvoiceRef": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "statementPaymentRef": "Payment PAY-{number}",
+  "@statementPaymentRef": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "creditBalanceShort": "Credit: {amount}",
+  "@creditBalanceShort": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "navOffers": "Offers",
+  "@navOffers": {
+    "description": "Bottom-navigation label for the Offers & Ads tab. Deliberately shorter than the screen's own title (offersAndAdsTitle) so it fits a five-tab bar in both languages, matching the app's other one-word tab labels."
+  },
+  "offersAndAdsTitle": "Offers & Ads",
+  "promotionsCountSubtitle": "{count, plural, zero{Nothing running right now} one{1 running now} other{{count} running now}}",
+  "@promotionsCountSubtitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "promotionsAllTitle": "All offers & packages",
+  "promotionsFilterAllTypes": "All",
+  "promotionsFilterOffers": "Offers",
+  "promotionsFilterPackages": "Packages",
+  "promotionsAllWarehouses": "All warehouses",
+  "promotionsWarehouseFilterTitle": "Filter by warehouse",
+  "promotionsPackageBadge": "Package",
+  "promotionsEmptyTitle": "Nothing on offer right now",
+  "promotionsEmptyMessage": "Offers and packages from your warehouses will show up here.",
+  "promotionsNoFilterResults": "Nothing matches these filters.",
+  "promotionsClearFilters": "Clear filters",
+  "promotionsError": "Offers couldn't be loaded.",
+  "offerDiscountPercent": "{percent}% off",
+  "@offerDiscountPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "offerEndsOn": "Until {date}",
+  "@offerEndsOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "offerPermanent": "Ongoing",
+  "addToCartFullButton": "Add to cart",
+  "@addToCartFullButton": {
+    "description": "The add button on a catalog list row, which used to be a bare + icon. The grid tile and the quantity sheet keep the shorter addToCartButton."
+  },
+  "warehouseOffersTitle": "Warehouse offers",
+  "@warehouseOffersTitle": {
+    "description": "Title of the screen a tapped Offer card on the Offers & Ads tab opens: the offers of that offer's own warehouse."
+  },
+  "discountCodeFieldLabel": "Discount code",
+  "discountCodeHint": "Enter a discount code",
+  "discountCodeApply": "Apply",
+  "discountCodeRemove": "Remove",
+  "discountCodeApplied": "Code {code} applied",
+  "@discountCodeApplied": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "discountCodeLine": "Discount code ({code})",
+  "@discountCodeLine": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "discountCodeUpdating": "Updating the discount",
+  "discountCodeChangedTitle": "Discount code changed",
+  "discountCodeRemovedMessage": "{reason} The code was removed from your cart - check the total, then submit again.",
+  "@discountCodeRemovedMessage": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "discountCodeEditedMessage": "The discount code {code} changed. The discount is now {discount} and the total {total}.",
+  "@discountCodeEditedMessage": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "discount": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "errorDiscountCodeInvalid": "This discount code is not valid.",
+  "errorDiscountCodeNotStarted": "This discount code is not active yet.",
+  "errorDiscountCodeExpired": "This discount code has expired.",
+  "errorDiscountCodeLimitReached": "This discount code has reached its usage limit.",
+  "errorDiscountCodePharmacyLimitReached": "You have already used this code the maximum number of times.",
+  "errorDiscountCodeNotForPharmacy": "This code is not for your pharmacy.",
+  "errorDiscountCodeNotForWarehouse": "This code does not work on orders to this warehouse.",
+  "errorDiscountCodePendingApproval": "This discount code is still waiting for approval.",
+  "errorDiscountCodeStopped": "This discount code has been stopped.",
+  "errorDiscountCodeEdited": "The terms of this discount code changed.",
+  "cartQuoteUnavailable": "Couldn't work out the total."
+}

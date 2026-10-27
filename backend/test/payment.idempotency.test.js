@@ -131,7 +131,7 @@ async function giveTradingRelationship(pharmacyId, warehouseId, chargeSyp) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-payment-idempotency-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-payment-idempotency-test' });
   // The unique idempotencyKey index is what the race test leans on, and every
   // payment is a transactional write.
   await syncIndexes(Payment, LedgerEntry, LedgerAccount);

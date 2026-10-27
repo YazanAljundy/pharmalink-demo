@@ -48,7 +48,7 @@ async function makeWarehouse() {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-manufacturer-entity-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-manufacturer-entity-test' });
   await syncIndexes(Manufacturer, ProductCatalog, Product, ManufacturerDiscount, WarehouseManufacturer);
 });
 

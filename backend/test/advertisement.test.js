@@ -62,7 +62,7 @@ async function makeProduct(key, warehouseId, nameEn, nameAr, priceUsd) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-advertisement-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-advertisement-test' });
 
   const [whUser, otherWhUser, adminUser] = await User.create([
     { name: 'WH', phone: '0942000401', role: 'warehouse', status: 'active' },

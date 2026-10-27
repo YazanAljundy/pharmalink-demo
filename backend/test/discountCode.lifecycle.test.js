@@ -83,7 +83,7 @@ async function call(role, method, urlPath, body) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-discount-code-lifecycle' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-discount-code-lifecycle' });
   await syncIndexes(DiscountCode, DiscountCodePharmacyUsage, LedgerAccount);
 
   const [admin, whUserA, whUserB, phUserA, phUserB] = await User.create([

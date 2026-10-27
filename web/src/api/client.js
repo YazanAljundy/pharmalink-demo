@@ -24,7 +24,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5000
 // Revisit HttpOnly cookies when the web panel no longer shares an auth
 // contract with the mobile app, or when a CSRF layer exists for other
 // reasons. Until then this is a known, accepted, and bounded risk.
-const TOKEN_STORAGE_KEY = 'phoenix.admin.token';
+const TOKEN_STORAGE_KEY = 'pharmalink_demo.admin.token';
 
 // The refresh token deliberately does NOT sit beside the access token.
 //
@@ -35,7 +35,7 @@ const TOKEN_STORAGE_KEY = 'phoenix.admin.token';
 // is worth at one browsing session. The cost is that closing the browser
 // means logging in again, which is the right trade for a panel that can
 // approve accounts and move money.
-const REFRESH_TOKEN_STORAGE_KEY = 'phoenix.admin.refresh';
+const REFRESH_TOKEN_STORAGE_KEY = 'pharmalink_demo.admin.refresh';
 
 export function getToken() {
   return localStorage.getItem(TOKEN_STORAGE_KEY);
@@ -714,6 +714,15 @@ export const api = {
     if (after) params.set('after', after);
     const qs = params.toString();
     return request(`/admin/commission/warehouses/${warehouseId}${qs ? `?${qs}` : ''}`);
+  },
+  adminLedgerStatement: (pharmacyId, warehouseId, { from, to } = {}) => {
+    const params = new URLSearchParams();
+    if (from) params.set('from', from);
+    if (to) params.set('to', to);
+    const qs = params.toString();
+    return request(
+      `/admin/ledger/accounts/${pharmacyId}/${warehouseId}/statement${qs ? `?${qs}` : ''}`
+    );
   },
   // `direction`: 'from_warehouse' (default - the warehouse paid its
   // commission) or 'to_warehouse' (a payout: the platform paid the warehouse

@@ -1,12 +1,6 @@
-/* FENIQ brand palette - kept in sync with the Flutter app's AppColors
-   (phoenix/lib/core/constants/app_colors.dart): the bird's orange body is the
-   CTA colour, its wing supplies navy (day) and silver (night), and green/red
-   stay on as the semantic pair for confirmation and danger.
-
-   The three --brand-* values are the identity's own, verified against the logo
-   artwork itself before adoption - see assets/branding/README.md. Everything
-   else in this file, and both scoped token blocks further down
-   (.warehouse-shell, .admin-shell), resolves back to them. */
+/* Existing demo palette - kept in sync with the Flutter app's AppColors.
+   Green and red remain semantic colours; scoped panel tokens below resolve
+   back to the shared palette. */
 :root {
   --brand-orange: #f2760a;
   --brand-orange-light: #ffa94d;
@@ -1065,7 +1059,7 @@ h2 {
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   Warehouse panel redesign (Feniq Design import, "Modernist"-based).
+   Warehouse panel design.
    Everything below is scoped under .warehouse-shell (WarehousePanel.jsx's
    own root) or targets shared classes through a ".warehouse-shell <shared
    class>" ancestor selector - never a bare selector - so none of it can
@@ -1243,6 +1237,23 @@ h2 {
 .wh-topbar-actions .user-name {
   color: var(--wh-text-secondary);
   font-size: 14px;
+}
+
+.wh-topbar-actions .demo-badge,
+.adm-topbar-actions .demo-badge {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: var(--font-weight-subheading);
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.wh-topbar-actions .demo-badge {
+  color: var(--wh-navy);
 }
 
 /* Scoped restyle of the shared LanguageToggle/logout buttons - only within
@@ -2499,7 +2510,7 @@ a.adm-pill {
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   Admin panel redesign (Feniq Design import, "Modernist"-based).
+   Admin panel design.
    Same strategy as the warehouse-shell section above, in its own scope:
    AdminPanel.jsx's root carries ".admin-shell", and every rule below either
    uses a brand-new "adm-*"-prefixed class or overrides a shared class via a
@@ -2661,6 +2672,10 @@ a.adm-pill {
 .adm-topbar-actions .user-name {
   color: var(--adm-text-secondary);
   font-size: 14px;
+}
+
+.adm-topbar-actions .demo-badge {
+  color: var(--adm-navy);
 }
 
 /* Scoped restyle of the shared LanguageToggle button - only within this

@@ -10,7 +10,7 @@
 //     only when it is ours and nothing else still points at it.
 process.env.JWT_SECRET = process.env.JWT_SECRET || 'test-secret-for-catalog-images-tests-0000000';
 process.env.NODE_ENV = 'test';
-process.env.CLOUDINARY_CLOUD_NAME = 'feniq-test';
+process.env.CLOUDINARY_CLOUD_NAME = 'pharmalink_demo-test';
 
 // Cloudinary itself is stubbed: the upload service's exports are replaced
 // before anything that destructures them is loaded.
@@ -20,7 +20,7 @@ const deleted = [];
 let uploadSeq = 0;
 uploadService.uploadImage = async (buffer, folder) => {
   uploadSeq += 1;
-  const url = `https://res.cloudinary.com/feniq-test/image/upload/v1/${folder}/img${uploadSeq}.png`;
+  const url = `https://res.cloudinary.com/pharmalink_demo-test/image/upload/v1/${folder}/img${uploadSeq}.png`;
   uploaded.push(url);
   return url;
 };
@@ -44,7 +44,7 @@ const Product = require('../src/models/product.model');
 const Manufacturer = require('../src/models/manufacturer.model');
 const { isOwnCloudinaryUrl, imageUrlInput } = require('../src/services/imageAsset.service');
 
-const OURS = (name) => `https://res.cloudinary.com/feniq-test/image/upload/v1/products/${name}.png`;
+const OURS = (name) => `https://res.cloudinary.com/pharmalink_demo-test/image/upload/v1/products/${name}.png`;
 // A tiny valid PNG header (the magic-bytes check reads the first 12 bytes).
 const PNG = Buffer.concat([Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]), Buffer.alloc(32)]);
 
@@ -88,7 +88,7 @@ async function makeProduct(extra = {}) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-catalog-images-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-catalog-images-test' });
   const [whUser, adminUser, pharmacyUser] = await User.create([
     { name: 'WH', phone: '0942000901', role: 'warehouse', status: 'active' },
     { name: 'AD', phone: '0952000901', role: 'admin', status: 'active' },
@@ -125,10 +125,10 @@ test('only a Cloudinary URL on our own cloud is accepted', () => {
   assert.strictEqual(isOwnCloudinaryUrl(OURS('a')), true);
   for (const url of [
     'https://res.cloudinary.com/someone-else/image/upload/v1/a.png',
-    'http://res.cloudinary.com/feniq-test/image/upload/v1/a.png',
-    'https://evil.example/feniq-test/image/upload/a.png',
-    'https://res.cloudinary.com.evil.example/feniq-test/image/upload/a.png',
-    'https://res.cloudinary.com/feniq-test/video/upload/v1/a.mp4',
+    'http://res.cloudinary.com/pharmalink_demo-test/image/upload/v1/a.png',
+    'https://evil.example/pharmalink_demo-test/image/upload/a.png',
+    'https://res.cloudinary.com.evil.example/pharmalink_demo-test/image/upload/a.png',
+    'https://res.cloudinary.com/pharmalink_demo-test/video/upload/v1/a.mp4',
     'javascript:alert(1)',
     'not a url',
   ]) {
@@ -199,7 +199,7 @@ test('a cleared image still referenced elsewhere is not deleted from Cloudinary'
 // --- effective image ----------------------------------------------------------
 
 test('responses show the override, else the catalog image; the stored override is untouched', async () => {
-  const central = 'https://res.cloudinary.com/feniq-test/image/upload/v1/catalog/central.png';
+  const central = 'https://res.cloudinary.com/pharmalink_demo-test/image/upload/v1/catalog/central.png';
   const plain = await makeProduct({ catalogImage: central });
   const overridden = await makeProduct({ catalogImage: central, image: OURS('override') });
 

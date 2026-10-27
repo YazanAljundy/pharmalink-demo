@@ -57,7 +57,7 @@ function nextPayload(overrides = {}) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-auth-register-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-auth-register-test' });
   server = http.createServer(app);
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
   baseUrl = `http://127.0.0.1:${server.address().port}/api`;

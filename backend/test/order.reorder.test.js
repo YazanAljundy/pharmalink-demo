@@ -119,7 +119,7 @@ async function makeDeliveredOrder(pharmacyId, warehouseId, lines) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-order-reorder-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-order-reorder-test' });
 
   const [pharmacyUser, otherPharmacyUser, warehouseUser] = await User.create([
     { name: 'Pharm', phone: '0932000001', role: 'pharmacy', status: 'active' },

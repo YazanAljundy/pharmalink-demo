@@ -29,7 +29,7 @@ const PAYLOAD = {
 };
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-fanout-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-fanout-test' });
 });
 
 test.after(async () => {

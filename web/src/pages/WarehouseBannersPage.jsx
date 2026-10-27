@@ -10,6 +10,7 @@ import { AdvertisementsSubNav } from '../components/AdvertisementsSubNav';
 import { WarehouseGroupSubNav } from '../components/WarehouseGroupSubNav';
 import { displayName } from '../utils/displayName';
 import { contactAdminOnWhatsApp } from '../utils/whatsapp';
+import { DEMO_IMAGE_FALLBACK, handleImageFallback } from '../utils/imageFallback';
 
 const PAGE_SIZE = 15;
 const STATUS_FILTERS = ['all', 'pending', 'approved', 'rejected'];
@@ -113,9 +114,10 @@ function CreateBannerModal({ editingBanner, onClose, onCreated, onSaved }) {
             editingBanner.imageUrl && (
               <img
                 className="return-photo-thumb"
-                src={editingBanner.imageUrl}
+                src={editingBanner.imageUrl || DEMO_IMAGE_FALLBACK}
                 alt={editingBanner.title}
                 style={{ width: 96, height: 96 }}
+                onError={handleImageFallback}
               />
             )
           ) : (
@@ -357,11 +359,12 @@ export function WarehouseBannersPage() {
                   <tr key={banner.id}>
                     <td className="wh-num wh-table-order-num">#{banner.bannerNumber}</td>
                     <td>
-                      {banner.imageUrl ? (
-                        <img className="wh-table-thumb" src={banner.imageUrl} alt={banner.title} />
-                      ) : (
-                        <span className="hint">{t('banners.admin.noImageYet')}</span>
-                      )}
+                      <img
+                        className="wh-table-thumb"
+                        src={banner.imageUrl || DEMO_IMAGE_FALLBACK}
+                        alt={banner.title}
+                        onError={handleImageFallback}
+                      />
                     </td>
                     <td>
                       {banner.title}

@@ -79,7 +79,7 @@ function respondWith(impl) {
 let logs;
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-fx-provider-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-fx-provider-test' });
 });
 
 test.after(async () => {

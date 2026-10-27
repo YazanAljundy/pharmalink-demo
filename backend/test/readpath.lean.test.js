@@ -51,7 +51,7 @@ const PASSWORD_USER_SECRET = 'correct horse';
 const NEW_REGISTRATION_PHONE = '0910000010';
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-leanpath-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-leanpath-test' });
 
   const legacyUserId = LEGACY_WAREHOUSE_USER_ID;
   const modernUserId = new mongoose.Types.ObjectId();

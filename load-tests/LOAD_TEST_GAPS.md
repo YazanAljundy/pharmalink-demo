@@ -1,4 +1,4 @@
-# Feniq Load Test — Coverage Gaps
+# PharmaLink Demo Load Test — Coverage Gaps
 
 What this suite could not measure, and why. Everything else is in
 [`../LOAD_TEST_REPORT.md`](../LOAD_TEST_REPORT.md).
@@ -11,7 +11,7 @@ Nothing listed here was worked around by changing production code.
 
 - **Area:** add to cart, change quantity, remove item
 - **Endpoint:** none exists
-- **Why:** Feniq has no cart API. `lib/features/cart` holds the basket in
+- **Why:** PharmaLink Demo has no cart API. `lib/features/cart` holds the basket in
   client state and submits it as `items` on `POST /orders`, so those three
   actions generate no server traffic at all. There is nothing to load-test.
 - **What was tested instead:** the traffic a shopping session actually
@@ -39,7 +39,7 @@ Nothing listed here was worked around by changing production code.
 ## 3. FCM push delivery
 
 - **Area:** actual push delivery to devices
-- **Endpoint:** Firebase, not Feniq
+- **Endpoint:** Firebase, not PharmaLink Demo
 - **Why:** `notification.service.js` only calls FCM for users with registered
   device tokens. Delivery latency and throughput past that call belong to
   Firebase and cannot be attributed to this backend. The notification test
@@ -84,7 +84,7 @@ Nothing listed here was worked around by changing production code.
 - **Area:** `POST /returns`, `PUT /returns/:id`
 - **Why:** photos are optional on a return, but the requests that do carry
   them have every photo streamed to Cloudinary by the controller *before* the
-  return is validated. At sweep concurrency this stops being a test of Feniq
+  return is validated. At sweep concurrency this stops being a test of PharmaLink Demo
   and becomes a stress test of a third party, spending real quota on the
   project's own Cloudinary account.
 - **What was tested instead:** the return **read** paths at full sweep
@@ -137,7 +137,7 @@ Nothing listed here was worked around by changing production code.
 
 ## 10. Production environment
 
-- **Area:** the deployed backend at `phoenix-1-p2qi.onrender.com`
+- **Area:** the remote backend deployment
 - **Why:** not tested, by design. See the report's "Testing production" section
   for what would need to be configured first, what the risks are, and what
   limits should apply.

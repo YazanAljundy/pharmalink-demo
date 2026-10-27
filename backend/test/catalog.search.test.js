@@ -8,7 +8,7 @@
 // the same rows, in the same order. That is what makes this a behaviour-
 // preservation test rather than a re-specification.
 //
-// Runs against its own database (feniq-catalog-test) and drops it at the
+// Runs against its own database (pharmalink_demo-catalog-test) and drops it at the
 // end, so it never touches the development data.
 process.env.JWT_SECRET = process.env.JWT_SECRET || 'test-secret-for-catalog-tests-pa';
 process.env.NODE_ENV = 'test';
@@ -124,8 +124,8 @@ async function seed() {
   // catalog item is a soft flag and populate still resolves it, so a search
   // must still find products linked to it.
   const [panadol, aspirin, deactivated, arabicOnly] = await ProductCatalog.create([
-    { nameAr: 'بانادول', nameEn: 'Panadol', manufacturerAr: 'جي اس كي', manufacturerEn: 'GSK' },
-    { nameAr: 'اسبرين', nameEn: 'Aspirin', manufacturerAr: 'باير', manufacturerEn: 'Bayer' },
+    { nameAr: 'بانادول', nameEn: 'Panadol', manufacturerAr: 'مختبر تجريبي ألف', manufacturerEn: 'Sample Pharma Labs A' },
+    { nameAr: 'اسبرين', nameEn: 'Aspirin', manufacturerAr: 'مختبر تجريبي باء', manufacturerEn: 'Sample Pharma Labs B' },
     {
       nameAr: 'دواء موقوف', nameEn: 'Discontinued Drug',
       manufacturerAr: 'شركة موقوفة', manufacturerEn: 'Halted Co', isActive: false,
@@ -187,7 +187,7 @@ async function seed() {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-catalog-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-catalog-test' });
   await seed();
 });
 
@@ -204,8 +204,8 @@ const SEARCH_TERMS = [
   'panadol',        // case-insensitive
   'a',              // many matches
   'Legacy',         // legacy product, via its own fields
-  'Bayer',          // matched on manufacturerEn
-  'جي اس كي',       // matched on manufacturerAr (Arabic)
+  'Sample Pharma Labs B', // matched on manufacturerEn
+  'مختبر تجريبي ألف', // matched on manufacturerAr (Arabic)
   'بانادول',        // matched on nameAr (Arabic)
   'Discontinued',   // linked to a DEACTIVATED catalog entry - must still match
   'كبسولات',        // catalog entry whose nameEn is null
@@ -362,7 +362,7 @@ test('pagination resolves identity the same way search does', async () => {
   const { items } = await productService.listWarehouseProducts(WAREHOUSE_ID, { limit: 100 });
   const linked = items.find((i) => i.product.nameEn === 'Panadol');
   assert.ok(linked, 'the linked product must resolve to its catalog name');
-  assert.strictEqual(linked.product.manufacturerAr, 'جي اس كي');
+  assert.strictEqual(linked.product.manufacturerAr, 'مختبر تجريبي ألف');
   const nulled = items.find((i) => i.product.nameAr === 'كبسولات');
   assert.strictEqual(nulled.product.nameEn, null, 'a catalog null must not fall back to the legacy field');
 });
@@ -387,7 +387,7 @@ test('manufacturers list is identical to the original algorithm', async () => {
 
 test('manufacturers include both linked and legacy products, and stay sorted', async () => {
   const actual = await productService.listDistinctManufacturersForWarehouse(WAREHOUSE_ID);
-  assert.ok(actual.includes('جي اس كي'), 'from a linked catalog entry');
+  assert.ok(actual.includes('مختبر تجريبي ألف'), 'from a linked catalog entry');
   assert.ok(actual.includes('قديم'), 'from a legacy product');
   assert.ok(actual.includes('شركة موقوفة'), 'from a DEACTIVATED catalog entry, as before');
   assert.ok(!actual.includes('IGNORE'), 'never a linked product\'s stale own field');
@@ -406,7 +406,7 @@ test('manufacturers are isolated per warehouse', async () => {
 test('manufacturers-with-discounts pairs each name with its standing discount, 0 when none', async () => {
   await ManufacturerDiscount.deleteMany({ warehouseId: WAREHOUSE_ID });
   await ManufacturerDiscount.create({
-    warehouseId: WAREHOUSE_ID, manufacturerAr: 'جي اس كي', discountPercentage: 10,
+    warehouseId: WAREHOUSE_ID, manufacturerAr: 'مختبر تجريبي ألف', discountPercentage: 10,
   });
 
   const names = await productService.listDistinctManufacturersForWarehouse(WAREHOUSE_ID);
@@ -415,8 +415,8 @@ test('manufacturers-with-discounts pairs each name with its standing discount, 0
   // Same names, same order, just enriched.
   assert.deepStrictEqual(withDiscounts.map((m) => m.manufacturerAr), names);
 
-  const gsk = withDiscounts.find((m) => m.manufacturerAr === 'جي اس كي');
-  assert.strictEqual(gsk.discountPercentage, 10, 'the configured discount is surfaced');
+  const sampleManufacturer = withDiscounts.find((m) => m.manufacturerAr === 'مختبر تجريبي ألف');
+  assert.strictEqual(sampleManufacturer.discountPercentage, 10, 'the configured discount is surfaced');
 
   const undiscounted = withDiscounts.find((m) => m.manufacturerAr === 'قديم');
   assert.strictEqual(undiscounted.discountPercentage, 0, 'no rule -> 0, never missing/hidden');

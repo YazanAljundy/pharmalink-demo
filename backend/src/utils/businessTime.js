@@ -1,4 +1,4 @@
-// The business's own calendar. Feniq trades in Syria, so every "day" a report
+// The business's own calendar. PharmaLink Demo trades in Syria, so every "day" a report
 // is asked about - a settlement period, a commission window, a statement
 // range - is a day in Asia/Damascus, whatever time zone the server runs in.
 //

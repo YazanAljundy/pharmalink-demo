@@ -90,7 +90,7 @@ async function setRates({ discountRate, commissionRate }) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-ad-pricing-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-ad-pricing-test' });
   await syncIndexes(Order);
   await ExchangeRate.create({ _id: 'singleton', usdToSyp: RATE, source: 'manual' });
 

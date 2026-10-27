@@ -47,7 +47,7 @@ async function makeWarehouse() {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-arabic-names-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-arabic-names-test' });
   await syncIndexes(Manufacturer, ProductCatalog, Product, CatalogRequest);
   await ExchangeRate.create({ _id: 'singleton', usdToSyp: 100, source: 'manual', manualOverride: true });
   ids.admin = (await User.create({ name: 'AD', phone: '0952009911', role: 'admin', status: 'active' }))._id;

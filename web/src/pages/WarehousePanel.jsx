@@ -9,6 +9,7 @@ import {
   navItemTarget,
 } from '../utils/warehouseNav';
 import { LanguageToggle } from '../components/LanguageToggle';
+import { DemoBadge } from '../components/DemoBadge';
 import { NavBadge } from '../components/NavBadge';
 import { useUnreadBadges } from '../realtime/UnreadBadgesProvider';
 import { WarehouseOrdersPage } from './WarehouseOrdersPage';
@@ -31,7 +32,7 @@ import { WarehouseImportResultsPage, WarehouseImportsPage } from './WarehouseImp
 
 // Section 13b: the warehouse side of the shared React panel. Real routes
 // (not component state) - each tab gets its own bookmarkable/refreshable
-// URL. Shell is a sidebar (Feniq Design import) rather than the admin
+// URL. Shell is a sidebar (PharmaLink Demo Design import) rather than the admin
 // panel's top tabs; see index.css's ".warehouse-shell" scope for why this
 // is safe to restyle without touching AdminPanel.jsx's own look.
 //
@@ -67,7 +68,7 @@ export function WarehousePanel() {
       />
       <aside className={`wh-sidebar${isSidebarOpen ? ' wh-sidebar-open' : ''}`}>
         <div className="wh-sidebar-header">
-          <img className="wh-sidebar-logo" src="/images/feniq-mark-dark.png" alt={t('nav.brandName')} />
+          <img className="wh-sidebar-logo" src="/images/demo-mark-dark.png" alt={t('nav.brandName')} />
           <div className="wh-sidebar-brand">{t('nav.brandName')}</div>
           <div className="wh-sidebar-subtitle">{t('nav.warehouseTitleFallback')}</div>
         </div>
@@ -118,6 +119,7 @@ export function WarehousePanel() {
             </div>
           </div>
           <div className="wh-topbar-actions">
+            <DemoBadge />
             <span className="user-name">{user?.name}</span>
             <LanguageToggle />
             <button className="wh-logout-btn" onClick={logout}>

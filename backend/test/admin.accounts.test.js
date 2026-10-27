@@ -91,7 +91,7 @@ async function seedWarehouse(key, { name, nameEn, nameAr, city, phone, status })
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-admin-accounts-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-admin-accounts-test' });
 
   const admin = await User.create({
     name: 'The Admin',

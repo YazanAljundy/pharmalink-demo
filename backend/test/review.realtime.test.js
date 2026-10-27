@@ -5,7 +5,7 @@
 // Same shape as offer.realtime.test.js: models and the realtime module are
 // stubbed through require.cache before the service loads, so this needs no
 // database and no socket server.
-process.env.MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/feniq-test';
+process.env.MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/pharmalink_demo-test';
 process.env.JWT_SECRET = process.env.JWT_SECRET || 'test-secret-for-realtime-tests-p';
 process.env.NODE_ENV = 'test';
 

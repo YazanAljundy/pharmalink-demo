@@ -20,7 +20,7 @@ const manufacturerSchema = new Schema(
     nameEn: { type: String, default: null, trim: true },
     key: { type: String, required: true },
     // normalizeText(nameEn): the English name as an import or a search writes
-    // it ("GSK", "Glaxo Smith Kline"). Not unique - two companies may share an
+    // it ("Sample Pharma Labs A"). Not unique - two companies may share an
     // English name, and then an English name alone resolves to neither.
     enKey: { type: String, default: null },
     // Cloudinary only, set by an admin (never a warehouse). null means the

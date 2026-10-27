@@ -19,7 +19,7 @@
  *     device/integration test - which is the correct scope for it anyway,
  *     since delivery is Firebase's to measure, not this backend's.
  *
- * What is measured here is the part Feniq owns: the cost of the fan-out.
+ * What is measured here is the part PharmaLink Demo owns: the cost of the fan-out.
  * admin.service.js selects every recipient, then notification.service.js
  * sendToAll does `Promise.all(userIds.map(sendToUser))` with no concurrency
  * limit, and each sendToUser is a User.findById plus a Notification.create.
@@ -41,8 +41,8 @@ const tokens = JSON.parse(fs.readFileSync(path.join(RUNTIME, 'tokens.json'), 'ut
 const API_BASE = process.env.BASE_URL || fixtures.baseUrl;
 const RESULT_DIR = path.join(__dirname, 'results', 'notifications');
 const MONGO_URI = process.env.LOAD_TEST_MONGODB_URI || 'mongodb://localhost:27017';
-const DB_NAME = process.env.LOAD_TEST_DB || 'phoenix';
-const TAG = 'phoenix-load-test';
+const DB_NAME = process.env.LOAD_TEST_DB || 'pharmalink_demo';
+const TAG = 'pharmalink_demo-load-test';
 const ADMIN_PHONE = '0977990001';
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

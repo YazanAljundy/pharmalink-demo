@@ -53,7 +53,7 @@ async function warehouseProduct(item) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-admin-categories-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-admin-categories-test' });
   await syncIndexes(Category, ProductCatalog, Product, Manufacturer);
   const [admin, warehouseUser] = await User.create([
     { name: 'AD', phone: '0952003301', role: 'admin', status: 'active' },

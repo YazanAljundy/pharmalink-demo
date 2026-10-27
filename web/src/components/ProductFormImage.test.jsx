@@ -27,8 +27,8 @@ function i18nFor(lng) {
   return instance;
 }
 
-const CENTRAL = 'https://res.cloudinary.com/feniq/image/upload/v1/catalog/c.png';
-const OVERRIDE = 'https://res.cloudinary.com/feniq/image/upload/v1/products/o.png';
+const CENTRAL = 'https://res.cloudinary.com/pharmalink_demo/image/upload/v1/catalog/c.png';
+const OVERRIDE = 'https://res.cloudinary.com/pharmalink_demo/image/upload/v1/products/o.png';
 
 function renderField(form, lng = 'en') {
   return renderToStaticMarkup(

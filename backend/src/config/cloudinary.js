@@ -16,7 +16,7 @@ cloudinary.config({
 if (!config.cloudinary.cloudName || !config.cloudinary.apiKey || !config.cloudinary.apiSecret) {
   // eslint-disable-next-line no-console
   console.warn(
-    'Cloudinary is not fully configured (CLOUDINARY_CLOUD_NAME / CLOUDINARY_API_KEY / CLOUDINARY_API_SECRET) - image uploads will fail until it is.'
+    'Cloudinary is not fully configured; image upload endpoints will return IMAGE_UPLOADS_UNAVAILABLE.'
   );
 }
 

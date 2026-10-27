@@ -14,7 +14,7 @@ const { seedCatalog, explainCatalogQueries, formatPlansTable } = require('../tes
 
 async function main() {
   const productsPerWarehouse = Number(process.argv[2]) || 4000;
-  await startMemoryMongo({ dbName: 'feniq-explain-catalog' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-explain-catalog' });
   try {
     const seeded = await seedCatalog({ warehouses: 3, productsPerWarehouse, catalogSize: 6000 });
     const results = await explainCatalogQueries(seeded);

@@ -82,7 +82,7 @@ async function makeOrder(status) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-order-status-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-order-status-test' });
   // Built up front, like every other test file whose orders reach 'delivered'
   // (ledger.delivery.test.js et al.). The final advance posts the charge inside
   // a transaction, and on a fresh database Mongoose's lazy background index

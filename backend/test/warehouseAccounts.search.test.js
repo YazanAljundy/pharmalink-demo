@@ -17,7 +17,7 @@ const { listAccountsForWarehouse } = require('../src/services/accountStatement.s
 const WAREHOUSE_ID = new mongoose.Types.ObjectId();
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-warehouse-accounts-search-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-warehouse-accounts-search-test' });
 });
 
 test.after(async () => {

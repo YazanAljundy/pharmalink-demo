@@ -71,12 +71,16 @@ async function rowsOf(batchId, bucket) {
 const ids = {};
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-warehouse-import-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-warehouse-import-test' });
   await syncIndexes(Product, ProductCatalog, Manufacturer, WarehouseProductAlias, ImportColumnMapping);
   await ExchangeRate.create({ _id: 'singleton', usdToSyp: RATE, source: 'manual', manualOverride: true });
-  ids.panadol = await ProductCatalog.create({ nameAr: 'بنادول اكسترا', nameEn: 'Panadol Extra', manufacturerAr: 'جي اس كي' });
+  await Manufacturer.create([
+    { nameAr: 'مختبر تجريبي ألف', nameEn: 'Sample Pharma Labs A' },
+    { nameAr: 'مختبر تجريبي باء', nameEn: 'Sample Pharma Labs B' },
+  ]);
+  ids.panadol = await ProductCatalog.create({ nameAr: 'بنادول اكسترا', nameEn: 'Panadol Extra', manufacturerAr: 'مختبر تجريبي ألف' });
   ids.amox = await ProductCatalog.create({ nameAr: 'أموكسيسيلين 500', manufacturerAr: 'ابن سينا' });
-  ids.voltaren = await ProductCatalog.create({ nameAr: 'فولتارين 50', manufacturerAr: 'نوفارتس' });
+  ids.voltaren = await ProductCatalog.create({ nameAr: 'فولتارين 50', manufacturerAr: 'مختبر تجريبي باء' });
 });
 
 test.after(async () => {
@@ -91,7 +95,7 @@ test('title rows above the header, reordered columns, Arabic headers, Arabic dig
     [],
     ['السعر', 'العملة', 'الشركة المصنعة', 'اسم المادة', 'البونص', 'الوحدة'],
     ['١٬٥٠٠', 'ل.س', 'ابن سينا', 'اموكسيسيلين ٥٠٠', '10+1', 'علبة'],
-    ['2.5', 'دولار', 'جي اس كي', 'بنادول  اكسترا', '', 'شريط'],
+    ['2.5', 'دولار', 'مختبر تجريبي ألف', 'بنادول  اكسترا', '', 'شريط'],
   ]);
   const report = await importProductsFromExcel(warehouseId, userId, file);
   assert.strictEqual(report.counts.added, 2);
@@ -112,8 +116,8 @@ test('English headers, the currency written inside the price cell, and an empty 
   const { userId, warehouseId } = await makeWarehouse();
   const file = await xlsx([
     ['Item Name', 'Manufacturer', 'Unit Price', 'Currency'],
-    ['Panadol Extra', 'جي اس كي', '$3', ''],
-    ['فولتارين 50', 'نوفارتس', '12,000 S.P', ''],
+    ['Panadol Extra', 'مختبر تجريبي ألف', '$3', ''],
+    ['فولتارين 50', 'مختبر تجريبي باء', '12,000 S.P', ''],
     ['أموكسيسيلين 500', 'ابن سينا', '4', ''],
   ]);
   const report = await importProductsFromExcel(warehouseId, userId, file);
@@ -129,7 +133,7 @@ test('unrecognized headers ask for a mapping, which is then remembered for the w
   const { userId, warehouseId } = await makeWarehouse();
   const rows = [
     ['الصنف التجاري', 'المنتج من', 'القيمة', 'العملة'],
-    ['فولتارين 50', 'نوفارتس', '5', 'USD'],
+    ['فولتارين 50', 'مختبر تجريبي باء', '5', 'USD'],
   ];
   let details;
   await assert.rejects(importProductsFromExcel(warehouseId, userId, await xlsx(rows)), (err) => {
@@ -146,7 +150,7 @@ test('unrecognized headers ask for a mapping, which is then remembered for the w
   assert.strictEqual(await ImportColumnMapping.countDocuments({ warehouseId }), 2);
 
   // Next time, no mapping needed.
-  const again = await importProductsFromExcel(warehouseId, userId, await xlsx([rows[0], ['فولتارين 50', 'نوفارتس', '6', 'USD']]));
+  const again = await importProductsFromExcel(warehouseId, userId, await xlsx([rows[0], ['فولتارين 50', 'مختبر تجريبي باء', '6', 'USD']]));
   assert.strictEqual(again.counts.updated, 1);
 });
 
@@ -155,7 +159,7 @@ test('price 0 creates the product disabled by the warehouse', async () => {
   const report = await importProductsFromExcel(
     warehouseId,
     userId,
-    await xlsx([['اسم المادة', 'الشركة', 'السعر', 'العملة'], ['فولتارين 50', 'نوفارتس', 0, 'USD']])
+    await xlsx([['اسم المادة', 'الشركة', 'السعر', 'العملة'], ['فولتارين 50', 'مختبر تجريبي باء', 0, 'USD']])
   );
   assert.strictEqual(report.counts.addedDisabled, 1);
   const product = await Product.findOne({ warehouseId, masterProductId: ids.voltaren._id }).lean();
@@ -170,8 +174,8 @@ test('the same catalog item twice sends both rows to review; resolving keeps the
     userId,
     await xlsx([
       ['اسم المادة', 'الشركة', 'السعر', 'العملة'],
-      ['فولتارين 50', 'نوفارتس', 7, 'USD'],
-      ['فولتارين  ٥٠', 'نوفارتس', 8, 'USD'],
+      ['فولتارين 50', 'مختبر تجريبي باء', 7, 'USD'],
+      ['فولتارين  ٥٠', 'مختبر تجريبي باء', 8, 'USD'],
     ])
   );
   const review = await rowsOf(report.batchId, 'review');
@@ -193,7 +197,7 @@ test('an unmatched row gets suggestions; resolving it saves an alias the next im
   const file = () =>
     xlsx([
       ['اسم المادة', 'الشركة', 'السعر', 'العملة'],
-      ['بانادول اكسترا', 'جي اس كي', 2, 'USD'],
+      ['بانادول اكسترا', 'مختبر تجريبي ألف', 2, 'USD'],
     ]);
   const report = await importProductsFromExcel(warehouseId, userId, await file());
   const [row] = await rowsOf(report.batchId, 'review');
@@ -240,7 +244,7 @@ test('a bad bonus or an unknown unit sends the row to review - nothing is guesse
     userId,
     await xlsx([
       ['اسم المادة', 'الشركة', 'السعر', 'العملة', 'الوحدة', 'العرض'],
-      ['فولتارين 50', 'نوفارتس', 5, 'USD', 'علبة', 'عشرة وواحد'],
+      ['فولتارين 50', 'مختبر تجريبي باء', 5, 'USD', 'علبة', 'عشرة وواحد'],
       ['أموكسيسيلين 500', 'ابن سينا', 5, 'USD', 'كرتونة', ''],
     ])
   );
@@ -257,11 +261,11 @@ test('a bad bonus or an unknown unit sends the row to review - nothing is guesse
 test('an empty bonus cell clears the bonus; a missing bonus column leaves it alone', async () => {
   const { userId, warehouseId } = await makeWarehouse();
   const header = ['اسم المادة', 'الشركة', 'السعر', 'العملة', 'البونص'];
-  await importProductsFromExcel(warehouseId, userId, await xlsx([header, ['فولتارين 50', 'نوفارتس', 5, 'USD', '10+1']]));
-  await importProductsFromExcel(warehouseId, userId, await xlsx([header.slice(0, 4), ['فولتارين 50', 'نوفارتس', 6, 'USD']]));
+  await importProductsFromExcel(warehouseId, userId, await xlsx([header, ['فولتارين 50', 'مختبر تجريبي باء', 5, 'USD', '10+1']]));
+  await importProductsFromExcel(warehouseId, userId, await xlsx([header.slice(0, 4), ['فولتارين 50', 'مختبر تجريبي باء', 6, 'USD']]));
   let product = await Product.findOne({ warehouseId }).lean();
   assert.strictEqual(product.bonuses.length, 1);
-  await importProductsFromExcel(warehouseId, userId, await xlsx([header, ['فولتارين 50', 'نوفارتس', 6, 'USD', '']]));
+  await importProductsFromExcel(warehouseId, userId, await xlsx([header, ['فولتارين 50', 'مختبر تجريبي باء', 6, 'USD', '']]));
   product = await Product.findOne({ warehouseId }).lean();
   assert.strictEqual(product.bonuses.length, 0);
 });
@@ -299,7 +303,7 @@ test('the old company-row template still reads, from the first sheet that has a 
     await xlsx(null, {
       sheets: [
         ['Cover', [['ملف أسعار'], ['لا يوجد جدول هنا']]],
-        ['Prices', [['note'], ['اسم الدواء (من القائمة)', 'السعر', 'العملة'], ['[نوفارتس]'], ['فولتارين 50', 3, 'USD']]],
+        ['Prices', [['note'], ['اسم الدواء (من القائمة)', 'السعر', 'العملة'], ['[مختبر تجريبي باء]'], ['فولتارين 50', 3, 'USD']]],
       ],
     })
   );
@@ -313,8 +317,8 @@ test('rows without a readable name or price are errors, never products', async (
     userId,
     await xlsx([
       ['اسم المادة', 'الشركة', 'السعر', 'العملة'],
-      ['فولتارين 50', 'نوفارتس', 'غير معروف', 'USD'],
-      ['', 'نوفارتس', 5, 'USD'],
+      ['فولتارين 50', 'مختبر تجريبي باء', 'غير معروف', 'USD'],
+      ['', 'مختبر تجريبي باء', 5, 'USD'],
       ['أموكسيسيلين 500', 'ابن سينا', '', 'USD'],
     ])
   );
@@ -341,15 +345,15 @@ test('admin import: a new manufacturer is reported, then created on confirmation
   assert.strictEqual(confirmed.newManufacturers.length, 0);
   assert.strictEqual(await Manufacturer.countDocuments({ key: 'شركه جديده للادمن' }), 1);
 
-  const linkTarget = await Manufacturer.findOne({ key: 'نوفارتس' }).lean();
+  const linkTarget = await Manufacturer.findOne({ nameAr: 'مختبر تجريبي باء' }).lean();
   const linked = await catalogService.importFromExcel(
-    await xlsx([['اسم الدواء', 'الشركة', 'السعر', 'العملة'], ['دواء مربوط', 'Novartis AG', 1, 'USD']]),
-    { manufacturerLinks: { 'Novartis AG': String(linkTarget._id) } }
+    await xlsx([['اسم الدواء', 'الشركة', 'السعر', 'العملة'], ['دواء مربوط', 'Sample Pharma Labs B', 1, 'USD']]),
+    { manufacturerLinks: { 'Sample Pharma Labs B': String(linkTarget._id) } }
   );
   assert.strictEqual(linked.added, 1);
   const item = await ProductCatalog.findOne({ nameAr: 'دواء مربوط' }).lean();
   assert.strictEqual(String(item.manufacturerId), String(linkTarget._id));
-  assert.strictEqual(item.manufacturerAr, 'نوفارتس');
+  assert.strictEqual(item.manufacturerAr, 'مختبر تجريبي باء');
 });
 
 test('the live suggestion search finds a misspelled medicine', async () => {
@@ -366,20 +370,20 @@ test('the live suggestion search finds a misspelled medicine', async () => {
 
 async function englishCatalog() {
   if (ids.panadol500) return;
-  const gsk = await Manufacturer.findOne({ key: 'جي اس كي' });
-  gsk.nameEn = 'GSK';
-  await gsk.save();
-  ids.panadol500 = await ProductCatalog.create({ nameAr: 'بنادول 500', nameEn: 'Panadol 500', manufacturerAr: 'جي اس كي' });
-  ids.augmentin = await ProductCatalog.create({ nameAr: 'اوجمنتين 1 غ', nameEn: 'Augmentin 1g', manufacturerAr: 'جي اس كي' });
+  const sampleManufacturer = await Manufacturer.findOne({ nameAr: 'مختبر تجريبي ألف' });
+  sampleManufacturer.nameEn = 'Sample Pharma Labs A';
+  await sampleManufacturer.save();
+  ids.panadol500 = await ProductCatalog.create({ nameAr: 'بنادول 500', nameEn: 'Panadol 500', manufacturerAr: 'مختبر تجريبي ألف' });
+  ids.augmentin = await ProductCatalog.create({ nameAr: 'اوجمنتين 1 غ', nameEn: 'Augmentin 1g', manufacturerAr: 'مختبر تجريبي ألف' });
 }
 
-test('English only: "Panadol 500" by "GSK" matches the Arabic catalog item', async () => {
+test('English-only product and manufacturer names match the Arabic catalog item', async () => {
   await englishCatalog();
-  assert.strictEqual((await Manufacturer.findOne({ key: 'جي اس كي' }).lean()).enKey, 'gsk');
+  assert.strictEqual((await Manufacturer.findOne({ nameAr: 'مختبر تجريبي ألف' }).lean()).enKey, 'sample pharma labs a');
   const { userId, warehouseId } = await makeWarehouse();
   const report = await importProductsFromExcel(warehouseId, userId, await xlsx([
     ['Item Name', 'Company', 'Price', 'Currency'],
-    ['Panadol 500', 'GSK', 2, 'USD'],
+    ['Panadol 500', 'Sample Pharma Labs A', 2, 'USD'],
   ]));
   assert.strictEqual(report.counts.added, 1, JSON.stringify(report.counts));
   const product = await Product.findOne({ warehouseId, masterProductId: ids.panadol500._id }).lean();
@@ -388,7 +392,7 @@ test('English only: "Panadol 500" by "GSK" matches the Arabic catalog item', asy
   // Spelling, spacing and case variants of the same English text are the same item.
   const again = await importProductsFromExcel(warehouseId, userId, await xlsx([
     ['Item Name', 'Company', 'Price', 'Currency'],
-    ['PANADOL  500', 'gsk', 3, 'USD'],
+    ['PANADOL  500', 'sample pharma labs a', 3, 'USD'],
   ]));
   assert.strictEqual(again.counts.updated, 1, JSON.stringify(again.counts));
 });
@@ -398,8 +402,8 @@ test('mixed: an Arabic name with an English manufacturer, and the other way roun
   const { userId, warehouseId } = await makeWarehouse();
   const report = await importProductsFromExcel(warehouseId, userId, await xlsx([
     ['اسم المادة', 'الشركة', 'السعر', 'العملة'],
-    ['بنادول 500', 'GSK', 2, 'USD'],
-    ['Augmentin 1g', 'جي إس كي', 5, 'USD'],
+    ['بنادول 500', 'Sample Pharma Labs A', 2, 'USD'],
+    ['Augmentin 1g', 'مختبر تجريبي ألف', 5, 'USD'],
   ]));
   assert.strictEqual(report.counts.added, 2, JSON.stringify(report.counts));
   assert.ok(await Product.exists({ warehouseId, masterProductId: ids.panadol500._id }));
@@ -408,7 +412,7 @@ test('mixed: an Arabic name with an English manufacturer, and the other way roun
 
 test('an English typo gets the right item in the top-5 suggestions, shown by its Arabic name', async () => {
   await englishCatalog();
-  const suggestions = await importService.suggestCatalogItems({ name: 'Panadoll 500', manufacturer: 'GSK' });
+  const suggestions = await importService.suggestCatalogItems({ name: 'Panadoll 500', manufacturer: 'Sample Pharma Labs A' });
   const top = suggestions.slice(0, 5).map((s) => String(s.masterProductId));
   assert.ok(top.includes(String(ids.panadol500._id)), JSON.stringify(suggestions));
   const hit = suggestions.find((s) => String(s.masterProductId) === String(ids.panadol500._id));
@@ -416,21 +420,21 @@ test('an English typo gets the right item in the top-5 suggestions, shown by its
   assert.ok(!('nameEn' in hit), 'the English name is a matching helper, never returned for display');
 
   // A misspelled English manufacturer still earns the manufacturer bonus.
-  const loose = await importService.suggestCatalogItems({ name: 'Augmentn 1g', manufacturer: 'GSKK' });
+  const loose = await importService.suggestCatalogItems({ name: 'Augmentn 1g', manufacturer: 'Sample Pharma Labs AA' });
   assert.strictEqual(String(loose[0].masterProductId), String(ids.augmentin._id), JSON.stringify(loose));
 });
 
 test('an English manufacturer name shared by two companies resolves to neither', async () => {
   await englishCatalog();
   await Manufacturer.create([
-    { nameAr: 'فايزر الأولى', nameEn: 'Pfizer' },
-    { nameAr: 'فايزر الثانية', nameEn: 'pfizer' },
+    { nameAr: 'مختبر تجريبي الأولى', nameEn: 'Sample Pharma Labs Shared' },
+    { nameAr: 'مختبر تجريبي الثانية', nameEn: 'sample pharma labs shared' },
   ]);
-  await ProductCatalog.create({ nameAr: 'دواء فايزر', nameEn: 'Pfizer Drug', manufacturerAr: 'فايزر الأولى' });
+  await ProductCatalog.create({ nameAr: 'دواء تجريبي', nameEn: 'Sample Medicine', manufacturerAr: 'مختبر تجريبي الأولى' });
   const { userId, warehouseId } = await makeWarehouse();
   const report = await importProductsFromExcel(warehouseId, userId, await xlsx([
     ['Item Name', 'Company', 'Price', 'Currency'],
-    ['Pfizer Drug', 'Pfizer', 2, 'USD'],
+    ['Sample Medicine', 'Sample Pharma Labs Shared', 2, 'USD'],
   ]));
   const [row] = await rowsOf(report.batchId, 'review');
   assert.deepStrictEqual(row.reasons, ['unknown_manufacturer']);

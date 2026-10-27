@@ -85,7 +85,7 @@ function statement(extra = {}) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-statement-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-statement-test' });
   await syncIndexes(LedgerEntry, LedgerAccount, Order, Payment, Return);
   await setRate(RATE);
 

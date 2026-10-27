@@ -1,0 +1,19 @@
+{
+  "success": true,
+  "manufacturers": [
+    {
+      "manufacturerAr": "مختبر تجريبي ألف",
+      "discountPercentage": 5,
+      "manufacturerId": "6a0c00000000000000000006",
+      "manufacturerEn": "Sample Pharma Labs A",
+      "logoUrl": "https://example.invalid/images/demo-manufacturer.png"
+    },
+    {
+      "manufacturerAr": "شركة قديمة",
+      "discountPercentage": 0,
+      "manufacturerId": null,
+      "manufacturerEn": null,
+      "logoUrl": null
+    }
+  ]
+}

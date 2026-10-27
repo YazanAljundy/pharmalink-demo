@@ -144,7 +144,7 @@ async function call(method, urlPath, body) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-discount-code-orders' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-discount-code-orders' });
   await syncIndexes(Order, OrderItem, LedgerAccount, LedgerEntry, DiscountCode, DiscountCodePharmacyUsage);
   await ExchangeRate.create({ _id: 'singleton', usdToSyp: RATE, source: 'manual' });
 

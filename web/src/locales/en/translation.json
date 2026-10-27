@@ -39,15 +39,16 @@
     "view": "View"
   },
   "app": {
-    "brand": "Feniq Admin"
+    "brand": "PharmaLink Demo Admin"
   },
   "nav": {
     "adminTitle": "Admin",
     "warehouseTitleFallback": "Warehouse panel",
-    "brandName": "Feniq",
+    "brandName": "PharmaLink Demo",
     "openMenu": "Open menu",
     "dashboard": "Dashboard",
     "accounts": "Accounts",
+    "ledger": "Ledger",
     "pendingAccounts": "Pending accounts",
     "offers": "Offers",
     "products": "Products",
@@ -177,8 +178,8 @@
     "warehouseNetLabel": "You receive",
     "discountCodeLabel": "Discount code {{code}}",
     "discountCodeFundedBy_warehouse": "Paid by your warehouse",
-    "discountCodeFundedBy_platform": "Paid by Feniq",
-    "platformCompensationLabel": "Feniq compensation"
+    "discountCodeFundedBy_platform": "Paid by PharmaLink Demo",
+    "platformCompensationLabel": "PharmaLink Demo compensation"
   },
   "returns": {
     "filterAll": "All",
@@ -778,7 +779,7 @@
     "credited": "Returned",
     "creditedHint": "Credited back to pharmacies",
     "commission": "Platform commission",
-    "commissionHint": "Owed to Feniq for this period",
+    "commissionHint": "Owed to PharmaLink Demo for this period",
     "commissionAfterClawback": "{{gross}} less {{clawback}} on returns",
     "net": "You receive",
     "netHint": "Sales less returns and commission",
@@ -792,7 +793,7 @@
     "orderNet": "You receive",
     "footnote": "Sales is what pharmacies were charged, not what has been collected — see Invoices for outstanding balances.",
     "compensation": "Discount-code compensation",
-    "compensationHint": "Feniq pays you the discount on its own discount codes",
+    "compensationHint": "PharmaLink Demo pays you the discount on its own discount codes",
     "orderCompensation": "Compensation"
   },
   "commission": {
@@ -802,7 +803,7 @@
     "returns": "Returns",
     "returnsHint": "Credited back on approved returns",
     "owed": "Commission owed",
-    "owedHint": "Due to Feniq, after returns",
+    "owedHint": "Due to PharmaLink Demo, after returns",
     "collected": "Collected",
     "outstanding": "Outstanding",
     "collectedSoFar": "{{amount}} collected so far",
@@ -826,14 +827,14 @@
     "reverseReasonRequired": "A reason is required to reverse a collection.",
     "reverseReasonPlaceholder": "e.g. the transfer bounced",
     "reverseButton": "Reverse collection",
-    "platformOwes": "Feniq owes the warehouse",
-    "platformOwesHint": "Negative: the discount-code compensation Feniq owes is more than the commission, or the warehouse paid for a wider window.",
+    "platformOwes": "PharmaLink Demo owes the warehouse",
+    "platformOwesHint": "Negative: the discount-code compensation PharmaLink Demo owes is more than the commission, or the warehouse paid for a wider window.",
     "direction": "Direction",
-    "direction_from_warehouse": "Warehouse paid Feniq (commission)",
-    "direction_to_warehouse": "Feniq paid the warehouse (payout)",
+    "direction_from_warehouse": "Warehouse paid PharmaLink Demo (commission)",
+    "direction_to_warehouse": "PharmaLink Demo paid the warehouse (payout)",
     "recordPayoutButton": "Record payout",
     "compensation": "Code compensation",
-    "compensationHint": "What Feniq owes for admin discount codes, net of returns",
+    "compensationHint": "What PharmaLink Demo owes for admin discount codes, net of returns",
     "compensationForCode": "Code {{code}}",
     "paidOut": "Paid out",
     "settledSoFar": "Collected {{collected}} - paid out {{paidOut}}"
@@ -862,6 +863,12 @@
     "kindMigrationAdjustment": "Opening adjustment",
     "kindOpeningBalance": "Opening balance",
     "kindOther": "Adjustment"
+  },
+  "ledger": {
+    "pharmacy": "Pharmacy",
+    "warehouse": "Warehouse",
+    "closingBalance": "Closing balance",
+    "noAccounts": "No active pharmacy and warehouse accounts are available."
   },
   "exchangeRateChange": {
     "notice": "The exchange rate changed while you were editing: $1 was {{from}} and is now {{to}}. Amounts in USD are now worked out at the new rate — review them, then confirm to save.",
@@ -1068,7 +1075,7 @@
     },
     "fundedBy": {
       "warehouse": "Paid by the warehouse",
-      "platform": "Paid by Feniq"
+      "platform": "Paid by PharmaLink Demo"
     },
     "columns": {
       "code": "Code",
@@ -1088,7 +1095,7 @@
         "admin": "Admin codes",
         "all": "All codes"
       },
-      "fundingHint": "Admin codes work on every warehouse from the moment they are created, and Feniq pays for them: the warehouse is compensated in full (see Commission). Warehouse codes are paid by the warehouse.",
+      "fundingHint": "Admin codes work on every warehouse from the moment they are created, and PharmaLink Demo pays for them: the warehouse is compensated in full (see Commission). Warehouse codes are paid by the warehouse.",
       "allWarehouses": "Admin - every warehouse",
       "confirmApprove": "Approve code {{code}}?",
       "rejectPrompt": "Why is code {{code}} rejected? The warehouse will see this reason.",

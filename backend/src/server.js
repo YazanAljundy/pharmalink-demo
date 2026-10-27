@@ -96,7 +96,7 @@ async function start() {
 
   server.listen(env.port, () => {
     // eslint-disable-next-line no-console
-    console.log(`Feniq API listening on port ${env.port} (${env.nodeEnv})`);
+    console.log(`PharmaLink Demo API listening on port ${env.port} (${env.nodeEnv})`);
   });
 }
 

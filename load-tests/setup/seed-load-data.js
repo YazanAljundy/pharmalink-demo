@@ -1,11 +1,11 @@
 /**
  * Load-test fixture seeder. Writes ONLY clearly-marked load-test documents
- * into the LOCAL phoenix database and never touches, reads back, or mutates
+ * into the LOCAL pharmalink_demo database and never touches, reads back, or mutates
  * any pre-existing record.
  *
  * Everything it creates is identifiable two ways, so cleanup is exact:
  *   - users.phone starts with LT_PHONE_PREFIX ('0977')
- *   - every document carries `loadTestTag: 'phoenix-load-test'`
+ *   - every document carries `loadTestTag: 'pharmalink_demo-load-test'`
  *
  *   node setup/seed-load-data.js            seed
  *   node setup/seed-load-data.js --clean    remove every tagged document
@@ -22,10 +22,10 @@ const backendDir = path.resolve(__dirname, '..', '..', 'backend');
 const { MongoClient, ObjectId } = require(require.resolve('mongodb', { paths: [backendDir] }));
 const bcrypt = require(require.resolve('bcrypt', { paths: [backendDir] }));
 
-const TAG = 'phoenix-load-test';
+const TAG = 'pharmalink_demo-load-test';
 const LT_PHONE_PREFIX = '0977';
 const MONGO_URI = process.env.LOAD_TEST_MONGODB_URI || 'mongodb://localhost:27017';
-const DB_NAME = process.env.LOAD_TEST_DB || 'phoenix';
+const DB_NAME = process.env.LOAD_TEST_DB || 'pharmalink_demo';
 
 // Sizing. Each pharmacy account is one simulated logged-in user; k6 VUs are
 // spread across them round-robin.

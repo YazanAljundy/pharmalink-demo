@@ -4,7 +4,7 @@
 // reconfigure the installed MongoDB service.
 //
 //   node backend/scripts/start-dev-replset.js
-//   MONGODB_URI=mongodb://127.0.0.1:27018/phoenix
+//   MONGODB_URI=mongodb://127.0.0.1:27018/pharmalink_demo
 //
 // Leave it running in its own terminal; Ctrl-C stops it.
 const { spawn } = require('node:child_process');
@@ -14,7 +14,7 @@ const path = require('node:path');
 
 const PORT = Number(process.env.DEV_REPLSET_PORT) || 27018;
 const REPL_SET = 'rs0';
-const dbPath = process.env.DEV_REPLSET_DBPATH || path.join(os.homedir(), '.phoenix-mongo-rs', String(PORT));
+const dbPath = process.env.DEV_REPLSET_DBPATH || path.join(os.homedir(), '.pharmalink_demo-mongo-rs', String(PORT));
 
 // mongod.exe lives under Program Files but only needs to be *executed*, not
 // written to - so this needs no elevation.
@@ -59,7 +59,7 @@ async function waitForPrimary() {
         if (info.setName && info.isWritablePrimary) {
           console.log('');
           console.log(`  replica set ${info.setName} ready on port ${PORT}`);
-          console.log(`  MONGODB_URI=mongodb://127.0.0.1:${PORT}/phoenix`);
+          console.log(`  MONGODB_URI=mongodb://127.0.0.1:${PORT}/pharmalink_demo`);
           console.log('');
           await mongoose.disconnect();
           return true;

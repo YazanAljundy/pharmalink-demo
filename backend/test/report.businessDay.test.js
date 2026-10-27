@@ -71,7 +71,7 @@ async function get(role, urlPath) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-report-business-day' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-report-business-day' });
   await syncIndexes(Order, LedgerEntry, LedgerAccount, CommissionCollection);
 
   const [admin, whUser, phUser] = await User.create([

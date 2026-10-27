@@ -225,7 +225,7 @@ export function formatBadgeCount(count) {
 // anything yet). Closing the tab, signing out or switching account does not.
 
 export function unreadStorageKey(userId) {
-  return `feniq.unread.${userId}`;
+  return `pharmalink_demo.unread.${userId}`;
 }
 
 // Anything that doesn't look exactly like a state this role could have produced

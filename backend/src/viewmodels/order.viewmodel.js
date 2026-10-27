@@ -187,7 +187,7 @@ function toReorderResponse({ warehouse, items = [], unavailableItems = [] }, usd
 // Money-Flow V2: SYP is the primary figure and it is a sum of FROZEN per-order
 // amounts, so the number stops moving every time the exchange rate does. The
 // three components are broken out because they answer different questions -
-// "the warehouse discounted this", "this was a package deal", "Feniq
+// "the warehouse discounted this", "this was a package deal", "PharmaLink Demo
 // subsidised this" - while `totalSavingsSyp` is the headline.
 function toSavingsSummaryResponse(summary) {
   return {

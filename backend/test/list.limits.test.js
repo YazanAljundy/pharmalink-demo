@@ -40,7 +40,7 @@ async function get(path, token) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-list-limits-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-list-limits-test' });
   const [whUser, adminUser, pharmacyUser] = await User.create([
     { name: 'WH', phone: '0942001001', role: 'warehouse', status: 'active' },
     { name: 'AD', phone: '0952001001', role: 'admin', status: 'active' },

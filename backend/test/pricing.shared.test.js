@@ -33,7 +33,7 @@ const RATE = 13130;
 const ids = {};
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-shared-pricing-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-shared-pricing-test' });
   await syncIndexes(Order, OrderItem);
   await ExchangeRate.create({ _id: 'singleton', usdToSyp: RATE, source: 'manual' });
   const [phUser, whUser] = await User.create([

@@ -6,7 +6,7 @@
 //
 // No database and no sockets here: the io instance is a recorder injected
 // through the module's own test seam.
-process.env.MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/feniq-test';
+process.env.MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/pharmalink_demo-test';
 process.env.JWT_SECRET = process.env.JWT_SECRET || 'test-secret-for-realtime-tests-p';
 process.env.NODE_ENV = 'test';
 

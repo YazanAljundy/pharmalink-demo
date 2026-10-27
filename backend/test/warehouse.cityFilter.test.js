@@ -88,7 +88,7 @@ const PHARMACY_USER_ID = new mongoose.Types.ObjectId();
 const CITYLESS_PHARMACY_USER_ID = new mongoose.Types.ObjectId();
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-city-filter-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-city-filter-test' });
 
   const homeUserId = new mongoose.Types.ObjectId();
   const arabicUserId = new mongoose.Types.ObjectId();

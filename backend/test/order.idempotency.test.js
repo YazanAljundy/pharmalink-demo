@@ -87,7 +87,7 @@ async function call(method, path, body) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-order-idempotency-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-order-idempotency-test' });
   // The unique (pharmacyId, idempotencyKey) index is what the race test below
   // leans on, and orders are written in a transaction.
   await syncIndexes(Order, OrderItem);

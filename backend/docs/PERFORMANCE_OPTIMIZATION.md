@@ -1,4 +1,4 @@
-# Feniq Backend — Performance Optimization Reference
+# PharmaLink Demo Backend — Performance Optimization Reference
 
 Central reference for incremental backend performance work. **Read this file
 first** before starting a new optimization task; only open source files when

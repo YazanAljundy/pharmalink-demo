@@ -53,7 +53,7 @@ async function balance() {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-adjustment-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-adjustment-test' });
   await syncIndexes(LedgerEntry, LedgerAccount);
   await ExchangeRate.create({ _id: 'singleton', usdToSyp: RATE, source: 'manual' });
 

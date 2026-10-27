@@ -3,7 +3,7 @@
 // (productCatalog.service.searchManufacturers), and the `manufacturer`
 // filter on both pages' list endpoints.
 //
-// Runs against its own database (feniq-admin-manufacturer-test) and drops it
+// Runs against its own database (pharmalink_demo-admin-manufacturer-test) and drops it
 // at the end, same pattern as adminProduct.categoryFilter.test.js.
 process.env.JWT_SECRET = process.env.JWT_SECRET || 'test-secret-for-admin-manufacturer-tests';
 process.env.NODE_ENV = 'test';
@@ -23,7 +23,7 @@ const catalogService = require('../src/services/productCatalog.service');
 const ids = {};
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-admin-manufacturer-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-admin-manufacturer-test' });
 
   const warehouseUser = await User.create({
     name: 'WH', phone: '0950000001', role: 'warehouse', status: 'active',
@@ -34,26 +34,27 @@ test.before(async () => {
   });
   ids.warehouseId = warehouse._id;
 
-  const [gskPanadol, gskAmoxil, bayerAspirin] = await ProductCatalog.create([
-    { nameAr: 'بانادول', nameEn: 'Panadol', manufacturerAr: 'جي اس كي', manufacturerEn: 'GSK' },
-    { nameAr: 'اموكسيل', nameEn: 'Amoxil', manufacturerAr: 'جي اس كي', manufacturerEn: 'GSK' },
-    { nameAr: 'اسبرين', nameEn: 'Aspirin', manufacturerAr: 'باير', manufacturerEn: 'Bayer' },
+  const [sampleMedicineAlpha, sampleMedicineBeta, sampleMedicineGamma] = await ProductCatalog.create([
+    { nameAr: 'دواء تجريبي ألف', nameEn: 'Sample Medicine Alpha', manufacturerAr: 'مختبر تجريبي ألف', manufacturerEn: 'Sample Pharma Labs A' },
+    { nameAr: 'دواء تجريبي باء', nameEn: 'Sample Medicine Beta', manufacturerAr: 'مختبر تجريبي ألف', manufacturerEn: 'Sample Pharma Labs A' },
+    { nameAr: 'دواء تجريبي جيم', nameEn: 'Sample Medicine Gamma', manufacturerAr: 'مختبر تجريبي باء', manufacturerEn: 'Sample Pharma Labs B' },
   ]);
-  ids.gskPanadol = gskPanadol._id;
-  ids.gskAmoxil = gskAmoxil._id;
-  ids.bayerAspirin = bayerAspirin._id;
+  ids.sampleMedicineAlpha = sampleMedicineAlpha._id;
+  ids.sampleMedicineBeta = sampleMedicineBeta._id;
+  ids.sampleMedicineGamma = sampleMedicineGamma._id;
 
   await Product.create([
-    // Two catalog-linked GSK products.
-    { warehouseId: warehouse._id, masterProductId: gskPanadol._id, price: 5 },
-    { warehouseId: warehouse._id, masterProductId: gskAmoxil._id, price: 6 },
-    // One catalog-linked Bayer product.
-    { warehouseId: warehouse._id, masterProductId: bayerAspirin._id, price: 7 },
-    // A legacy product (no catalog link) whose OWN manufacturer field is GSK -
+    // Two catalog-linked products from one demo manufacturer.
+    { warehouseId: warehouse._id, masterProductId: sampleMedicineAlpha._id, price: 5 },
+    { warehouseId: warehouse._id, masterProductId: sampleMedicineBeta._id, price: 6 },
+    // One catalog-linked product from another demo manufacturer.
+    { warehouseId: warehouse._id, masterProductId: sampleMedicineGamma._id, price: 7 },
+    // A legacy product (no catalog link) whose OWN manufacturer field is set -
     // the two-step match (manufacturerMatchClauses) must catch this too.
     {
       warehouseId: warehouse._id, masterProductId: null, price: 8,
-      nameAr: 'مسكن قديم', nameEn: 'Legacy GSK Product', manufacturerAr: 'جي اس كي', manufacturerEn: 'GSK',
+      nameAr: 'دواء تجريبي قديم', nameEn: 'Legacy Sample Product',
+      manufacturerAr: 'مختبر تجريبي ألف', manufacturerEn: 'Sample Pharma Labs A',
     },
   ]);
 });
@@ -69,19 +70,19 @@ test.after(async () => {
 test('searchManufacturers with no term returns every distinct manufacturer, sorted', async () => {
   const names = await catalogService.searchManufacturers();
   assert.deepStrictEqual(names, [...names].sort((a, b) => a.localeCompare(b)));
-  assert.ok(names.includes('جي اس كي'));
-  assert.ok(names.includes('باير'));
+  assert.ok(names.includes('مختبر تجريبي ألف'));
+  assert.ok(names.includes('مختبر تجريبي باء'));
   assert.strictEqual(new Set(names).size, names.length, 'must be distinct');
 });
 
 test('searchManufacturers matches on the Arabic name', async () => {
-  const names = await catalogService.searchManufacturers('جي اس كي');
-  assert.deepStrictEqual(names, ['جي اس كي']);
+  const names = await catalogService.searchManufacturers('مختبر تجريبي ألف');
+  assert.deepStrictEqual(names, ['مختبر تجريبي ألف']);
 });
 
 test('searchManufacturers matches on the English name too', async () => {
-  const names = await catalogService.searchManufacturers('Bayer');
-  assert.deepStrictEqual(names, ['باير']);
+  const names = await catalogService.searchManufacturers('Sample Pharma Labs B');
+  assert.deepStrictEqual(names, ['مختبر تجريبي باء']);
 });
 
 test('searchManufacturers with no matches returns an empty array, not an error', async () => {
@@ -95,45 +96,45 @@ test('searchManufacturers with no matches returns an empty array, not an error',
 
 test('adminProduct.service: manufacturer filter matches catalog-linked AND legacy products', async () => {
   const { rows } = await adminProductService.listPaginatedAllProducts({
-    manufacturer: 'جي اس كي',
+    manufacturer: 'مختبر تجريبي ألف',
     limit: 50,
   });
   assert.strictEqual(rows.length, 3);
   const names = rows.map((r) => r.product.nameEn).sort();
-  assert.deepStrictEqual(names, ['Amoxil', 'Legacy GSK Product', 'Panadol']);
+  assert.deepStrictEqual(names, ['Legacy Sample Product', 'Sample Medicine Alpha', 'Sample Medicine Beta']);
 });
 
 test('adminProduct.service: manufacturer filter excludes a different manufacturer', async () => {
   const { rows } = await adminProductService.listPaginatedAllProducts({
-    manufacturer: 'باير',
+    manufacturer: 'مختبر تجريبي باء',
     limit: 50,
   });
   assert.strictEqual(rows.length, 1);
-  assert.strictEqual(rows[0].product.nameEn, 'Aspirin');
+  assert.strictEqual(rows[0].product.nameEn, 'Sample Medicine Gamma');
 });
 
 test('adminProduct.service: manufacturer AND search combine (both must match)', async () => {
-  // "Panadol" alone would match one GSK product; add the manufacturer filter
-  // for a manufacturer that owns no product named "Panadol" -> no rows.
+  // A medicine name alone matches one product; add a different manufacturer's
+  // filter -> no rows.
   const noMatch = await adminProductService.listPaginatedAllProducts({
-    search: 'Panadol',
-    manufacturer: 'باير',
+    search: 'Sample Medicine Alpha',
+    manufacturer: 'مختبر تجريبي باء',
     limit: 50,
   });
   assert.deepStrictEqual(noMatch.rows, []);
 
   const match = await adminProductService.listPaginatedAllProducts({
-    search: 'Panadol',
-    manufacturer: 'جي اس كي',
+    search: 'Sample Medicine Alpha',
+    manufacturer: 'مختبر تجريبي ألف',
     limit: 50,
   });
   assert.strictEqual(match.rows.length, 1);
-  assert.strictEqual(match.rows[0].product.nameEn, 'Panadol');
+  assert.strictEqual(match.rows[0].product.nameEn, 'Sample Medicine Alpha');
 });
 
 test('productCatalog.service: manufacturer filter is an exact match on the catalog', async () => {
-  const { items } = await catalogService.listCatalog({ manufacturer: 'جي اس كي', limit: 50 });
+  const { items } = await catalogService.listCatalog({ manufacturer: 'مختبر تجريبي ألف', limit: 50 });
   assert.strictEqual(items.length, 2);
   const ids2 = items.map((i) => String(i._id)).sort();
-  assert.deepStrictEqual(ids2, [String(ids.gskAmoxil), String(ids.gskPanadol)].sort());
+  assert.deepStrictEqual(ids2, [String(ids.sampleMedicineAlpha), String(ids.sampleMedicineBeta)].sort());
 });

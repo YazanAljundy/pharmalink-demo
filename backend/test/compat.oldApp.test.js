@@ -18,9 +18,8 @@
 //   POST /orders                         (the old request body, below)
 //   GET  /orders/:id, GET /orders, POST /orders/:id/reorder
 //
-// The responses are recorded as fixtures in phoenix/test/compat/fixtures,
-// which the Flutter half (phoenix/test/compat/old_app_compat_test.dart)
-// parses with the OLD model classes, copied unchanged from main. The order
+// The responses are recorded as fixtures for the Flutter compatibility test,
+// which parses them with the OLD model classes, copied unchanged from main. The order
 // body posted here is fixtures/order_request_old.json, and the Flutter half
 // checks that the old OrderRepositoryImpl code builds exactly that body from
 // carts made by the old models - so the two halves meet in the middle.
@@ -60,7 +59,13 @@ const ExchangeRate = require('../src/models/exchangeRate.model');
 const { registerManufacturers } = require('../src/services/warehouseManufacturer.service');
 const { createDiscount } = require('../src/services/manufacturerDiscount.service');
 
-const FIXTURES = path.join(__dirname, '..', '..', 'phoenix', 'test', 'compat', 'fixtures');
+const REPO_ROOT = path.resolve(__dirname, '..', '..');
+const FLUTTER_ROOT = fs
+  .readdirSync(REPO_ROOT)
+  .map((name) => path.join(REPO_ROOT, name))
+  .find((directory) => fs.existsSync(path.join(directory, 'pubspec.yaml')));
+if (!FLUTTER_ROOT) throw new Error('Could not locate the Flutter app pubspec.yaml.');
+const FIXTURES = path.join(FLUTTER_ROOT, 'test', 'compat', 'fixtures');
 const RECORD = process.env.COMPAT_RECORD === '1';
 
 // A realistic lira rate, so the stacked discounts produce lira that need
@@ -144,7 +149,7 @@ function recordOrCheck(name, body) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-old-app-compat-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-old-app-compat-test' });
   await syncIndexes(Order, OrderItem, Product, ProductCatalog, Manufacturer);
   await ExchangeRate.create({ _id: 'singleton', usdToSyp: RATE, source: 'manual', manualOverride: true });
 
@@ -165,18 +170,18 @@ test.before(async () => {
   await Category.create({ _id: IDS.category, nameAr: 'مسكنات', nameEn: 'Painkillers', sortOrder: 1 });
 
   await Manufacturer.create({
-    _id: IDS.manufacturer, nameAr: 'جي إس كي', nameEn: 'GSK', key: 'جي اس كي',
-    logoUrl: 'https://res.cloudinary.com/feniq/image/upload/v1/manufacturers/gsk.png',
+    _id: IDS.manufacturer, nameAr: 'مختبر تجريبي ألف', nameEn: 'Sample Pharma Labs A', key: 'مختبر تجريبي ألف',
+    logoUrl: 'https://example.invalid/images/demo-manufacturer.png',
   });
   await ProductCatalog.create([
     {
-      _id: IDS.catalogPanadol, nameAr: 'بنادول أكسترا', nameEn: 'Panadol Extra', manufacturerAr: 'جي إس كي',
-      manufacturerEn: 'GSK', categoryId: IDS.category,
-      imageUrl: 'https://res.cloudinary.com/feniq/image/upload/v1/catalog/panadol.png',
+      _id: IDS.catalogPanadol, nameAr: 'بنادول أكسترا', nameEn: 'Panadol Extra', manufacturerAr: 'مختبر تجريبي ألف',
+      manufacturerEn: 'Sample Pharma Labs A', categoryId: IDS.category,
+      imageUrl: 'https://example.invalid/images/demo-product.png',
     },
     {
-      _id: IDS.catalogAmoxil, nameAr: 'أموكسيل 500', nameEn: 'Amoxil 500', manufacturerAr: 'جي إس كي',
-      manufacturerEn: 'GSK', categoryId: IDS.category,
+      _id: IDS.catalogAmoxil, nameAr: 'أموكسيل 500', nameEn: 'Amoxil 500', manufacturerAr: 'مختبر تجريبي ألف',
+      manufacturerEn: 'Sample Pharma Labs A', categoryId: IDS.category,
     },
   ]);
   await Product.create([
@@ -197,8 +202,8 @@ test.before(async () => {
   ]);
 
   // A manufacturer discount stacked under an offer (7.5% then 5%, decimals).
-  await registerManufacturers(IDS.warehouse, ['جي إس كي']);
-  await createDiscount(IDS.warehouse, { manufacturerAr: 'جي إس كي', discountPercentage: 5 });
+  await registerManufacturers(IDS.warehouse, ['مختبر تجريبي ألف']);
+  await createDiscount(IDS.warehouse, { manufacturerAr: 'مختبر تجريبي ألف', discountPercentage: 5 });
   const day = 86400000;
   await Offer.create({
     _id: IDS.offer, warehouseId: IDS.warehouse, productId: IDS.panadol, titleAr: 'عرض بنادول', titleEn: 'Panadol offer',
@@ -238,7 +243,7 @@ test('the catalog screens: categories, manufacturers, products (old query parame
 
   // The company drill-down sends the manufacturer's name exactly as the
   // manufacturers list showed it; the search box sends free text.
-  const byManufacturer = await call('GET', `/warehouses/${IDS.warehouse}/products?limit=20&manufacturer=${encodeURIComponent('جي إس كي')}`);
+  const byManufacturer = await call('GET', `/warehouses/${IDS.warehouse}/products?limit=20&manufacturer=${encodeURIComponent('مختبر تجريبي ألف')}`);
   assert.deepStrictEqual(byManufacturer.body.products.map((p) => p.id).sort(), [String(IDS.panadol), String(IDS.amoxil)].sort());
   recordOrCheck('products_by_manufacturer', byManufacturer.body);
   const bySearch = await call('GET', `/warehouses/${IDS.warehouse}/products?limit=20&search=${encodeURIComponent('بنادول')}`);

@@ -85,7 +85,7 @@ const ids = {
 const DELIVERED_AT = new Date(Date.now() - 60 * 60 * 1000);
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-projection-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-projection-test' });
 
   await User.create([
     { _id: ids.pharmUser, name: 'Pharm Owner', phone: '0930000001', role: 'pharmacy', status: 'active' },

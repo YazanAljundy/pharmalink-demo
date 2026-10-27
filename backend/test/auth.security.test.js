@@ -8,7 +8,7 @@
 //
 // There was no HTTP-level coverage of /auth/* at all before this.
 process.env.JWT_SECRET = process.env.JWT_SECRET || 'test-secret-for-auth-security-tests';
-process.env.MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/feniq-auth-security-test';
+process.env.MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/pharmalink_demo-auth-security-test';
 // Pinned rather than inherited: dotenv loads backend/.env for these tests,
 // and the access-token lifetime assertion below has to describe the code,
 // not whatever this particular machine has configured.
@@ -98,7 +98,7 @@ function registrationBody(phone, overrides = {}) {
 }
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-auth-security-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-auth-security-test' });
   await syncIndexes(User);
 
   const hashed = await bcrypt.hash(PASSWORD, 10);

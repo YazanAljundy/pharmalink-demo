@@ -97,7 +97,7 @@ const rejectsWith = (code, extra = () => {}) => (err) => {
 };
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-advertisement-availability-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-advertisement-availability-test' });
   await syncIndexes(Order);
   await ExchangeRate.create({ _id: 'singleton', usdToSyp: RATE, source: 'manual' });
 

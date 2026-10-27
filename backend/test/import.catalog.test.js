@@ -43,7 +43,7 @@ async function manufacturer() {
 const itemNamed = (nameAr, manufacturerAr) => ProductCatalog.findOne({ nameAr, manufacturerAr }).lean();
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-import-catalog-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-import-catalog-test' });
   await syncIndexes(ProductCatalog, Manufacturer, ImportColumnMapping, Category);
   // Deliberately no exchange rate: the catalog import never needs one.
 });

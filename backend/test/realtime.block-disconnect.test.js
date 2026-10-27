@@ -5,7 +5,7 @@
 // with real clients - what is under test is an actual disconnect arriving at an
 // actual client, which a mocked socket could not demonstrate. The Mongoose
 // models are stubbed through require.cache so no database is needed.
-process.env.MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/feniq-test';
+process.env.MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/pharmalink_demo-test';
 process.env.JWT_SECRET = process.env.JWT_SECRET || 'test-secret-for-realtime-tests-p';
 process.env.NODE_ENV = 'test';
 

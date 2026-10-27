@@ -9,7 +9,7 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 
-const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/phoenix';
+const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/pharmalink_demo';
 const shouldInitiate = process.argv.includes('--initiate');
 
 async function main() {

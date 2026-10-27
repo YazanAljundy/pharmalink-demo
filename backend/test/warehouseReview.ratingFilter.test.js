@@ -15,7 +15,7 @@ const WAREHOUSE_ID = new mongoose.Types.ObjectId();
 const PHARMACY_ID = new mongoose.Types.ObjectId();
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-review-rating-filter-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-review-rating-filter-test' });
 });
 
 test.after(async () => {

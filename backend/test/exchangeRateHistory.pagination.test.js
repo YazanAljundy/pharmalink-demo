@@ -12,7 +12,7 @@ const ExchangeRateHistory = require('../src/models/exchangeRateHistory.model');
 const { listRateHistory } = require('../src/services/exchangeRate.service');
 
 test.before(async () => {
-  await startMemoryMongo({ dbName: 'feniq-fx-history-pagination-test' });
+  await startMemoryMongo({ dbName: 'pharmalink_demo-fx-history-pagination-test' });
 });
 
 test.after(async () => {

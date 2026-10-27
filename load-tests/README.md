@@ -1,6 +1,6 @@
-# Feniq Load & Stress Test Suite
+# PharmaLink Demo Load & Stress Test Suite
 
-Full-system load testing for the Feniq backend: HTTP APIs, Socket.IO realtime,
+Full-system load testing for the PharmaLink Demo backend: HTTP APIs, Socket.IO realtime,
 return-photo uploads, and catalog-size scaling. Nothing here modifies
 application code — the backend is exercised only through its public API, plus
 one out-of-band instrumentation module loaded with `node -r`.
@@ -67,7 +67,7 @@ node load-tests/setup/seed-load-data.js --clean
 
 ## Test data
 
-Every fixture document carries `loadTestTag: 'phoenix-load-test'`, and every
+Every fixture document carries `loadTestTag: 'pharmalink_demo-load-test'`, and every
 fixture account's phone starts with `0977`. Records the *write* scenarios
 create through the API (orders, reviews, returns) cannot carry that tag — the
 application does not know about it — so `--clean` also deletes by ownership:

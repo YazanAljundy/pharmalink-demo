@@ -1,0 +1,282 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pharmalink_demo/core/constants/app_colors.dart';
+import 'package:pharmalink_demo/core/constants/app_radius.dart';
+import 'package:pharmalink_demo/core/constants/app_sizes.dart';
+import 'package:pharmalink_demo/core/error/error_translator.dart';
+import 'package:pharmalink_demo/core/extensions/build_context_extensions.dart';
+import 'package:pharmalink_demo/core/widgets/app_skeleton.dart';
+import 'package:pharmalink_demo/core/widgets/empty_view.dart';
+import 'package:pharmalink_demo/core/widgets/failure_widget.dart';
+import 'package:pharmalink_demo/features/advertisements/presentation/utils/advertisement_cart_launcher.dart';
+import 'package:pharmalink_demo/features/cart/presentation/widgets/cart_button.dart';
+import 'package:pharmalink_demo/features/notifications/presentation/widgets/notification_button.dart';
+import 'package:pharmalink_demo/features/promotions/data/models/promotion.dart';
+import 'package:pharmalink_demo/features/promotions/presentation/managers/promotions_cubit.dart';
+import 'package:pharmalink_demo/features/promotions/presentation/managers/promotions_state.dart';
+import 'package:pharmalink_demo/features/promotions/presentation/widgets/promotion_filter_bar.dart';
+import 'package:pharmalink_demo/features/promotions/presentation/widgets/promotion_hero_card.dart';
+import 'package:pharmalink_demo/features/promotions/presentation/widgets/promotions_hero_carousel.dart';
+import 'package:pharmalink_demo/routes/route_names.dart';
+
+/// The Offers & Ads tab: the one place a pharmacist browses everything being
+/// promoted right now - product offers and warehouse packages together.
+///
+/// Discovery only. Nothing is ordered from here: tapping an offer opens
+/// WarehouseOffersView, scoped to that offer's own warehouse (see
+/// _handleTap below), and a package hands off to the existing package ->
+/// cart flow. Neither builds a screen of its own. The "All"/"Offers"/
+/// "Packages" chips above the list are a plain in-place kind filter (see
+/// PromotionFilterBar) - unlike an offer tap, they never navigate anywhere.
+class PromotionsView extends StatefulWidget {
+  const PromotionsView({super.key});
+
+  @override
+  State<PromotionsView> createState() => _PromotionsViewState();
+}
+
+class _PromotionsViewState extends State<PromotionsView> {
+  // A package tap is a network round trip; this stops a double tap from
+  // starting two of them (the same guard AdvertisementCard uses).
+  bool _openingPackage = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) context.read<PromotionsCubit>().load();
+    });
+  }
+
+  Future<void> _handleTap(Promotion promotion) async {
+    switch (promotion) {
+      case OfferPromotion(:final offer):
+        // Not straight into the catalog - into the offers running at THIS
+        // offer's own warehouse (WarehouseOffersView/Cubit, the same screen
+        // the Offers chip opens for the cart's warehouse - see
+        // _openWarehouseOffers). That list's own tap is what makes the
+        // manufacturer -> catalog hand-off a tapped banner also uses.
+        context.pushNamed(
+          RouteNames.warehouseOffers,
+          pathParameters: {'warehouseId': offer.warehouseId},
+          extra: promotion.warehouseName(Localizations.localeOf(context).languageCode == 'ar'),
+        );
+      case PackagePromotion(:final advertisement):
+        if (_openingPackage) return;
+        setState(() => _openingPackage = true);
+        await launchAdvertisementCart(context, advertisement.id);
+        if (mounted) setState(() => _openingPackage = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.navyOf(context),
+        foregroundColor: Colors.white,
+        toolbarHeight: 64,
+        title: BlocBuilder<PromotionsCubit, PromotionsState>(
+          buildWhen: (previous, current) =>
+              previous.totalCount != current.totalCount || previous.status != current.status,
+          builder: (context, state) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(l10n.offersAndAdsTitle, maxLines: 1, overflow: TextOverflow.ellipsis),
+                Text(
+                  l10n.promotionsCountSubtitle(state.totalCount),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.normal, color: Colors.white70),
+                ),
+              ],
+            );
+          },
+        ),
+        actions: const [NotificationButton(), CartButton()],
+      ),
+      body: BlocBuilder<PromotionsCubit, PromotionsState>(
+        builder: (context, state) {
+          switch (state.status) {
+            case PromotionsStatus.initial:
+            case PromotionsStatus.loading:
+              // Filter bar, hero carousel, section title, then the list -
+              // the running order of the loaded screen below.
+              return const SkeletonPage(
+                padding: EdgeInsets.fromLTRB(
+                  AppSizes.spacingMedium,
+                  AppSizes.spacingMedium,
+                  AppSizes.spacingMedium,
+                  AppSizes.spacingLarge,
+                ),
+                children: [
+                  SkeletonBar(height: 36, radius: AppRadius.full),
+                  SizedBox(height: AppSizes.spacingMedium),
+                  SkeletonBar(height: 168, radius: AppRadius.large),
+                  SizedBox(height: AppSizes.spacingLarge),
+                  SkeletonBar(width: 140, height: 16),
+                  SizedBox(height: AppSizes.spacingMedium),
+                  SkeletonListCard(lines: 2),
+                  SizedBox(height: AppSizes.spacingMedium),
+                  SkeletonListCard(lines: 2),
+                ],
+              );
+            case PromotionsStatus.error:
+              return FailureWidget(
+                message: translateErrorCode(l10n, state.errorCode, state.errorMessage ?? l10n.promotionsError),
+                onRetry: () => context.read<PromotionsCubit>().load(),
+              );
+            case PromotionsStatus.loaded:
+              return _LoadedBody(state: state, onPromotionTap: _handleTap);
+          }
+        },
+      ),
+    );
+  }
+}
+
+class _LoadedBody extends StatelessWidget {
+  const _LoadedBody({required this.state, required this.onPromotionTap});
+
+  final PromotionsState state;
+  final ValueChanged<Promotion> onPromotionTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final cubit = context.read<PromotionsCubit>();
+    final visible = state.filtered;
+
+    // Nothing is running at all - a calm "come back later", the app's standard
+    // empty state, never an error.
+    if (state.promotions.isEmpty) {
+      return RefreshIndicator(
+        onRefresh: cubit.load,
+        child: ListView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          children: [
+            SizedBox(height: context.screenHeight * 0.18),
+            EmptyView(
+              message: l10n.promotionsEmptyTitle,
+              subtitle: l10n.promotionsEmptyMessage,
+              icon: Icons.local_offer_outlined,
+            ),
+          ],
+        ),
+      );
+    }
+
+    return RefreshIndicator(
+      onRefresh: cubit.load,
+      // Both listings are paginated server-side: nearing the end of the list
+      // asks the cubit for the next page (a no-op while one is in flight or
+      // when everything is loaded).
+      child: NotificationListener<ScrollNotification>(
+        onNotification: (notification) {
+          if (notification.metrics.extentAfter < 400) cubit.loadMore();
+          return false;
+        },
+        child: CustomScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          slivers: [
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.only(top: AppSizes.spacingMedium),
+                child: PromotionFilterBar(
+                  kindFilter: state.kindFilter,
+                  warehouseFilter: state.warehouseFilter,
+                  warehouses: state.warehouses,
+                  onKindChanged: cubit.filterByKind,
+                  onWarehouseChanged: cubit.filterByWarehouse,
+                ),
+              ),
+            ),
+            if (visible.isEmpty)
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    EmptyView(message: l10n.promotionsNoFilterResults, icon: Icons.filter_alt_off_outlined),
+                    const SizedBox(height: AppSizes.spacingMedium),
+                    TextButton(onPressed: cubit.clearFilters, child: Text(l10n.promotionsClearFilters)),
+                  ],
+                ),
+              )
+            else ...[
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(AppSizes.spacingMedium, AppSizes.spacingMedium, 0, 0),
+                  // Full width on a phone, capped on a tablet - the same
+                  // treatment BannerSlider and the packages section give theirs.
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 640),
+                      child: PromotionsHeroCarousel(promotions: state.featured, onPromotionTap: onPromotionTap),
+                    ),
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 560),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        AppSizes.spacingMedium,
+                        AppSizes.spacingLarge,
+                        AppSizes.spacingMedium,
+                        AppSizes.spacingSmall,
+                      ),
+                      child: Align(
+                        alignment: AlignmentDirectional.centerStart,
+                        child: Text(l10n.promotionsAllTitle, style: context.textTheme.titleMedium),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SliverPadding(
+                padding: const EdgeInsets.fromLTRB(
+                  AppSizes.spacingMedium,
+                  0,
+                  AppSizes.spacingMedium,
+                  AppSizes.spacingLarge,
+                ),
+                sliver: SliverList.separated(
+                  itemCount: visible.length,
+                  separatorBuilder: (context, index) => const SizedBox(height: AppSizes.spacingMedium),
+                  itemBuilder: (context, index) {
+                    final promotion = visible[index];
+                    return Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 560),
+                        child: PromotionListCard(
+                          key: ValueKey(promotion.key),
+                          promotion: promotion,
+                          onTap: () => onPromotionTap(promotion),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              if (state.isLoadingMore)
+                const SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: AppSizes.spacingLarge),
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
+                ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}

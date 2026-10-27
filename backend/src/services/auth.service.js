@@ -29,7 +29,7 @@ const LOCKOUT_MAX_MINUTES = 24 * 60;
 // error messages were written to close. Generated rather than hard-coded so it
 // always matches the cost factor above.
 const DUMMY_PASSWORD_HASH = bcrypt.hashSync(
-  'feniq/no-such-account/timing-equaliser',
+  'pharmalink_demo/no-such-account/timing-equaliser',
   BCRYPT_SALT_ROUNDS
 );
 
