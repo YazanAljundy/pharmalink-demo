@@ -166,6 +166,25 @@ void main() {
     expect(find.text('300,000 SYP'), findsOneWidget);
   });
 
+  testWidgets('debt and credit totals fit the account history card', (tester) async {
+    when(() => debts.state).thenReturn(
+      DebtsState(
+        status: DebtsStatus.loaded,
+        summary: DebtsSummaryModel(
+          totalDebtSyp: 135000,
+          totalCreditSyp: 20000,
+          netPositionSyp: 115000,
+          accounts: [_debt(135000), _debt(-20000)],
+        ),
+      ),
+    );
+    await pump(tester);
+
+    expect(find.text('135,000 SYP'), findsOneWidget);
+    expect(find.text('Credit: 20,000 SYP'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('Test 5: the return count is shown', (tester) async {
     await pump(tester);
     expect(find.text('3 requests'), findsOneWidget);

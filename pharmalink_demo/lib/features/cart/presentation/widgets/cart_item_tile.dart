@@ -63,7 +63,9 @@ class CartItemTile extends StatelessWidget {
     // line gets checked before the order goes out, so every line gets a larger
     // picture, larger type and the full-size quantity controls.
     return CustomCard(
-      padding: const EdgeInsets.all(AppSizes.spacingMedium + AppSizes.spacingXSmall),
+      padding: const EdgeInsets.all(
+        AppSizes.spacingMedium + AppSizes.spacingXSmall,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -74,7 +76,11 @@ class CartItemTile extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _ItemImage(url: item.image),
+              _ItemImage(
+                url: item.image,
+                seed: item.productId,
+                isPackage: item.isPackage,
+              ),
               const SizedBox(width: AppSizes.spacingMedium),
               Expanded(
                 child: Column(
@@ -103,7 +109,9 @@ class CartItemTile extends StatelessWidget {
                     const SizedBox(height: AppSizes.spacingXSmall),
                     Text(
                       item.manufacturerAr,
-                      style: context.textTheme.bodyMedium?.copyWith(color: secondary),
+                      style: context.textTheme.bodyMedium?.copyWith(
+                        color: secondary,
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -114,7 +122,11 @@ class CartItemTile extends StatelessWidget {
                         spacing: AppSizes.spacingSmall,
                         children: [
                           Text(
-                            formatMoneyFromUsd(item.unitPriceUsd, usdToSyp, l10n.currencySuffix),
+                            formatMoneyFromUsd(
+                              item.unitPriceUsd,
+                              usdToSyp,
+                              l10n.currencySuffix,
+                            ),
                             style: TextStyle(
                               decoration: TextDecoration.lineThrough,
                               color: secondary,
@@ -122,7 +134,10 @@ class CartItemTile extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            formatMoneySyp(item.unitSypAt(usdToSyp), l10n.currencySuffix),
+                            formatMoneySyp(
+                              item.unitSypAt(usdToSyp),
+                              l10n.currencySuffix,
+                            ),
                             style: TextStyle(
                               color: AppColors.secondaryOf(context),
                               fontWeight: FontWeight.bold,
@@ -133,7 +148,10 @@ class CartItemTile extends StatelessWidget {
                       )
                     else
                       Text(
-                        formatMoneySyp(item.unitSypAt(usdToSyp), l10n.currencySuffix),
+                        formatMoneySyp(
+                          item.unitSypAt(usdToSyp),
+                          l10n.currencySuffix,
+                        ),
                         style: TextStyle(
                           color: AppColors.primaryOf(context),
                           fontWeight: FontWeight.bold,
@@ -144,7 +162,9 @@ class CartItemTile extends StatelessWidget {
                     // (catalog overhaul Phase 8) - never charged.
                     if (!item.isPackage && item.bonuses.isNotEmpty)
                       Padding(
-                        padding: const EdgeInsets.only(top: AppSizes.spacingXSmall),
+                        padding: const EdgeInsets.only(
+                          top: AppSizes.spacingXSmall,
+                        ),
                         child: Text(
                           item.freeQuantity > 0
                               ? '${l10n.bonusValue(BonusTier.format(item.bonuses))} · ${l10n.freeUnits(item.freeQuantity)}'
@@ -165,7 +185,9 @@ class CartItemTile extends StatelessWidget {
                           padding: const EdgeInsetsDirectional.only(top: 2),
                           child: Text(
                             '${content.nameAr} x${content.quantityPerCopy * item.quantity}',
-                            style: context.textTheme.bodySmall?.copyWith(color: secondary),
+                            style: context.textTheme.bodySmall?.copyWith(
+                              color: secondary,
+                            ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -178,11 +200,18 @@ class CartItemTile extends StatelessWidget {
               // The same remove action, on a soft tinted square so it reads as
               // a button at a glance without shouting over the line itself.
               IconButton(
-                icon: Icon(Icons.delete_outline, color: AppColors.errorOf(context)),
+                icon: Icon(
+                  Icons.delete_outline,
+                  color: AppColors.errorOf(context),
+                ),
                 onPressed: () => _confirmRemoval(context),
                 style: IconButton.styleFrom(
-                  backgroundColor: AppColors.errorOf(context).withValues(alpha: 0.08),
-                  shape: const RoundedRectangleBorder(borderRadius: AppRadius.small),
+                  backgroundColor: AppColors.errorOf(
+                    context,
+                  ).withValues(alpha: 0.08),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadius.small,
+                  ),
                 ),
               ),
             ],
@@ -224,8 +253,13 @@ class CartItemTile extends StatelessWidget {
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      formatMoneySyp(item.lineTotalSypAt(usdToSyp), l10n.currencySuffix),
-                      style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+                      formatMoneySyp(
+                        item.lineTotalSypAt(usdToSyp),
+                        l10n.currencySuffix,
+                      ),
+                      style: context.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
                       maxLines: 1,
                     ),
                   ),
@@ -240,9 +274,15 @@ class CartItemTile extends StatelessWidget {
 }
 
 class _ItemImage extends StatelessWidget {
-  const _ItemImage({required this.url});
+  const _ItemImage({
+    required this.url,
+    required this.seed,
+    required this.isPackage,
+  });
 
   final String? url;
+  final String seed;
+  final bool isPackage;
 
   @override
   Widget build(BuildContext context) {
@@ -253,7 +293,10 @@ class _ItemImage extends StatelessWidget {
       height: 72,
       fit: BoxFit.cover,
       borderRadius: AppRadius.medium,
-      fallbackIcon: Icons.medication_outlined,
+      placeholderKind: isPackage
+          ? AppImageKind.advertisement
+          : AppImageKind.product,
+      placeholderSeed: seed,
     );
   }
 }

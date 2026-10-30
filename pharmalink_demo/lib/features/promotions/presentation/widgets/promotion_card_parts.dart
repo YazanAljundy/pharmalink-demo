@@ -52,8 +52,12 @@ class PromotionSavingBadge extends StatelessWidget {
     if (promotion.savingPercentage <= 0) return const SizedBox.shrink();
     return StatusBadge(
       label: switch (promotion) {
-        OfferPromotion() => l10n.offerDiscountPercent(promotion.savingPercentage),
-        PackagePromotion() => l10n.advertisementSavingPercent(promotion.savingPercentage),
+        OfferPromotion() => l10n.offerDiscountPercent(
+          promotion.savingPercentage,
+        ),
+        PackagePromotion() => l10n.advertisementSavingPercent(
+          promotion.savingPercentage,
+        ),
       },
       // Green is this app's "positive" colour (see AppColors) - a saving, not
       // an alarm.
@@ -66,7 +70,11 @@ class PromotionSavingBadge extends StatelessWidget {
 /// it when there is a saving. Both figures come straight off the model; this
 /// computes nothing.
 class PromotionPriceLine extends StatelessWidget {
-  const PromotionPriceLine({super.key, required this.promotion, this.compact = false});
+  const PromotionPriceLine({
+    super.key,
+    required this.promotion,
+    this.compact = false,
+  });
 
   final Promotion promotion;
   final bool compact;
@@ -75,10 +83,15 @@ class PromotionPriceLine extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final usdToSyp = context.watch<ExchangeRateCubit>().state.usdToSyp;
-    String money(num usd) => formatMoneyFromUsd(usd, usdToSyp, l10n.currencySuffix);
+    String money(num usd) =>
+        formatMoneyFromUsd(usd, usdToSyp, l10n.currencySuffix);
 
     final (num payable, num before, bool hasSaving) = switch (promotion) {
-      OfferPromotion(:final offer) => (offer.discountPriceUsd, offer.priceUsd, offer.hasSaving),
+      OfferPromotion(:final offer) => (
+        offer.discountPriceUsd,
+        offer.priceUsd,
+        offer.hasSaving,
+      ),
       PackagePromotion(:final advertisement) => (
         advertisement.totalPriceUsd,
         advertisement.itemsTotalUsd,
@@ -96,9 +109,11 @@ class PromotionPriceLine extends StatelessWidget {
       children: [
         Text(
           money(payable),
-          style: (compact ? context.textTheme.titleSmall : context.textTheme.titleMedium)?.copyWith(
-            color: AppColors.primaryOf(context),
-          ),
+          style:
+              (compact
+                      ? context.textTheme.titleSmall
+                      : context.textTheme.titleMedium)
+                  ?.copyWith(color: AppColors.primaryOf(context)),
         ),
         if (hasSaving)
           Text(
@@ -128,7 +143,8 @@ class PromotionMetaLine extends StatelessWidget {
     final style = context.textTheme.bodySmall?.copyWith(color: secondary);
 
     final validity = switch (promotion) {
-      OfferPromotion(:final offer) when offer.isPermanent => l10n.offerPermanent,
+      OfferPromotion(:final offer) when offer.isPermanent =>
+        l10n.offerPermanent,
       OfferPromotion(:final offer) when offer.endDate != null =>
         l10n.offerEndsOn(DateFormatter.formatDate(offer.endDate!)),
       _ => null,
@@ -143,10 +159,19 @@ class PromotionMetaLine extends StatelessWidget {
 
     return Row(
       children: [
-        Icon(Icons.storefront_outlined, size: AppSizes.iconSizeSmall, color: secondary),
+        Icon(
+          Icons.storefront_outlined,
+          size: AppSizes.iconSizeSmall,
+          color: secondary,
+        ),
         const SizedBox(width: AppSizes.spacingXSmall),
         Expanded(
-          child: Text(label, style: style, maxLines: 1, overflow: TextOverflow.ellipsis),
+          child: Text(
+            label,
+            style: style,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
       ],
     );
@@ -183,6 +208,11 @@ class PromotionThumbnail extends StatelessWidget {
           PromotionKind.offer => Icons.local_offer_outlined,
           PromotionKind.package => Icons.inventory_2_outlined,
         },
+        placeholderKind: switch (promotion.kind) {
+          PromotionKind.offer => AppImageKind.product,
+          PromotionKind.package => AppImageKind.advertisement,
+        },
+        placeholderSeed: promotion.id,
       ),
     );
   }
@@ -208,7 +238,9 @@ class PromotionSurface extends StatelessWidget {
         border: Border.all(color: AppColors.borderOf(context)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: context.isDarkMode ? 0.24 : 0.06),
+            color: Colors.black.withValues(
+              alpha: context.isDarkMode ? 0.24 : 0.06,
+            ),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),

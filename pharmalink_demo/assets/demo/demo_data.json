@@ -1,0 +1,959 @@
+{
+  "pharmacy": {
+    "userId": "user-demo-pharmacy",
+    "id": "pharmacy-demo",
+    "name": "Demo Pharmacy",
+    "phone": "0900000004",
+    "role": "pharmacy",
+    "status": "active",
+    "lang": "en",
+    "nameAr": "صيدلية العرض",
+    "nameEn": "Demo Pharmacy",
+    "ownerName": "Demo Pharmacist",
+    "address": "Demo District",
+    "city": "Demo City",
+    "areaType": "city"
+  },
+  "warehouses": [
+    {
+      "id": "warehouse-demo-01",
+      "nameAr": "مستودع العرض الأول",
+      "nameEn": "Demo Warehouse One",
+      "city": "Demo City",
+      "phone": "0900000011",
+      "address": "North Demo District",
+      "deliveryType": "self",
+      "minOrderAmountUsd": 0,
+      "maxOrderAmountUsd": null,
+      "logo": "asset:demo/warehouses/warehouse-demo-01.jpg"
+    },
+    {
+      "id": "warehouse-demo-02",
+      "nameAr": "مستودع العرض الثاني",
+      "nameEn": "Demo Warehouse Two",
+      "city": "Demo City",
+      "phone": "0900000012",
+      "address": "South Demo District",
+      "deliveryType": "third_party",
+      "minOrderAmountUsd": 10,
+      "maxOrderAmountUsd": 500,
+      "logo": "asset:demo/warehouses/warehouse-demo-02.jpg"
+    }
+  ],
+  "categories": [
+    {
+      "id": "category-01",
+      "nameAr": "مسكنات الألم",
+      "nameEn": "Pain relief",
+      "icon": null,
+      "sortOrder": 1
+    },
+    {
+      "id": "category-02",
+      "nameAr": "أدوية الحساسية",
+      "nameEn": "Allergy care",
+      "icon": null,
+      "sortOrder": 2
+    },
+    {
+      "id": "category-03",
+      "nameAr": "صحة الجهاز الهضمي",
+      "nameEn": "Digestive health",
+      "icon": null,
+      "sortOrder": 3
+    },
+    {
+      "id": "category-04",
+      "nameAr": "مكملات غذائية",
+      "nameEn": "Vitamins and supplements",
+      "icon": null,
+      "sortOrder": 4
+    },
+    {
+      "id": "category-05",
+      "nameAr": "العناية بالبشرة",
+      "nameEn": "Skin care",
+      "icon": null,
+      "sortOrder": 5
+    },
+    {
+      "id": "category-06",
+      "nameAr": "أدوية السعال",
+      "nameEn": "Cough care",
+      "icon": null,
+      "sortOrder": 6
+    },
+    {
+      "id": "category-07",
+      "nameAr": "صحة القلب",
+      "nameEn": "Heart health",
+      "icon": null,
+      "sortOrder": 7
+    },
+    {
+      "id": "category-08",
+      "nameAr": "مستلزمات طبية",
+      "nameEn": "Medical supplies",
+      "icon": null,
+      "sortOrder": 8
+    }
+  ],
+  "manufacturers": [
+    {
+      "manufacturerId": "manufacturer-demo-01",
+      "manufacturerAr": "مختبرات العينة ألف",
+      "manufacturerEn": "Sample Lab Alpha",
+      "logoUrl": "asset:demo/manufacturers/manufacturer-demo-01.png",
+      "discountPercentage": 5
+    },
+    {
+      "manufacturerId": "manufacturer-demo-02",
+      "manufacturerAr": "مختبرات العينة باء",
+      "manufacturerEn": "Sample Lab Beta",
+      "logoUrl": "asset:demo/manufacturers/manufacturer-demo-02.png",
+      "discountPercentage": 0
+    },
+    {
+      "manufacturerId": "manufacturer-demo-03",
+      "manufacturerAr": "مختبرات العينة جيم",
+      "manufacturerEn": "Sample Lab Gamma",
+      "logoUrl": "asset:demo/manufacturers/manufacturer-demo-03.png",
+      "discountPercentage": 8
+    },
+    {
+      "manufacturerId": "manufacturer-demo-04",
+      "manufacturerAr": "مختبرات العينة دال",
+      "manufacturerEn": "Sample Lab Delta",
+      "logoUrl": "asset:demo/manufacturers/manufacturer-demo-04.png",
+      "discountPercentage": 3
+    },
+    {
+      "manufacturerId": "manufacturer-demo-05",
+      "manufacturerAr": "مختبرات العينة هاء",
+      "manufacturerEn": "Sample Lab Epsilon",
+      "logoUrl": "asset:demo/manufacturers/manufacturer-demo-05.png",
+      "discountPercentage": 0
+    },
+    {
+      "manufacturerId": "manufacturer-demo-06",
+      "manufacturerAr": "مختبرات العينة واو",
+      "manufacturerEn": "Sample Lab Zeta",
+      "logoUrl": "asset:demo/manufacturers/manufacturer-demo-06.png",
+      "discountPercentage": 6
+    }
+  ],
+  "products": [
+    {
+      "id": "product-001",
+      "categoryId": "category-01",
+      "nameAr": "باراسيتامول 500 ملغ",
+      "nameEn": "Paracetamol 500 mg",
+      "manufacturerIndex": 0,
+      "priceUsd": 2.4,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-001.jpg"
+    },
+    {
+      "id": "product-002",
+      "categoryId": "category-01",
+      "nameAr": "إيبوبروفين 200 ملغ",
+      "nameEn": "Ibuprofen 200 mg",
+      "manufacturerIndex": 1,
+      "priceUsd": 3.1,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-002.jpg"
+    },
+    {
+      "id": "product-003",
+      "categoryId": "category-01",
+      "nameAr": "إيبوبروفين 400 ملغ",
+      "nameEn": "Ibuprofen 400 mg",
+      "manufacturerIndex": 2,
+      "priceUsd": 4.2,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": false,
+      "image": "asset:demo/products/product-003.jpg"
+    },
+    {
+      "id": "product-004",
+      "categoryId": "category-01",
+      "nameAr": "ديكلوفيناك 50 ملغ",
+      "nameEn": "Diclofenac 50 mg",
+      "manufacturerIndex": 3,
+      "priceUsd": 3.7,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-004.jpg"
+    },
+    {
+      "id": "product-005",
+      "categoryId": "category-01",
+      "nameAr": "نابروكسين 250 ملغ",
+      "nameEn": "Naproxen 250 mg",
+      "manufacturerIndex": 4,
+      "priceUsd": 4.6,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-005.jpg"
+    },
+    {
+      "id": "product-006",
+      "categoryId": "category-02",
+      "nameAr": "سيتريزين 10 ملغ",
+      "nameEn": "Cetirizine 10 mg",
+      "manufacturerIndex": 0,
+      "priceUsd": 2.8,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-006.jpg"
+    },
+    {
+      "id": "product-007",
+      "categoryId": "category-02",
+      "nameAr": "لوراتادين 10 ملغ",
+      "nameEn": "Loratadine 10 mg",
+      "manufacturerIndex": 1,
+      "priceUsd": 3.2,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-007.jpg"
+    },
+    {
+      "id": "product-008",
+      "categoryId": "category-02",
+      "nameAr": "فيكسوفينادين 120 ملغ",
+      "nameEn": "Fexofenadine 120 mg",
+      "manufacturerIndex": 2,
+      "priceUsd": 5.5,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": false,
+      "image": "asset:demo/products/product-008.jpg"
+    },
+    {
+      "id": "product-009",
+      "categoryId": "category-02",
+      "nameAr": "بخاخ محلول ملحي",
+      "nameEn": "Saline nasal spray",
+      "manufacturerIndex": 3,
+      "priceUsd": 2.1,
+      "unit": "bottle",
+      "unitAr": "عبوة",
+      "unitEn": "bottle",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-009.jpg"
+    },
+    {
+      "id": "product-010",
+      "categoryId": "category-02",
+      "nameAr": "قطرات عين مرطبة",
+      "nameEn": "Lubricating eye drops",
+      "manufacturerIndex": 4,
+      "priceUsd": 3.8,
+      "unit": "bottle",
+      "unitAr": "عبوة",
+      "unitEn": "bottle",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-010.jpg"
+    },
+    {
+      "id": "product-011",
+      "categoryId": "category-03",
+      "nameAr": "أوميبرازول 20 ملغ",
+      "nameEn": "Omeprazole 20 mg",
+      "manufacturerIndex": 0,
+      "priceUsd": 3.3,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-011.jpg"
+    },
+    {
+      "id": "product-012",
+      "categoryId": "category-03",
+      "nameAr": "بانتوبرازول 40 ملغ",
+      "nameEn": "Pantoprazole 40 mg",
+      "manufacturerIndex": 1,
+      "priceUsd": 4.1,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-012.jpg"
+    },
+    {
+      "id": "product-013",
+      "categoryId": "category-03",
+      "nameAr": "محلول معالجة الجفاف",
+      "nameEn": "Oral rehydration salts",
+      "manufacturerIndex": 2,
+      "priceUsd": 1.8,
+      "unit": "sachet",
+      "unitAr": "ظرف",
+      "unitEn": "sachet",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-013.jpg"
+    },
+    {
+      "id": "product-014",
+      "categoryId": "category-03",
+      "nameAr": "أقراص مضادة للحموضة",
+      "nameEn": "Antacid tablets",
+      "manufacturerIndex": 3,
+      "priceUsd": 2.6,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": false,
+      "image": "asset:demo/products/product-014.jpg"
+    },
+    {
+      "id": "product-015",
+      "categoryId": "category-03",
+      "nameAr": "لاكتولوز شراب",
+      "nameEn": "Lactulose syrup",
+      "manufacturerIndex": 4,
+      "priceUsd": 3.9,
+      "unit": "bottle",
+      "unitAr": "عبوة",
+      "unitEn": "bottle",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-015.jpg"
+    },
+    {
+      "id": "product-016",
+      "categoryId": "category-04",
+      "nameAr": "فيتامين د3 1000 وحدة",
+      "nameEn": "Vitamin D3 1000 IU",
+      "manufacturerIndex": 0,
+      "priceUsd": 4.4,
+      "unit": "bottle",
+      "unitAr": "عبوة",
+      "unitEn": "bottle",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-016.jpg"
+    },
+    {
+      "id": "product-017",
+      "categoryId": "category-04",
+      "nameAr": "فيتامين ج 500 ملغ",
+      "nameEn": "Vitamin C 500 mg",
+      "manufacturerIndex": 1,
+      "priceUsd": 3.6,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-017.jpg"
+    },
+    {
+      "id": "product-018",
+      "categoryId": "category-04",
+      "nameAr": "مركب فيتامين ب",
+      "nameEn": "Vitamin B complex",
+      "manufacturerIndex": 2,
+      "priceUsd": 4.8,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-018.jpg"
+    },
+    {
+      "id": "product-019",
+      "categoryId": "category-04",
+      "nameAr": "مكمل الزنك 25 ملغ",
+      "nameEn": "Zinc supplement 25 mg",
+      "manufacturerIndex": 3,
+      "priceUsd": 3.4,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": false,
+      "image": "asset:demo/products/product-019.jpg"
+    },
+    {
+      "id": "product-020",
+      "categoryId": "category-04",
+      "nameAr": "مكمل الحديد 30 ملغ",
+      "nameEn": "Iron supplement 30 mg",
+      "manufacturerIndex": 4,
+      "priceUsd": 4.2,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-020.jpg"
+    },
+    {
+      "id": "product-021",
+      "categoryId": "category-05",
+      "nameAr": "كريم أكسيد الزنك",
+      "nameEn": "Zinc oxide cream",
+      "manufacturerIndex": 0,
+      "priceUsd": 2.9,
+      "unit": "tube",
+      "unitAr": "أنبوب",
+      "unitEn": "tube",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-021.jpg"
+    },
+    {
+      "id": "product-022",
+      "categoryId": "category-05",
+      "nameAr": "مرهم مرطب للبشرة",
+      "nameEn": "Moisturizing skin ointment",
+      "manufacturerIndex": 1,
+      "priceUsd": 3.5,
+      "unit": "tube",
+      "unitAr": "أنبوب",
+      "unitEn": "tube",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-022.jpg"
+    },
+    {
+      "id": "product-023",
+      "categoryId": "category-05",
+      "nameAr": "كريم هيدروكورتيزون 1%",
+      "nameEn": "Hydrocortisone cream 1%",
+      "manufacturerIndex": 2,
+      "priceUsd": 3.8,
+      "unit": "tube",
+      "unitAr": "أنبوب",
+      "unitEn": "tube",
+      "isAvailable": false,
+      "image": "asset:demo/products/product-023.jpg"
+    },
+    {
+      "id": "product-024",
+      "categoryId": "category-05",
+      "nameAr": "غسول مطهر للبشرة",
+      "nameEn": "Antiseptic skin wash",
+      "manufacturerIndex": 3,
+      "priceUsd": 4.3,
+      "unit": "bottle",
+      "unitAr": "عبوة",
+      "unitEn": "bottle",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-024.jpg"
+    },
+    {
+      "id": "product-025",
+      "categoryId": "category-05",
+      "nameAr": "جل ألوفيرا",
+      "nameEn": "Aloe vera gel",
+      "manufacturerIndex": 4,
+      "priceUsd": 3.2,
+      "unit": "tube",
+      "unitAr": "أنبوب",
+      "unitEn": "tube",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-025.jpg"
+    },
+    {
+      "id": "product-026",
+      "categoryId": "category-06",
+      "nameAr": "شراب غوايفينيسين",
+      "nameEn": "Guaifenesin syrup",
+      "manufacturerIndex": 0,
+      "priceUsd": 3.7,
+      "unit": "bottle",
+      "unitAr": "عبوة",
+      "unitEn": "bottle",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-026.jpg"
+    },
+    {
+      "id": "product-027",
+      "categoryId": "category-06",
+      "nameAr": "أقراص ديكستروميثورفان",
+      "nameEn": "Dextromethorphan tablets",
+      "manufacturerIndex": 1,
+      "priceUsd": 3.4,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-027.jpg"
+    },
+    {
+      "id": "product-028",
+      "categoryId": "category-06",
+      "nameAr": "شراب سعال عشبي",
+      "nameEn": "Herbal cough syrup",
+      "manufacturerIndex": 2,
+      "priceUsd": 4.5,
+      "unit": "bottle",
+      "unitAr": "عبوة",
+      "unitEn": "bottle",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-028.jpg"
+    },
+    {
+      "id": "product-029",
+      "categoryId": "category-06",
+      "nameAr": "أقراص استحلاب للحلق",
+      "nameEn": "Throat lozenges",
+      "manufacturerIndex": 3,
+      "priceUsd": 2.2,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": false,
+      "image": "asset:demo/products/product-029.jpg"
+    },
+    {
+      "id": "product-030",
+      "categoryId": "category-06",
+      "nameAr": "محلول ملحي للاستنشاق",
+      "nameEn": "Saline inhalation solution",
+      "manufacturerIndex": 4,
+      "priceUsd": 2.7,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-030.jpg"
+    },
+    {
+      "id": "product-031",
+      "categoryId": "category-07",
+      "nameAr": "أملوديبين 5 ملغ",
+      "nameEn": "Amlodipine 5 mg",
+      "manufacturerIndex": 0,
+      "priceUsd": 3.8,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-031.jpg"
+    },
+    {
+      "id": "product-032",
+      "categoryId": "category-07",
+      "nameAr": "أتورفاستاتين 10 ملغ",
+      "nameEn": "Atorvastatin 10 mg",
+      "manufacturerIndex": 1,
+      "priceUsd": 4.2,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-032.jpg"
+    },
+    {
+      "id": "product-033",
+      "categoryId": "category-07",
+      "nameAr": "لوسارتان 50 ملغ",
+      "nameEn": "Losartan 50 mg",
+      "manufacturerIndex": 2,
+      "priceUsd": 4.7,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": false,
+      "image": "asset:demo/products/product-033.jpg"
+    },
+    {
+      "id": "product-034",
+      "categoryId": "category-07",
+      "nameAr": "ميتفورمين 500 ملغ",
+      "nameEn": "Metformin 500 mg",
+      "manufacturerIndex": 3,
+      "priceUsd": 3.1,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-034.jpg"
+    },
+    {
+      "id": "product-035",
+      "categoryId": "category-07",
+      "nameAr": "أسبرين 81 ملغ",
+      "nameEn": "Acetylsalicylic acid 81 mg",
+      "manufacturerIndex": 4,
+      "priceUsd": 2.3,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-035.jpg"
+    },
+    {
+      "id": "product-036",
+      "categoryId": "category-08",
+      "nameAr": "قفازات فحص متوسطة",
+      "nameEn": "Examination gloves, medium",
+      "manufacturerIndex": 0,
+      "priceUsd": 5.2,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-036.jpg"
+    },
+    {
+      "id": "product-037",
+      "categoryId": "category-08",
+      "nameAr": "كمامات طبية",
+      "nameEn": "Medical face masks",
+      "manufacturerIndex": 1,
+      "priceUsd": 4.6,
+      "unit": "box",
+      "unitAr": "علبة",
+      "unitEn": "box",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-037.jpg"
+    },
+    {
+      "id": "product-038",
+      "categoryId": "category-08",
+      "nameAr": "ضمادات شاش معقمة",
+      "nameEn": "Sterile gauze dressings",
+      "manufacturerIndex": 2,
+      "priceUsd": 3.5,
+      "unit": "pack",
+      "unitAr": "حزمة",
+      "unitEn": "pack",
+      "isAvailable": false,
+      "image": "asset:demo/products/product-038.jpg"
+    },
+    {
+      "id": "product-039",
+      "categoryId": "category-08",
+      "nameAr": "شريط لاصق طبي",
+      "nameEn": "Medical adhesive tape",
+      "manufacturerIndex": 3,
+      "priceUsd": 1.9,
+      "unit": "roll",
+      "unitAr": "لفة",
+      "unitEn": "roll",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-039.jpg"
+    },
+    {
+      "id": "product-040",
+      "categoryId": "category-08",
+      "nameAr": "ميزان حرارة رقمي",
+      "nameEn": "Digital thermometer",
+      "manufacturerIndex": 4,
+      "priceUsd": 6.8,
+      "unit": "piece",
+      "unitAr": "قطعة",
+      "unitEn": "piece",
+      "isAvailable": true,
+      "image": "asset:demo/products/product-040.jpg"
+    }
+  ],
+  "offers": [
+    {
+      "id": "offer-demo-01",
+      "productId": "product-001",
+      "discountPercentage": 12,
+      "titleAr": "عرض المسكنات",
+      "titleEn": "Pain relief offer",
+      "image": "asset:demo/products/product-001.jpg"
+    },
+    {
+      "id": "offer-demo-02",
+      "productId": "product-016",
+      "discountPercentage": 15,
+      "titleAr": "عرض الفيتامينات",
+      "titleEn": "Vitamin offer",
+      "image": "asset:demo/products/product-016.jpg"
+    },
+    {
+      "id": "offer-demo-03",
+      "productId": "product-036",
+      "discountPercentage": 10,
+      "titleAr": "عرض المستلزمات",
+      "titleEn": "Supplies offer",
+      "image": "asset:demo/products/product-036.jpg"
+    }
+  ],
+  "discountCodes": [
+    {
+      "code": "SAVE10",
+      "type": "percentage",
+      "value": 10,
+      "revision": 1
+    },
+    {
+      "code": "SAVE5000",
+      "type": "fixed",
+      "value": 5000,
+      "revision": 1
+    }
+  ],
+  "banners": [
+    {
+      "id": "banner-demo-01",
+      "imageUrl": "asset:demo/banners/banner-demo-01.jpg",
+      "mediaType": "image",
+      "productId": null,
+      "manufacturerAr": null,
+      "warehouseId": null
+    },
+    {
+      "id": "banner-demo-02",
+      "imageUrl": "asset:demo/banners/banner-demo-02.jpg",
+      "mediaType": "image",
+      "productId": null,
+      "manufacturerAr": null,
+      "warehouseId": null
+    }
+  ],
+  "advertisements": [
+    {
+      "id": "advertisement-demo-01",
+      "titleAr": "حزمة العناية اليومية",
+      "titleEn": "Daily care package",
+      "warehouseIndex": 0,
+      "productIds": [
+        "product-001",
+        "product-006",
+        "product-016"
+      ],
+      "totalPriceUsd": 8.5,
+      "imageUrl": "asset:demo/ads/advertisement-demo-01.jpg"
+    },
+    {
+      "id": "advertisement-demo-02",
+      "titleAr": "حزمة العيادة الأساسية",
+      "titleEn": "Clinic essentials package",
+      "warehouseIndex": 1,
+      "productIds": [
+        "product-036",
+        "product-037",
+        "product-039"
+      ],
+      "totalPriceUsd": 10.2,
+      "imageUrl": "asset:demo/ads/advertisement-demo-02.jpg"
+    }
+  ],
+  "orders": [
+    {
+      "id": "order-demo-01",
+      "orderNumber": 1001,
+      "status": "delivered",
+      "warehouseIndex": 0,
+      "productId": "product-001",
+      "quantity": 4,
+      "createdDaysAgo": 12,
+      "deliverySealPhotoUrl": "asset:demo/ads/seal-order-demo-01.jpg"
+    },
+    {
+      "id": "order-demo-02",
+      "orderNumber": 1002,
+      "status": "delivered",
+      "warehouseIndex": 0,
+      "productId": "product-016",
+      "quantity": 2,
+      "createdDaysAgo": 9,
+      "deliverySealPhotoUrl": "asset:demo/ads/seal-order-demo-02.jpg"
+    },
+    {
+      "id": "order-demo-03",
+      "orderNumber": 1003,
+      "status": "preparing",
+      "warehouseIndex": 1,
+      "productId": "product-006",
+      "quantity": 3,
+      "createdDaysAgo": 2,
+      "deliverySealPhotoUrl": "asset:demo/ads/seal-order-demo-03.jpg"
+    },
+    {
+      "id": "order-demo-04",
+      "orderNumber": 1004,
+      "status": "pending",
+      "warehouseIndex": 0,
+      "productId": "product-037",
+      "quantity": 1,
+      "createdDaysAgo": 1,
+      "deliverySealPhotoUrl": "asset:demo/ads/seal-order-demo-04.jpg"
+    },
+    {
+      "id": "order-demo-05",
+      "orderNumber": 1005,
+      "status": "cancelled",
+      "warehouseIndex": 1,
+      "productId": "product-011",
+      "quantity": 2,
+      "createdDaysAgo": 7,
+      "deliverySealPhotoUrl": "asset:demo/ads/seal-order-demo-05.jpg"
+    },
+    {
+      "id": "order-demo-06",
+      "orderNumber": 1006,
+      "status": "confirmed",
+      "warehouseIndex": 1,
+      "productId": "product-021",
+      "quantity": 5,
+      "createdDaysAgo": 3,
+      "deliverySealPhotoUrl": "asset:demo/ads/seal-order-demo-06.jpg"
+    },
+    {
+      "id": "order-demo-07",
+      "orderNumber": 1007,
+      "status": "out_for_delivery",
+      "warehouseIndex": 0,
+      "productId": "product-026",
+      "quantity": 2,
+      "createdDaysAgo": 0,
+      "deliverySealPhotoUrl": "asset:demo/ads/seal-order-demo-07.jpg"
+    },
+    {
+      "id": "order-demo-08",
+      "orderNumber": 1008,
+      "status": "delivered",
+      "warehouseIndex": 1,
+      "productId": "product-031",
+      "quantity": 3,
+      "createdDaysAgo": 18,
+      "deliverySealPhotoUrl": "asset:demo/ads/seal-order-demo-08.jpg"
+    }
+  ],
+  "returns": [
+    {
+      "id": "return-demo-01",
+      "orderId": "order-demo-01",
+      "productId": "product-001",
+      "quantity": 1,
+      "reasonType": "damaged",
+      "status": "pending",
+      "notes": "Packaging arrived damaged",
+      "images": [
+        "asset:demo/products/product-001.jpg"
+      ]
+    },
+    {
+      "id": "return-demo-02",
+      "orderId": "order-demo-02",
+      "productId": "product-016",
+      "quantity": 1,
+      "reasonType": "wrong_item",
+      "status": "approved",
+      "notes": "Credit issued",
+      "images": [
+        "asset:demo/products/product-016.jpg"
+      ]
+    }
+  ],
+  "complaints": [
+    {
+      "id": "complaint-demo-01",
+      "complaintNumber": 501,
+      "subject": "Delivery timing",
+      "description": "The delivery arrived later than expected.",
+      "status": "in_review",
+      "contextType": "general"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "review-demo-01",
+      "orderId": "order-demo-01",
+      "orderNumber": 1001,
+      "warehouseIndex": 0,
+      "rating": 5,
+      "comment": "Carefully packed",
+      "createdDaysAgo": 8
+    },
+    {
+      "id": "review-demo-02",
+      "orderId": "order-demo-08",
+      "orderNumber": 1008,
+      "warehouseIndex": 1,
+      "rating": 4,
+      "comment": "Helpful service",
+      "createdDaysAgo": 10
+    }
+  ],
+  "ledger": [
+    {
+      "warehouseIndex": 0,
+      "id": "ledger-demo-01",
+      "kind": "charge",
+      "debitSyp": 180000,
+      "creditSyp": 0,
+      "orderNumber": 1001
+    },
+    {
+      "warehouseIndex": 0,
+      "id": "ledger-demo-02",
+      "kind": "payment",
+      "debitSyp": 0,
+      "creditSyp": 45000,
+      "paymentNumber": 201
+    },
+    {
+      "warehouseIndex": 1,
+      "id": "ledger-demo-03",
+      "kind": "charge",
+      "debitSyp": 50000,
+      "creditSyp": 0,
+      "orderNumber": 1008
+    },
+    {
+      "warehouseIndex": 1,
+      "id": "ledger-demo-04",
+      "kind": "payment",
+      "debitSyp": 0,
+      "creditSyp": 70000,
+      "paymentNumber": 202
+    }
+  ],
+  "savings": {
+    "offerAndManufacturerSyp": 18000,
+    "advertisementSyp": 7500,
+    "platformDiscountSyp": 6000,
+    "discountCodeSyp": 5000,
+    "totalSavingsSyp": 36500,
+    "totalSavingsUsd": 2.81
+  },
+  "notifications": [
+    {
+      "id": "notification-demo-01",
+      "title": "Order delivered",
+      "body": "Demo order 1001 was delivered.",
+      "receivedAt": "2026-01-01T10:00:00.000Z",
+      "isRead": false,
+      "type": "orderUpdate",
+      "relatedOrderId": "order-demo-01",
+      "data": {
+        "type": "order_update",
+        "relatedOrderId": "order-demo-01"
+      }
+    },
+    {
+      "id": "notification-demo-02",
+      "title": "Demo offer",
+      "body": "A new offer is available in the catalog.",
+      "receivedAt": "2026-01-01T09:00:00.000Z",
+      "isRead": true,
+      "type": "offer",
+      "data": {
+        "type": "offer"
+      }
+    }
+  ]
+}

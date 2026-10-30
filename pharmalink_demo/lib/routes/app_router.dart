@@ -37,6 +37,7 @@ import 'package:pharmalink_demo/features/debts/presentation/managers/debt_detail
 import 'package:pharmalink_demo/features/debts/presentation/managers/debts_cubit.dart';
 import 'package:pharmalink_demo/features/debts/presentation/views/debt_detail_view.dart';
 import 'package:pharmalink_demo/features/debts/presentation/views/my_debts_view.dart';
+import 'package:pharmalink_demo/features/legal/presentation/views/privacy_policy_view.dart';
 import 'package:pharmalink_demo/features/my_orders/presentation/managers/my_orders_cubit.dart';
 import 'package:pharmalink_demo/features/my_orders/presentation/views/my_orders_view.dart';
 import 'package:pharmalink_demo/features/notifications/presentation/views/notification_center_view.dart';
@@ -133,6 +134,14 @@ class AppRouter {
         pageBuilder: (context, state) => buildPageTransition(
           state: state,
           child: const ApprovalPendingView(),
+        ),
+      ),
+      GoRoute(
+        name: RouteNames.privacyPolicy,
+        path: RoutePaths.privacyPolicy,
+        pageBuilder: (context, state) => buildPageTransition(
+          state: state,
+          child: const PrivacyPolicyView(),
         ),
       ),
       GoRoute(

@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+vi.mock('../demo/demoConfig', () => ({ DEMO_MOCK: false }));
 import { api, getRefreshToken, getToken, setSession } from './client';
 
 // The file transports (requestBlob / requestUpload / requestFormData) bypass

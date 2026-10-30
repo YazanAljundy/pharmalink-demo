@@ -1,3 +1,6 @@
+import { DEMO_MOCK } from '../demo/demoConfig';
+import { mockFetch } from '../demo/mockFetch';
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5000/api';
 
 // Why the access token lives in localStorage, and why that is not changing
@@ -125,7 +128,8 @@ async function fetchWithTimeout(url, options, timeoutMs) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    return await fetch(url, { ...options, signal: controller.signal });
+    const transport = DEMO_MOCK ? mockFetch : fetch;
+    return await transport(url, { ...options, signal: controller.signal });
   } catch (err) {
     if (err?.name === 'AbortError') {
       throw new ApiError(

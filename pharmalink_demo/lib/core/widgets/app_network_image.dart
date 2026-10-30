@@ -1,8 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmalink_demo/config/app_config.dart';
 
 import '../constants/app_colors.dart';
 import '../utils/cloudinary_image.dart';
+
+enum AppImageKind {
+  generic,
+  product,
+  warehouse,
+  manufacturer,
+  banner,
+  advertisement,
+}
 
 /// The one way the app loads a remote image.
 ///
@@ -15,10 +25,10 @@ import '../utils/cloudinary_image.dart';
 ///    caps the decoded bitmap with `memCacheWidth`/`memCacheHeight` so an
 ///    80x80 thumbnail never keeps a 4000px bitmap in RAM. Non-Cloudinary
 ///    URLs are still cached and decode-capped, just not URL-rewritten.
-///  * **Graceful failure** - a 404 / dead URL / no connection never reaches
-///    the user as an exception or Flutter's broken-image glyph; it shows a
-///    calm themed placeholder. A null / empty [url] renders that placeholder
-///    without even attempting a request.
+///  * **Offline demo support** - `asset:` URLs load from the bundled assets;
+///    remote URLs in mock mode render a generated local placeholder.
+///  * **Graceful failure** - a 404 / dead URL / no connection or missing asset
+///    never reaches the user as an exception or Flutter's broken-image glyph.
 ///
 /// Pass [fallback] to override the empty/error widget, or [fallbackIcon] to
 /// just change its glyph. Pass [borderRadius] to have the image (and its
@@ -30,23 +40,29 @@ class AppNetworkImage extends StatelessWidget {
     this.fit = BoxFit.cover,
     this.width,
     this.height,
-    this.fallbackIcon = Icons.image_not_supported_outlined,
+    this.fallbackIcon,
+    this.placeholderKind = AppImageKind.generic,
+    this.placeholderSeed,
     this.fallback,
     this.borderRadius,
     this.crop = false,
+    this.demoMockApi,
   });
 
   final String? url;
   final BoxFit fit;
   final double? width;
   final double? height;
-  final IconData fallbackIcon;
+  final IconData? fallbackIcon;
+  final AppImageKind placeholderKind;
+  final String? placeholderSeed;
   final Widget? fallback;
   final BorderRadius? borderRadius;
 
   /// Cloudinary crop strategy: `false` = `c_limit` (keep aspect ratio),
   /// `true` = `c_fill` (crop to the exact box). See [cloudinaryOptimizedUrl].
   final bool crop;
+  final bool? demoMockApi;
 
   // Upper bounds so an unbounded / buggy layout constraint can never turn
   // into a request for (or a decode of) a giant image. 1400 logical px covers
@@ -55,17 +71,85 @@ class AppNetworkImage extends StatelessWidget {
   static const double _maxTargetLogicalPx = 1400;
   static const int _maxTargetDevicePx = 2400;
 
-  // Shown for null/empty [url] and for a failed load - the "there is no image
-  // here" state.
-  Widget _emptyState(BuildContext context) =>
-      fallback ??
-      Container(
-        width: width,
-        height: height,
-        color: AppColors.surfaceOf(context),
-        alignment: Alignment.center,
-        child: Icon(fallbackIcon, color: AppColors.textSecondaryOf(context)),
-      );
+  // Shown for missing/remote demo images and failed loads.
+  Widget _emptyState(BuildContext context, {String? seed}) {
+    if (fallback != null) return fallback!;
+    final theme = Theme.of(context);
+    final stableSeed = seed ?? placeholderSeed ?? url ?? placeholderKind.name;
+    final seedColor = _seedColor(context, stableSeed);
+    final iconColor = AppColors.textOf(context).withValues(alpha: 0.72);
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color.alphaBlend(
+              seedColor.withValues(
+                alpha: theme.brightness == Brightness.dark ? 0.25 : 0.15,
+              ),
+              AppColors.surfaceElevatedOf(context),
+            ),
+            Color.alphaBlend(
+              AppColors.primaryOf(context).withValues(
+                alpha: theme.brightness == Brightness.dark ? 0.18 : 0.10,
+              ),
+              AppColors.surfaceOf(context),
+            ),
+          ],
+        ),
+      ),
+      alignment: Alignment.center,
+      child: Icon(
+        fallbackIcon ?? _iconForKind,
+        color: iconColor,
+        size: _iconSize(context),
+      ),
+    );
+  }
+
+  IconData get _iconForKind => switch (placeholderKind) {
+    AppImageKind.generic => Icons.image_not_supported_outlined,
+    AppImageKind.banner || AppImageKind.advertisement => Icons.image_outlined,
+    AppImageKind.product => Icons.medication_outlined,
+    AppImageKind.warehouse => Icons.storefront_outlined,
+    AppImageKind.manufacturer => Icons.factory_outlined,
+  };
+
+  double _iconSize(BuildContext context) {
+    final shortestSide = MediaQuery.sizeOf(context).shortestSide;
+    if (width != null && height != null) {
+      return ((width! < height! ? width! : height!).clamp(20, 64) * 0.42)
+          .toDouble();
+    }
+    return (shortestSide * 0.12).clamp(24, 56).toDouble();
+  }
+
+  static Color _seedColor(BuildContext context, String seed) {
+    var hash = 0x811c9dc5;
+    for (final unit in seed.codeUnits) {
+      hash ^= unit;
+      hash = (hash * 0x01000193) & 0xffffffff;
+    }
+    final palette = [
+      AppColors.primaryOf(context),
+      AppColors.secondaryOf(context),
+      AppColors.brandOrangeLight,
+      AppColors.brandOrangeDeep,
+      AppColors.navyOf(context),
+    ];
+    return palette[hash % palette.length];
+  }
+
+  String? _assetPath(String value) {
+    final path = value.substring('asset:'.length);
+    if (path.isEmpty || path.startsWith('/') || path.contains('..')) {
+      return null;
+    }
+    return 'assets/$path';
+  }
 
   // Shown while the image is in flight - a calm neutral block, no spinner and
   // no animation (a grid can hold dozens of these at once, and once cached
@@ -85,6 +169,25 @@ class AppNetworkImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final trimmed = url?.trim() ?? '';
     if (trimmed.isEmpty) return _clip(_emptyState(context));
+
+    if (trimmed.startsWith('asset:')) {
+      final assetPath = _assetPath(trimmed);
+      if (assetPath == null) return _clip(_emptyState(context, seed: trimmed));
+      return _clip(
+        Image.asset(
+          assetPath,
+          fit: fit,
+          width: width,
+          height: height,
+          errorBuilder: (context, error, stackTrace) =>
+              _emptyState(context, seed: trimmed),
+        ),
+      );
+    }
+
+    if (demoMockApi ?? kDemoMockApi) {
+      return _clip(_emptyState(context, seed: placeholderSeed ?? trimmed));
+    }
 
     final dpr = MediaQuery.devicePixelRatioOf(context);
 
@@ -133,7 +236,8 @@ class AppNetworkImage extends StatelessWidget {
             memCacheHeight: memH,
             fadeInDuration: const Duration(milliseconds: 200),
             placeholder: (context, _) => _loadingState(context),
-            errorWidget: (context, _, __) => _emptyState(context),
+            errorWidget: (context, _, __) =>
+                _emptyState(context, seed: trimmed),
           );
         },
       ),

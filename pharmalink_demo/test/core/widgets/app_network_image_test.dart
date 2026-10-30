@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pharmalink_demo/core/widgets/app_network_image.dart';
 
-Widget _host(Widget child) =>
-    MaterialApp(home: Scaffold(body: Center(child: child)));
+Widget _host(Widget child) => MaterialApp(
+  home: Scaffold(body: Center(child: child)),
+);
 
 void main() {
   group('AppNetworkImage', () {
@@ -37,15 +38,82 @@ void main() {
       expect(find.text('no image'), findsOneWidget);
     });
 
+    testWidgets('asset: URLs render bundled assets', (tester) async {
+      await tester.pumpWidget(
+        _host(
+          const AppNetworkImage(
+            url: 'asset:images/demo_logo_light.png',
+            width: 80,
+            height: 80,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(
+        find.byWidgetPredicate(
+          (widget) => widget is Image && widget.image is AssetImage,
+        ),
+        findsOneWidget,
+      );
+      expect(find.byType(CachedNetworkImage), findsNothing);
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('HTTP URLs in mock mode show a generated placeholder only', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        _host(
+          const AppNetworkImage(
+            url: 'https://images.example.invalid/product.jpg',
+            width: 80,
+            height: 80,
+            demoMockApi: true,
+            placeholderKind: AppImageKind.product,
+            placeholderSeed: 'product-01',
+          ),
+        ),
+      );
+
+      expect(find.byIcon(Icons.medication_outlined), findsOneWidget);
+      expect(find.byType(CachedNetworkImage), findsNothing);
+      expect(find.byType(Image), findsNothing);
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('a missing asset falls back to the generated placeholder', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        _host(
+          const AppNetworkImage(
+            url: 'asset:demo/products/missing.jpg',
+            width: 80,
+            height: 80,
+            placeholderKind: AppImageKind.product,
+            placeholderSeed: 'missing-product',
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.byIcon(Icons.medication_outlined), findsOneWidget);
+      expect(find.byType(CachedNetworkImage), findsNothing);
+      expect(tester.takeException(), isNull);
+    });
+
     testWidgets('a non-empty url builds a CachedNetworkImage (cached path)', (
       tester,
     ) async {
       await tester.pumpWidget(
         _host(
           const AppNetworkImage(
-            url: 'https://res.cloudinary.com/demo/image/upload/v1/banners/a.jpg',
+            url:
+                'https://res.cloudinary.com/demo/image/upload/v1/banners/a.jpg',
             width: 100,
             height: 100,
+            demoMockApi: false,
           ),
         ),
       );
@@ -65,6 +133,7 @@ void main() {
               url: 'https://example.com/does-not-exist.png',
               width: 40,
               height: 40,
+              demoMockApi: false,
             ),
           ),
         );

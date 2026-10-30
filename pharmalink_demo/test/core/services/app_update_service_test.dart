@@ -18,7 +18,9 @@ void main() {
     storage = StorageService(await SharedPreferences.getInstance());
     rc = MockRemoteConfigService();
     when(() => rc.refresh()).thenAnswer((_) async {});
-    when(() => rc.updateUrl).thenReturn('https://play.google.com/store/apps/details?id=pharmalink_demo');
+    when(() => rc.updateUrl).thenReturn(
+      'https://play.google.com/store/apps/details?id=pharmalink_demo',
+    );
   });
 
   AppUpdateService build({
@@ -36,6 +38,7 @@ void main() {
       currentVersion: current,
       checkInterval: interval,
       now: now,
+      demoMockApi: false,
     );
   }
 
@@ -79,14 +82,23 @@ void main() {
       expect(await build(current: '').checkForUpdate(), AppUpdateStatus.none);
       SharedPreferences.setMockInitialValues({});
       storage = StorageService(await SharedPreferences.getInstance());
-      expect(await build(current: 'not-a-version', latest: '9.9.9').checkForUpdate(),
-          AppUpdateStatus.none);
+      expect(
+        await build(current: 'not-a-version', latest: '9.9.9').checkForUpdate(),
+        AppUpdateStatus.none,
+      );
     });
 
-    test('6b. an invalid Remote Config version never crashes -> none', () async {
-      final s = build(current: '1.0.0', latest: 'garbage', min: 'also-garbage');
-      expect(await s.checkForUpdate(), AppUpdateStatus.none);
-    });
+    test(
+      '6b. an invalid Remote Config version never crashes -> none',
+      () async {
+        final s = build(
+          current: '1.0.0',
+          latest: 'garbage',
+          min: 'also-garbage',
+        );
+        expect(await s.checkForUpdate(), AppUpdateStatus.none);
+      },
+    );
 
     test('7. a Remote Config failure -> none, no throw', () async {
       when(() => rc.refresh()).thenThrow(Exception('firebase unavailable'));
@@ -96,44 +108,71 @@ void main() {
         remoteConfigService: rc,
         storageService: storage,
         currentVersion: '1.0.0',
+        demoMockApi: false,
       );
       expect(await s.checkForUpdate(), AppUpdateStatus.none);
     });
   });
 
   group('24-hour gate (spec section 2)', () {
-    test('first launch: fetches Remote Config and records the check time', () async {
-      final t0 = DateTime(2026, 1, 1, 8);
-      final s = build(current: '1.1.0', latest: '1.2.0', min: '1.1.0', now: () => t0);
-
-      final status = await s.checkForUpdate();
-
-      expect(status, AppUpdateStatus.optional);
-      verify(() => rc.refresh()).called(1);
-      expect(storage.getString('app_update.last_check_at'), t0.toIso8601String());
-    });
-
-    test('relaunch after 2h / 10h / 23h: NO fresh fetch, returns none', () async {
-      final t0 = DateTime(2026, 1, 1, 8);
-      await build(current: '1.1.0', latest: '1.2.0', now: () => t0).checkForUpdate();
-      clearInteractions(rc);
-
-      for (final hours in [2, 10, 23]) {
-        final later = t0.add(Duration(hours: hours));
-        final status = await build(
+    test(
+      'first launch: fetches Remote Config and records the check time',
+      () async {
+        final t0 = DateTime(2026, 1, 1, 8);
+        final s = build(
           current: '1.1.0',
           latest: '1.2.0',
-          now: () => later,
-        ).checkForUpdate();
+          min: '1.1.0',
+          now: () => t0,
+        );
 
-        expect(status, AppUpdateStatus.none, reason: 'launch after ${hours}h');
-        verifyNever(() => rc.refresh());
-      }
-    });
+        final status = await s.checkForUpdate();
+
+        expect(status, AppUpdateStatus.optional);
+        verify(() => rc.refresh()).called(1);
+        expect(
+          storage.getString('app_update.last_check_at'),
+          t0.toIso8601String(),
+        );
+      },
+    );
+
+    test(
+      'relaunch after 2h / 10h / 23h: NO fresh fetch, returns none',
+      () async {
+        final t0 = DateTime(2026, 1, 1, 8);
+        await build(
+          current: '1.1.0',
+          latest: '1.2.0',
+          now: () => t0,
+        ).checkForUpdate();
+        clearInteractions(rc);
+
+        for (final hours in [2, 10, 23]) {
+          final later = t0.add(Duration(hours: hours));
+          final status = await build(
+            current: '1.1.0',
+            latest: '1.2.0',
+            now: () => later,
+          ).checkForUpdate();
+
+          expect(
+            status,
+            AppUpdateStatus.none,
+            reason: 'launch after ${hours}h',
+          );
+          verifyNever(() => rc.refresh());
+        }
+      },
+    );
 
     test('relaunch after 24h+: a fresh fetch is allowed again', () async {
       final t0 = DateTime(2026, 1, 1, 8);
-      await build(current: '1.1.0', latest: '1.2.0', now: () => t0).checkForUpdate();
+      await build(
+        current: '1.1.0',
+        latest: '1.2.0',
+        now: () => t0,
+      ).checkForUpdate();
       clearInteractions(rc);
 
       final next = t0.add(const Duration(hours: 25));
@@ -163,12 +202,15 @@ void main() {
   });
 
   group('openUpdateUrl', () {
-    test('returns false (no throw) when update_url is empty or invalid', () async {
-      when(() => rc.updateUrl).thenReturn('');
-      expect(await build(current: '1.0.0').openUpdateUrl(), isFalse);
+    test(
+      'returns false (no throw) when update_url is empty or invalid',
+      () async {
+        when(() => rc.updateUrl).thenReturn('');
+        expect(await build(current: '1.0.0').openUpdateUrl(), isFalse);
 
-      when(() => rc.updateUrl).thenReturn('not a url');
-      expect(await build(current: '1.0.0').openUpdateUrl(), isFalse);
-    });
+        when(() => rc.updateUrl).thenReturn('not a url');
+        expect(await build(current: '1.0.0').openUpdateUrl(), isFalse);
+      },
+    );
   });
 }

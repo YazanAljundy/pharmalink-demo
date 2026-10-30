@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:pharmalink_demo/config/app_config.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pharmalink_demo/core/services/logger_service.dart';
@@ -141,6 +142,7 @@ class FcmService implements SessionScoped {
   }
 
   Future<void> initialize() async {
+    if (kDemoMockApi) return;
     try {
       // TEMP DIAGNOSTIC LOGS (see FCM_DEBUG task).
       _logger.info('FCM_DEBUG: requesting notification permission');
@@ -181,6 +183,7 @@ class FcmService implements SessionScoped {
   /// server row is then left behind, but registerDeviceToken already pulls
   /// a token away from any previous owner when someone next signs in here.
   Future<void> unregisterDevice() async {
+    if (kDemoMockApi) return;
     try {
       final token = await _messaging.getToken();
       if (token != null && token.isNotEmpty) {

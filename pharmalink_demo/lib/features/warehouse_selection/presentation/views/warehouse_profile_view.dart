@@ -29,7 +29,11 @@ import 'package:pharmalink_demo/routes/route_names.dart';
 // order flow, see the "browse products" button at the bottom which is the
 // only way forward from here.
 class WarehouseProfileView extends StatelessWidget {
-  const WarehouseProfileView({super.key, required this.warehouseId, required this.warehouseName});
+  const WarehouseProfileView({
+    super.key,
+    required this.warehouseId,
+    required this.warehouseName,
+  });
 
   final String warehouseId;
   final String warehouseName;
@@ -47,12 +51,18 @@ class WarehouseProfileView extends StatelessWidget {
   // Complaint Section 2: "file a complaint about THIS warehouse" - the
   // warehouse context is passed through, so the "submit a complaint" screen
   // shows it pre-filled and non-editable, with no warehouse dropdown.
-  Future<void> _fileWarehouseComplaint(BuildContext context, WarehouseProfileModel profile) async {
+  Future<void> _fileWarehouseComplaint(
+    BuildContext context,
+    WarehouseProfileModel profile,
+  ) async {
     final isArabic = Localizations.localeOf(context).languageCode == 'ar';
     final name = isArabic ? profile.nameAr : profile.nameEn;
     await context.pushNamed(
       RouteNames.submitComplaint,
-      extra: SubmitComplaintArgs.warehouse(warehouseId: warehouseId, warehouseName: name),
+      extra: SubmitComplaintArgs.warehouse(
+        warehouseId: warehouseId,
+        warehouseName: name,
+      ),
     );
   }
 
@@ -64,7 +74,11 @@ class WarehouseProfileView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.navyOf(context),
         foregroundColor: Colors.white,
-        title: Text(warehouseName, maxLines: 1, overflow: TextOverflow.ellipsis),
+        title: Text(
+          warehouseName,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
         actions: const [CartButton()],
       ),
       body: BlocBuilder<WarehouseProfileCubit, WarehouseProfileState>(
@@ -85,13 +99,21 @@ class WarehouseProfileView extends StatelessWidget {
                 SizedBox(height: AppSizes.spacingMedium),
                 SkeletonListCard(),
                 SizedBox(height: AppSizes.spacingXLarge),
-                SkeletonBar(height: AppSizes.buttonHeight, radius: AppRadius.medium),
+                SkeletonBar(
+                  height: AppSizes.buttonHeight,
+                  radius: AppRadius.medium,
+                ),
               ],
             );
           }
-          if (state.status == WarehouseProfileStatus.error || state.profile == null) {
+          if (state.status == WarehouseProfileStatus.error ||
+              state.profile == null) {
             return FailureWidget(
-              message: translateErrorCode(l10n, state.errorCode, state.errorMessage ?? l10n.errorState),
+              message: translateErrorCode(
+                l10n,
+                state.errorCode,
+                state.errorMessage ?? l10n.errorState,
+              ),
               onRetry: () => context.read<WarehouseProfileCubit>().load(),
             );
           }
@@ -128,14 +150,24 @@ class WarehouseProfileView extends StatelessWidget {
                           SizedBox(
                             width: double.infinity,
                             child: OutlinedButton.icon(
-                              onPressed: () => _fileWarehouseComplaint(context, profile),
-                              icon: const Icon(Icons.support_agent_outlined, size: 18),
+                              onPressed: () =>
+                                  _fileWarehouseComplaint(context, profile),
+                              icon: const Icon(
+                                Icons.support_agent_outlined,
+                                size: 18,
+                              ),
                               label: Text(l10n.submitComplaintOnWarehouseCta),
                               style: OutlinedButton.styleFrom(
                                 foregroundColor: AppColors.textOf(context),
-                                side: BorderSide(color: AppColors.textOf(context)),
-                                shape: const RoundedRectangleBorder(borderRadius: AppRadius.medium),
-                                padding: const EdgeInsets.symmetric(vertical: 14),
+                                side: BorderSide(
+                                  color: AppColors.textOf(context),
+                                ),
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: AppRadius.medium,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 14,
+                                ),
                               ),
                             ),
                           ),
@@ -172,15 +204,8 @@ class _ProfileHeader extends StatelessWidget {
             child: AppNetworkImage(
               url: profile.logo,
               fit: BoxFit.cover,
-              fallback: Container(
-                color: AppColors.surfaceOf(context),
-                alignment: Alignment.center,
-                child: Icon(
-                  Icons.local_shipping_outlined,
-                  color: AppColors.textOf(context),
-                  size: AppSizes.iconSizeLarge,
-                ),
-              ),
+              placeholderKind: AppImageKind.warehouse,
+              placeholderSeed: profile.id,
             ),
           ),
         ),
@@ -197,12 +222,18 @@ class _ProfileHeader extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.location_on_outlined, size: AppSizes.iconSizeSmall, color: AppColors.textSecondaryOf(context)),
+            Icon(
+              Icons.location_on_outlined,
+              size: AppSizes.iconSizeSmall,
+              color: AppColors.textSecondaryOf(context),
+            ),
             const SizedBox(width: AppSizes.spacingXSmall),
             Flexible(
               child: Text(
                 profile.city,
-                style: context.textTheme.bodyMedium?.copyWith(color: AppColors.textSecondaryOf(context)),
+                style: context.textTheme.bodyMedium?.copyWith(
+                  color: AppColors.textSecondaryOf(context),
+                ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -229,7 +260,11 @@ class _ContactSection extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.phone_outlined, size: AppSizes.iconSizeSmall, color: AppColors.textSecondaryOf(context)),
+              Icon(
+                Icons.phone_outlined,
+                size: AppSizes.iconSizeSmall,
+                color: AppColors.textSecondaryOf(context),
+              ),
               const SizedBox(width: AppSizes.spacingSmall),
               Expanded(
                 child: Text(
@@ -276,7 +311,8 @@ class _DeliverySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final hasHours = profile.deliveryStartTime != null && profile.deliveryEndTime != null;
+    final hasHours =
+        profile.deliveryStartTime != null && profile.deliveryEndTime != null;
     final deliveryTypeLabel = profile.deliveryType == 'third_party'
         ? l10n.deliveryTypeThirdPartyLabel
         : l10n.deliveryTypeSelfLabel;
@@ -290,21 +326,33 @@ class _DeliverySection extends StatelessWidget {
           _IconTextRow(
             icon: Icons.schedule_outlined,
             text: hasHours
-                ? l10n.deliveryHoursValue(profile.deliveryStartTime!, profile.deliveryEndTime!)
+                ? l10n.deliveryHoursValue(
+                    profile.deliveryStartTime!,
+                    profile.deliveryEndTime!,
+                  )
                 : l10n.deliveryHoursNotSet,
           ),
           const SizedBox(height: AppSizes.spacingXSmall),
-          _IconTextRow(icon: Icons.local_shipping_outlined, text: deliveryTypeLabel),
+          _IconTextRow(
+            icon: Icons.local_shipping_outlined,
+            text: deliveryTypeLabel,
+          ),
           const SizedBox(height: AppSizes.spacingSmall),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.info_outline, size: AppSizes.iconSizeSmall, color: AppColors.textSecondaryOf(context)),
+              Icon(
+                Icons.info_outline,
+                size: AppSizes.iconSizeSmall,
+                color: AppColors.textSecondaryOf(context),
+              ),
               const SizedBox(width: AppSizes.spacingXSmall),
               Expanded(
                 child: Text(
                   l10n.deliveryInfoDisclaimer,
-                  style: context.textTheme.bodySmall?.copyWith(color: AppColors.textSecondaryOf(context)),
+                  style: context.textTheme.bodySmall?.copyWith(
+                    color: AppColors.textSecondaryOf(context),
+                  ),
                 ),
               ),
             ],
@@ -325,7 +373,11 @@ class _IconTextRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: AppSizes.iconSizeSmall, color: AppColors.textSecondaryOf(context)),
+        Icon(
+          icon,
+          size: AppSizes.iconSizeSmall,
+          color: AppColors.textSecondaryOf(context),
+        ),
         const SizedBox(width: AppSizes.spacingSmall),
         Expanded(
           child: Text(
@@ -357,7 +409,9 @@ class _ReviewsSection extends StatelessWidget {
         if (profile.reviewsCount == 0)
           Text(
             l10n.noWarehouseReviewsYet,
-            style: context.textTheme.bodyMedium?.copyWith(color: AppColors.textSecondaryOf(context)),
+            style: context.textTheme.bodyMedium?.copyWith(
+              color: AppColors.textSecondaryOf(context),
+            ),
           )
         else ...[
           CustomCard(
@@ -402,7 +456,8 @@ class _ReviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final reviewerName = review.reviewerName != null && review.reviewerName!.trim().isNotEmpty
+    final reviewerName =
+        review.reviewerName != null && review.reviewerName!.trim().isNotEmpty
         ? review.reviewerName!
         : l10n.anonymousReviewerName;
 
@@ -426,7 +481,9 @@ class _ReviewCard extends StatelessWidget {
                     Flexible(
                       child: Text(
                         reviewerName,
-                        style: context.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -445,7 +502,9 @@ class _ReviewCard extends StatelessWidget {
           const SizedBox(height: AppSizes.spacingXSmall),
           Text(
             DateFormatter.formatDate(review.createdAt),
-            style: context.textTheme.bodySmall?.copyWith(color: AppColors.textSecondaryOf(context)),
+            style: context.textTheme.bodySmall?.copyWith(
+              color: AppColors.textSecondaryOf(context),
+            ),
           ),
         ],
       ),
@@ -468,7 +527,9 @@ class _StarRow extends StatelessWidget {
         return Icon(
           filled ? Icons.star : Icons.star_border,
           size: size,
-          color: filled ? AppColors.primaryOf(context) : AppColors.borderOf(context),
+          color: filled
+              ? AppColors.primaryOf(context)
+              : AppColors.borderOf(context),
         );
       }),
     );

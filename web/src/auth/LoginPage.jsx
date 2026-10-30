@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from './AuthContext';
+import { DEMO_MOCK } from '../demo/demoConfig';
 
 // Section 6-2/3: phone + password, no OTP (temporarily disabled - see
 // AuthContext.login). Single-step form, same shape as the pharmacy app's
@@ -12,6 +13,38 @@ export function LoginPage() {
   const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
+
+  if (DEMO_MOCK) {
+    const enterAs = async (role) => {
+      setError(null);
+      setIsSubmitting(true);
+      try {
+        await login(role === 'admin' ? '0900000001' : '0900000002', 'Demo@12345');
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsSubmitting(false);
+      }
+    };
+
+    return (
+      <div className="auth-screen">
+        <div className="auth-card">
+          <h1 className="brand">
+            <img className="auth-logo" src="/images/demo-logo-light.png" alt={t('app.brand')} />
+          </h1>
+          <p className="hint">Choose a demo dashboard</p>
+          {error && <p className="error-text">{error}</p>}
+          <button type="button" className="btn-primary" disabled={isSubmitting} onClick={() => enterAs('warehouse')}>
+            Enter as Warehouse
+          </button>
+          <button type="button" className="btn-primary" disabled={isSubmitting} onClick={() => enterAs('admin')}>
+            Enter as Admin
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();

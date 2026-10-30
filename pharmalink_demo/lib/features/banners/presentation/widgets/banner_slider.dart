@@ -6,6 +6,7 @@ import 'package:video_player/video_player.dart';
 import 'package:pharmalink_demo/core/constants/app_colors.dart';
 import 'package:pharmalink_demo/core/constants/app_radius.dart';
 import 'package:pharmalink_demo/core/constants/app_sizes.dart';
+import 'package:pharmalink_demo/config/app_config.dart';
 import 'package:pharmalink_demo/core/widgets/app_network_image.dart';
 import 'package:pharmalink_demo/features/banners/data/models/banner_model.dart';
 import 'package:pharmalink_demo/features/banners/presentation/managers/banners_cubit.dart';
@@ -24,7 +25,8 @@ class BannerSlider extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<BannersCubit, BannersState>(
       buildWhen: (previous, current) =>
-          previous.status != current.status || previous.banners != current.banners,
+          previous.status != current.status ||
+          previous.banners != current.banners,
       builder: (context, state) {
         if (state.status != BannersStatus.loaded || state.banners.isEmpty) {
           return const SizedBox.shrink();
@@ -110,7 +112,8 @@ class _BannerCarouselState extends State<_BannerCarousel> {
                       // dragDetails is only set for a real user-initiated
                       // drag, never for the programmatic animateToPage
                       // above - this is how the two are told apart.
-                      if (notification is ScrollStartNotification && notification.dragDetails != null) {
+                      if (notification is ScrollStartNotification &&
+                          notification.dragDetails != null) {
                         _stopAutoScroll();
                       }
                       return false;
@@ -118,12 +121,18 @@ class _BannerCarouselState extends State<_BannerCarousel> {
                     child: PageView.builder(
                       controller: _pageController,
                       itemCount: widget.banners.length,
-                      onPageChanged: (index) => setState(() => _currentPage = index),
+                      onPageChanged: (index) =>
+                          setState(() => _currentPage = index),
                       itemBuilder: (context, index) {
                         final banner = widget.banners[index];
                         return GestureDetector(
-                          onTap: banner.isTappable ? () => widget.onTap?.call(banner) : null,
-                          child: _BannerMedia(banner: banner, isActive: index == _currentPage),
+                          onTap: banner.isTappable
+                              ? () => widget.onTap?.call(banner)
+                              : null,
+                          child: _BannerMedia(
+                            banner: banner,
+                            isActive: index == _currentPage,
+                          ),
                         );
                       },
                     ),
@@ -142,7 +151,9 @@ class _BannerCarouselState extends State<_BannerCarousel> {
                       width: isActive ? 18 : 6,
                       height: 6,
                       decoration: BoxDecoration(
-                        color: isActive ? AppColors.primaryOf(context) : AppColors.borderOf(context),
+                        color: isActive
+                            ? AppColors.primaryOf(context)
+                            : AppColors.borderOf(context),
                         borderRadius: AppRadius.full,
                       ),
                     );
@@ -157,9 +168,8 @@ class _BannerCarouselState extends State<_BannerCarousel> {
   }
 }
 
-// Dispatches on the banner's mediaType - image keeps the exact pre-existing
-// AppNetworkImage path (caching + right-sizing); video and GIF each need
-// their own widget below (see each one's own doc comment for why).
+// Offline mode always uses the local image/placeholder path. Online mode
+// dispatches on mediaType so animated GIFs and video retain their behavior.
 class _BannerMedia extends StatelessWidget {
   const _BannerMedia({required this.banner, required this.isActive});
 
@@ -168,21 +178,33 @@ class _BannerMedia extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (kDemoMockApi) {
+      return AppNetworkImage(
+        url: banner.imageUrl,
+        fit: BoxFit.cover,
+        width: double.infinity,
+        placeholderKind: AppImageKind.banner,
+        placeholderSeed: banner.id,
+      );
+    }
     if (banner.isVideo) {
       return _BannerVideo(url: banner.imageUrl, isActive: isActive);
     }
     if (banner.isGif) {
       return _BannerGifImage(url: banner.imageUrl);
     }
-    return AppNetworkImage(url: banner.imageUrl, fit: BoxFit.cover, width: double.infinity);
+    return AppNetworkImage(
+      url: banner.imageUrl,
+      fit: BoxFit.cover,
+      width: double.infinity,
+      placeholderKind: AppImageKind.banner,
+      placeholderSeed: banner.id,
+    );
   }
 }
 
-// AppNetworkImage rewrites Cloudinary URLs to a right-sized, decode-capped
-// rendition (cloudinary_image.dart) - both the `f_auto`/`q_auto` transform
-// and the memCacheWidth/memCacheHeight decode resize can turn an animated
-// GIF into a single static frame. A plain Image.network sidesteps both, so
-// the GIF's animation is guaranteed to survive.
+// The shared image widget keeps network caching, right-sizing and graceful
+// error handling consistent with other image surfaces.
 class _BannerGifImage extends StatelessWidget {
   const _BannerGifImage({required this.url});
 
@@ -190,17 +212,11 @@ class _BannerGifImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(
-      url,
+    return AppNetworkImage(
+      url: url,
       fit: BoxFit.cover,
       width: double.infinity,
-      loadingBuilder: (context, child, progress) =>
-          progress == null ? child : Container(color: AppColors.surfaceOf(context)),
-      errorBuilder: (context, error, stack) => Container(
-        color: AppColors.surfaceOf(context),
-        alignment: Alignment.center,
-        child: Icon(Icons.image_not_supported_outlined, color: AppColors.textSecondaryOf(context)),
-      ),
+      placeholderKind: AppImageKind.banner,
     );
   }
 }
@@ -254,7 +270,11 @@ class _BannerVideoState extends State<_BannerVideo> {
   void didUpdateWidget(covariant _BannerVideo oldWidget) {
     super.didUpdateWidget(oldWidget);
     final controller = _controller;
-    if (controller == null || !_isReady || widget.isActive == oldWidget.isActive) return;
+    if (controller == null ||
+        !_isReady ||
+        widget.isActive == oldWidget.isActive) {
+      return;
+    }
     if (widget.isActive) {
       controller.seekTo(Duration.zero);
       controller.play();

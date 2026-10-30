@@ -10,6 +10,8 @@ import {
 } from '../utils/warehouseNav';
 import { LanguageToggle } from '../components/LanguageToggle';
 import { DemoBadge } from '../components/DemoBadge';
+import { DEMO_MOCK } from '../demo/demoConfig';
+import { simulateIncomingOrder } from '../demo/DemoStore';
 import { NavBadge } from '../components/NavBadge';
 import { useUnreadBadges } from '../realtime/UnreadBadgesProvider';
 import { WarehouseOrdersPage } from './WarehouseOrdersPage';
@@ -120,11 +122,18 @@ export function WarehousePanel() {
           </div>
           <div className="wh-topbar-actions">
             <DemoBadge />
+            {DEMO_MOCK && (
+              <button type="button" className="wh-logout-btn" onClick={simulateIncomingOrder}>
+                Simulate incoming order
+              </button>
+            )}
             <span className="user-name">{user?.name}</span>
             <LanguageToggle />
-            <button className="wh-logout-btn" onClick={logout}>
-              {t('common.logOut')}
-            </button>
+            {DEMO_MOCK ? (
+              <button className="wh-logout-btn" onClick={logout}>Switch role</button>
+            ) : (
+              <button className="wh-logout-btn" onClick={logout}>{t('common.logOut')}</button>
+            )}
           </div>
         </header>
 

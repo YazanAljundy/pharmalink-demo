@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../auth/AuthContext';
 import { LanguageToggle } from '../components/LanguageToggle';
 import { DemoBadge } from '../components/DemoBadge';
+import { DEMO_MOCK } from '../demo/demoConfig';
 import { NavBadge } from '../components/NavBadge';
 import { useUnreadBadges } from '../realtime/UnreadBadgesProvider';
 import { AdminDashboardPage } from './AdminDashboardPage';
@@ -114,9 +115,11 @@ export function AdminPanel() {
             <DemoBadge />
             <span className="user-name">{user?.name}</span>
             <LanguageToggle />
-            <button className="adm-logout-btn" onClick={logout}>
-              {t('common.logOut')}
-            </button>
+            {DEMO_MOCK ? (
+              <button className="adm-logout-btn" onClick={logout}>Switch role</button>
+            ) : (
+              <button className="adm-logout-btn" onClick={logout}>{t('common.logOut')}</button>
+            )}
           </div>
         </header>
 

@@ -14,7 +14,11 @@ import 'package:pharmalink_demo/features/catalog/presentation/widgets/manufactur
 // (logo area over the name) rather than a wide row - matches the grid-of-
 // tiles convention used for warehouses/products elsewhere in the app.
 class ManufacturerCard extends StatelessWidget {
-  const ManufacturerCard({super.key, required this.manufacturer, required this.onSelect});
+  const ManufacturerCard({
+    super.key,
+    required this.manufacturer,
+    required this.onSelect,
+  });
 
   final ManufacturerModel manufacturer;
   final VoidCallback onSelect;
@@ -35,7 +39,7 @@ class ManufacturerCard extends StatelessWidget {
                 color: AppColors.surfaceOf(context),
                 borderRadius: AppRadius.medium,
               ),
-              // The admin-set logo, or the first letter in a coloured circle.
+              // The admin-set logo, or the generated manufacturer placeholder.
               child: ManufacturerAvatar(
                 name: manufacturer.name,
                 id: manufacturer.id,
@@ -59,7 +63,9 @@ class ManufacturerCard extends StatelessWidget {
           // those) as "25.5%", never rounded. Green = the app's "positive /
           // saving" colour, matching the discounted-price figure on ProductCard.
           Text(
-            l10n.companyDiscountValue(_formatPercent(manufacturer.discountPercentage)),
+            l10n.companyDiscountValue(
+              _formatPercent(manufacturer.discountPercentage),
+            ),
             textAlign: TextAlign.center,
             style: context.textTheme.bodySmall?.copyWith(
               color: AppColors.secondaryOf(context),

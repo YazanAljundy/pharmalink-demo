@@ -299,8 +299,8 @@ class _MiniCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSizes.spacingMedium),
-          SizedBox(
-            height: 28,
+          ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 28),
             child: Align(alignment: AlignmentDirectional.centerStart, child: value),
           ),
           const SizedBox(height: AppSizes.spacingXSmall),

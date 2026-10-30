@@ -46,7 +46,8 @@ class _AdvertisementCardState extends State<AdvertisementCard> {
     final advertisement = widget.advertisement;
     final usdToSyp = context.watch<ExchangeRateCubit>().state.usdToSyp;
 
-    String money(num usd) => formatMoneyFromUsd(usd, usdToSyp, l10n.currencySuffix);
+    String money(num usd) =>
+        formatMoneyFromUsd(usd, usdToSyp, l10n.currencySuffix);
     final title = isArabic
         ? advertisement.titleAr
         : (advertisement.titleEn ?? advertisement.titleAr);
@@ -68,7 +69,8 @@ class _AdvertisementCardState extends State<AdvertisementCard> {
               // Optional - most packages carry no image of their own, in
               // which case this renders nothing and the card looks exactly
               // as it always has.
-              if (advertisement.imageUrl != null && advertisement.imageUrl!.trim().isNotEmpty) ...[
+              if (advertisement.imageUrl != null &&
+                  advertisement.imageUrl!.trim().isNotEmpty) ...[
                 ClipRRect(
                   borderRadius: AppRadius.medium,
                   child: AppNetworkImage(
@@ -76,6 +78,8 @@ class _AdvertisementCardState extends State<AdvertisementCard> {
                     height: 120,
                     width: double.infinity,
                     fit: BoxFit.cover,
+                    placeholderKind: AppImageKind.advertisement,
+                    placeholderSeed: advertisement.id,
                   ),
                 ),
                 const SizedBox(height: AppSizes.spacingSmall),
@@ -105,14 +109,21 @@ class _AdvertisementCardState extends State<AdvertisementCard> {
                   ),
                   if (advertisement.hasSaving)
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.primaryOf(context),
                         borderRadius: AppRadius.full,
                       ),
                       child: Text(
-                        l10n.advertisementSavingPercent(advertisement.savingPercentage),
-                        style: context.textTheme.labelSmall?.copyWith(color: Colors.white),
+                        l10n.advertisementSavingPercent(
+                          advertisement.savingPercentage,
+                        ),
+                        style: context.textTheme.labelSmall?.copyWith(
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                 ],
@@ -137,7 +148,9 @@ class _AdvertisementCardState extends State<AdvertisementCard> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsetsDirectional.only(end: AppSizes.spacingSmall),
+                        padding: const EdgeInsetsDirectional.only(
+                          end: AppSizes.spacingSmall,
+                        ),
                         child: Text(
                           l10n.advertisementItemQuantity(item.quantity),
                           style: context.textTheme.bodySmall?.copyWith(
@@ -148,7 +161,9 @@ class _AdvertisementCardState extends State<AdvertisementCard> {
                       if (item.lineTotalUsd != null)
                         Text(
                           money(item.lineTotalUsd!),
-                          style: context.textTheme.bodyMedium?.copyWith(fontWeight: AppTextTheme.semiBold),
+                          style: context.textTheme.bodyMedium?.copyWith(
+                            fontWeight: AppTextTheme.semiBold,
+                          ),
                         ),
                     ],
                   ),
@@ -161,7 +176,10 @@ class _AdvertisementCardState extends State<AdvertisementCard> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(l10n.advertisementPackageTotal, style: context.textTheme.titleSmall),
+                  Text(
+                    l10n.advertisementPackageTotal,
+                    style: context.textTheme.titleSmall,
+                  ),
                   Wrap(
                     crossAxisAlignment: WrapCrossAlignment.center,
                     spacing: AppSizes.spacingXSmall,
@@ -192,13 +210,18 @@ class _AdvertisementCardState extends State<AdvertisementCard> {
                   style: FilledButton.styleFrom(
                     backgroundColor: AppColors.primaryOf(context),
                     foregroundColor: Colors.white,
-                    shape: const RoundedRectangleBorder(borderRadius: AppRadius.medium),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadius.medium,
+                    ),
                   ),
                   child: _busy
                       ? const SizedBox(
                           width: 18,
                           height: 18,
-                          child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
                         )
                       : Text(l10n.advertisementAddToCartButton),
                 ),

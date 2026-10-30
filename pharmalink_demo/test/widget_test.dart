@@ -40,6 +40,7 @@ import 'package:pharmalink_demo/features/warehouse_selection/data/repositories/w
 import 'package:pharmalink_demo/main.dart';
 import 'package:pharmalink_demo/routes/app_router.dart';
 import 'package:pharmalink_demo/routes/route_paths.dart';
+import 'package:pharmalink_demo/routes/route_names.dart';
 
 class _MockExchangeRateRepository extends Mock
     implements ExchangeRateRepository {}
@@ -54,7 +55,10 @@ Future<AppRouter> _pumpApp(
 }) async {
   final storageService = StorageService(await SharedPreferences.getInstance());
   final secureStorage = SecureStorageService();
-  final apiClient = ApiClient(secureStorage: secureStorage);
+  final apiClient = ApiClient(
+    secureStorage: secureStorage,
+    mockApiDelay: Duration.zero,
+  );
   final authRepository = AuthRepositoryImpl(apiClient: apiClient);
   final resolvedWarehouseRepository =
       warehouseRepository ?? WarehouseRepositoryImpl(apiClient: apiClient);
@@ -132,6 +136,10 @@ void main() {
   test('demo router starts directly on the post-login route', () async {
     final appRouter = AppRouter(demoAutoLogin: true);
     expect(appRouter.initialLocation, RoutePaths.warehouseSelection);
+    expect(
+      appRouter.router.namedLocation(RouteNames.privacyPolicy),
+      RoutePaths.privacyPolicy,
+    );
     appRouter.router.dispose();
   });
 
@@ -206,6 +214,7 @@ void main() {
       ]) {
         binding.handleAppLifecycleStateChanged(state);
       }
+      await tester.pump(const Duration(milliseconds: 400));
       await tester.pumpAndSettle();
 
       verify(() => rateRepository.getExchangeRate()).called(1);

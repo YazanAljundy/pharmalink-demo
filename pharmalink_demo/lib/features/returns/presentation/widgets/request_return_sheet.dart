@@ -59,7 +59,8 @@ class _RequestReturnSheetBody extends StatefulWidget {
   const _RequestReturnSheetBody();
 
   @override
-  State<_RequestReturnSheetBody> createState() => _RequestReturnSheetBodyState();
+  State<_RequestReturnSheetBody> createState() =>
+      _RequestReturnSheetBodyState();
 }
 
 class _RequestReturnSheetBodyState extends State<_RequestReturnSheetBody> {
@@ -67,7 +68,10 @@ class _RequestReturnSheetBodyState extends State<_RequestReturnSheetBody> {
   late final TextEditingController _notesController;
   bool _notesInitialized = false;
 
-  TextEditingController _customReasonController(String orderItemId, String initial) {
+  TextEditingController _customReasonController(
+    String orderItemId,
+    String initial,
+  ) {
     return _customReasonControllers.putIfAbsent(
       orderItemId,
       () => TextEditingController(text: initial),
@@ -95,7 +99,9 @@ class _RequestReturnSheetBodyState extends State<_RequestReturnSheetBody> {
   // adds no second compression step.
   Future<void> _pickPhotoWithSourceChoice(RequestReturnCubit cubit) async {
     final remaining =
-        kMaxReturnPhotos - cubit.state.existingImageUrls.length - cubit.state.newImages.length;
+        kMaxReturnPhotos -
+        cubit.state.existingImageUrls.length -
+        cubit.state.newImages.length;
     if (remaining <= 0) return;
 
     final l10n = context.l10n;
@@ -136,7 +142,8 @@ class _RequestReturnSheetBodyState extends State<_RequestReturnSheetBody> {
 
     if (!status.isGranted) {
       final l10n = context.l10n;
-      final permanentlyBlocked = status.isPermanentlyDenied || status.isRestricted;
+      final permanentlyBlocked =
+          status.isPermanentlyDenied || status.isRestricted;
       await AppDialog.show(
         context: context,
         title: l10n.permissionRequiredTitle,
@@ -161,7 +168,9 @@ class _RequestReturnSheetBodyState extends State<_RequestReturnSheetBody> {
 
   Future<void> _addPhotos(RequestReturnCubit cubit) async {
     final remaining =
-        kMaxReturnPhotos - cubit.state.existingImageUrls.length - cubit.state.newImages.length;
+        kMaxReturnPhotos -
+        cubit.state.existingImageUrls.length -
+        cubit.state.newImages.length;
     if (remaining <= 0) return;
     // Image pipeline (Section: image-upload optimisation). image_picker does
     // the whole processing step natively, in one pass, before the file ever
@@ -196,9 +205,13 @@ class _RequestReturnSheetBodyState extends State<_RequestReturnSheetBody> {
 
     return BlocConsumer<RequestReturnCubit, RequestReturnState>(
       listenWhen: (previous, current) =>
-          current.errorMessage != null && previous.errorMessage != current.errorMessage,
+          current.errorMessage != null &&
+          previous.errorMessage != current.errorMessage,
       listener: (context, state) {
-        AppSnackbar.show(context, translateErrorCode(l10n, state.errorCode, state.errorMessage!));
+        AppSnackbar.show(
+          context,
+          translateErrorCode(l10n, state.errorCode, state.errorMessage!),
+        );
       },
       builder: (context, state) {
         final cubit = context.read<RequestReturnCubit>();
@@ -230,15 +243,23 @@ class _RequestReturnSheetBodyState extends State<_RequestReturnSheetBody> {
             left: AppSizes.spacingLarge,
             right: AppSizes.spacingLarge,
             top: AppSizes.spacingLarge,
-            bottom: MediaQuery.of(context).viewInsets.bottom + AppSizes.spacingLarge,
+            bottom:
+                MediaQuery.of(context).viewInsets.bottom +
+                AppSizes.spacingLarge,
           ),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(l10n.requestReturnTitle, style: context.textTheme.titleLarge),
+                Text(
+                  l10n.requestReturnTitle,
+                  style: context.textTheme.titleLarge,
+                ),
                 const SizedBox(height: AppSizes.spacingMedium),
-                Text(l10n.returnPickItemsLabel, style: context.textTheme.titleSmall),
+                Text(
+                  l10n.returnPickItemsLabel,
+                  style: context.textTheme.titleSmall,
+                ),
                 const SizedBox(height: AppSizes.spacingSmall),
                 ...state.orderItems.map((item) {
                   final selected = state.selectedItemIds.contains(item.id);
@@ -248,7 +269,9 @@ class _RequestReturnSheetBodyState extends State<_RequestReturnSheetBody> {
                     name: name,
                     selected: selected,
                     quantity: state.itemQuantity[item.id] ?? 1,
-                    reasonType: state.itemReasonType[item.id] ?? kReturnReasonTypes.first,
+                    reasonType:
+                        state.itemReasonType[item.id] ??
+                        kReturnReasonTypes.first,
                     customReasonController: _customReasonController(
                       item.id,
                       state.itemCustomReason[item.id] ?? '',
@@ -256,7 +279,8 @@ class _RequestReturnSheetBodyState extends State<_RequestReturnSheetBody> {
                     onToggle: () => cubit.toggleItem(item.id),
                     onQuantityChanged: (q) => cubit.setItemQuantity(item.id, q),
                     onReasonChanged: (r) => cubit.setItemReasonType(item.id, r),
-                    onCustomReasonChanged: (v) => cubit.setItemCustomReason(item.id, v),
+                    onCustomReasonChanged: (v) =>
+                        cubit.setItemCustomReason(item.id, v),
                   );
                 }),
                 const SizedBox(height: AppSizes.spacingMedium),
@@ -266,7 +290,10 @@ class _RequestReturnSheetBodyState extends State<_RequestReturnSheetBody> {
                   onChanged: cubit.setNotes,
                 ),
                 const SizedBox(height: AppSizes.spacingMedium),
-                Text(l10n.returnPhotosLabel, style: context.textTheme.titleSmall),
+                Text(
+                  l10n.returnPhotosLabel,
+                  style: context.textTheme.titleSmall,
+                ),
                 const SizedBox(height: AppSizes.spacingXSmall),
                 Text(
                   l10n.returnPhotosHint,
@@ -280,13 +307,18 @@ class _RequestReturnSheetBodyState extends State<_RequestReturnSheetBody> {
                   runSpacing: AppSizes.spacingSmall,
                   children: [
                     for (final url in state.existingImageUrls)
-                      _ExistingPhotoThumbnail(url: url, onRemove: () => cubit.removeExistingImage(url)),
+                      _ExistingPhotoThumbnail(
+                        url: url,
+                        onRemove: () => cubit.removeExistingImage(url),
+                      ),
                     for (var i = 0; i < state.newImages.length; i++)
                       _NewPhotoThumbnail(
                         image: state.newImages[i],
                         onRemove: () => cubit.removeNewImageAt(i),
                       ),
-                    if (state.existingImageUrls.length + state.newImages.length < kMaxReturnPhotos)
+                    if (state.existingImageUrls.length +
+                            state.newImages.length <
+                        kMaxReturnPhotos)
                       InkWell(
                         onTap: () => _pickPhotoWithSourceChoice(cubit),
                         borderRadius: AppRadius.small,
@@ -295,7 +327,9 @@ class _RequestReturnSheetBodyState extends State<_RequestReturnSheetBody> {
                           height: 64,
                           decoration: BoxDecoration(
                             borderRadius: AppRadius.small,
-                            border: Border.all(color: AppColors.borderOf(context)),
+                            border: Border.all(
+                              color: AppColors.borderOf(context),
+                            ),
                           ),
                           child: Icon(
                             Icons.add_a_photo_outlined,
@@ -358,7 +392,9 @@ class _ReturnItemTile extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: AppRadius.medium,
         border: Border.all(
-          color: selected ? AppColors.primaryOf(context) : AppColors.borderOf(context),
+          color: selected
+              ? AppColors.primaryOf(context)
+              : AppColors.borderOf(context),
         ),
       ),
       child: Column(
@@ -380,21 +416,31 @@ class _ReturnItemTile extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text(l10n.returnQuantityLabel, style: context.textTheme.bodyMedium),
+                      Text(
+                        l10n.returnQuantityLabel,
+                        style: context.textTheme.bodyMedium,
+                      ),
                       const Spacer(),
                       IconButton(
-                        onPressed: quantity > 1 ? () => onQuantityChanged(quantity - 1) : null,
+                        onPressed: quantity > 1
+                            ? () => onQuantityChanged(quantity - 1)
+                            : null,
                         icon: const Icon(Icons.remove_circle_outline),
                       ),
                       Text('$quantity', style: context.textTheme.titleMedium),
                       IconButton(
-                        onPressed: quantity < item.quantity ? () => onQuantityChanged(quantity + 1) : null,
+                        onPressed: quantity < item.quantity
+                            ? () => onQuantityChanged(quantity + 1)
+                            : null,
                         icon: const Icon(Icons.add_circle_outline),
                       ),
                     ],
                   ),
                   const SizedBox(height: AppSizes.spacingXSmall),
-                  Text(l10n.returnReasonLabel, style: context.textTheme.bodyMedium),
+                  Text(
+                    l10n.returnReasonLabel,
+                    style: context.textTheme.bodyMedium,
+                  ),
                   const SizedBox(height: AppSizes.spacingXSmall),
                   Wrap(
                     spacing: AppSizes.spacingSmall,
@@ -402,7 +448,9 @@ class _ReturnItemTile extends StatelessWidget {
                       return ChoiceChip(
                         label: Text(returnReasonLabel(l10n, type)),
                         selected: reasonType == type,
-                        shape: RoundedRectangleBorder(borderRadius: AppRadius.full),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: AppRadius.full,
+                        ),
                         onSelected: (_) => onReasonChanged(type),
                       );
                     }).toList(),
@@ -459,7 +507,11 @@ class _NewPhotoThumbnailState extends State<_NewPhotoThumbnail> {
         future: _bytes,
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Container(width: 64, height: 64, color: AppColors.borderOf(context));
+            return Container(
+              width: 64,
+              height: 64,
+              color: AppColors.borderOf(context),
+            );
           }
           // Decode to the thumbnail size, not the full ~1600px picked image -
           // a 64pt box at up to 3x DPR. Only one dimension is pinned so the
@@ -491,7 +543,13 @@ class _ExistingPhotoThumbnail extends StatelessWidget {
       onRemove: onRemove,
       // A dead photo URL (404/expired link) must not throw or show a broken
       // glyph inside the sheet - AppNetworkImage falls back to a placeholder.
-      child: AppNetworkImage(url: url, width: 64, height: 64),
+      child: AppNetworkImage(
+        url: url,
+        width: 64,
+        height: 64,
+        placeholderKind: AppImageKind.banner,
+        placeholderSeed: url,
+      ),
     );
   }
 }
@@ -514,7 +572,10 @@ class _PhotoThumbnailFrame extends StatelessWidget {
             onTap: onRemove,
             child: Container(
               padding: const EdgeInsets.all(2),
-              decoration: const BoxDecoration(color: Colors.black54, shape: BoxShape.circle),
+              decoration: const BoxDecoration(
+                color: Colors.black54,
+                shape: BoxShape.circle,
+              ),
               child: const Icon(Icons.close, size: 14, color: Colors.white),
             ),
           ),

@@ -26,7 +26,11 @@ import 'package:pharmalink_demo/features/order_tracking/presentation/managers/or
 // advance the order - the warehouse still finalises it (the backend just won't
 // let it reach 'delivered' until this photo exists).
 class DeliverySealSection extends StatefulWidget {
-  const DeliverySealSection({super.key, required this.order, required this.isConfirming});
+  const DeliverySealSection({
+    super.key,
+    required this.order,
+    required this.isConfirming,
+  });
 
   final OrderModel order;
   final bool isConfirming;
@@ -68,7 +72,8 @@ class _DeliverySealSectionState extends State<DeliverySealSection> {
       final status = await Permission.camera.request();
       if (!mounted) return;
       if (!status.isGranted) {
-        final permanentlyBlocked = status.isPermanentlyDenied || status.isRestricted;
+        final permanentlyBlocked =
+            status.isPermanentlyDenied || status.isRestricted;
         await AppDialog.show(
           context: context,
           title: l10n.permissionRequiredTitle,
@@ -116,9 +121,17 @@ class _DeliverySealSectionState extends State<DeliverySealSection> {
           children: [
             Row(
               children: [
-                Icon(Icons.verified_outlined, color: AppColors.secondaryOf(context)),
+                Icon(
+                  Icons.verified_outlined,
+                  color: AppColors.secondaryOf(context),
+                ),
                 const SizedBox(width: AppSizes.spacingSmall),
-                Expanded(child: Text(l10n.sealPhotoLabel, style: context.textTheme.titleMedium)),
+                Expanded(
+                  child: Text(
+                    l10n.sealPhotoLabel,
+                    style: context.textTheme.titleMedium,
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: AppSizes.spacingSmall),
@@ -129,6 +142,8 @@ class _DeliverySealSectionState extends State<DeliverySealSection> {
                 width: double.infinity,
                 height: 200,
                 fit: BoxFit.cover,
+                placeholderKind: AppImageKind.banner,
+                placeholderSeed: widget.order.id,
               ),
             ),
             if (order.deliverySealConfirmedAt != null) ...[
@@ -151,7 +166,10 @@ class _DeliverySealSectionState extends State<DeliverySealSection> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(l10n.deliverySealRequiredTitle, style: context.textTheme.titleMedium),
+          Text(
+            l10n.deliverySealRequiredTitle,
+            style: context.textTheme.titleMedium,
+          ),
           const SizedBox(height: AppSizes.spacingXSmall),
           Text(
             l10n.deliverySealRequiredMessage,
@@ -166,14 +184,19 @@ class _DeliverySealSectionState extends State<DeliverySealSection> {
               borderRadius: AppRadius.small,
               child: Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: AppSizes.spacingLarge),
+                padding: const EdgeInsets.symmetric(
+                  vertical: AppSizes.spacingLarge,
+                ),
                 decoration: BoxDecoration(
                   borderRadius: AppRadius.small,
                   border: Border.all(color: AppColors.borderOf(context)),
                 ),
                 child: Column(
                   children: [
-                    Icon(Icons.add_a_photo_outlined, color: AppColors.textSecondaryOf(context)),
+                    Icon(
+                      Icons.add_a_photo_outlined,
+                      color: AppColors.textSecondaryOf(context),
+                    ),
                     const SizedBox(height: AppSizes.spacingXSmall),
                     Text(l10n.takeSealPhoto),
                   ],

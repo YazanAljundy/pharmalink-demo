@@ -1,5 +1,6 @@
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:pharmalink_demo/config/app_config.dart';
 import 'package:pharmalink_demo/core/services/logger_service.dart';
 import 'package:pharmalink_demo/core/services/remote_config_service.dart';
 import 'package:pharmalink_demo/core/services/storage_service.dart';
@@ -23,11 +24,13 @@ class AppUpdateService {
     required String currentVersion,
     Duration checkInterval = const Duration(hours: 24),
     DateTime Function()? now,
+    bool? demoMockApi,
   }) : _remoteConfig = remoteConfigService,
        _storage = storageService,
        _currentVersion = currentVersion,
        _checkInterval = checkInterval,
-       _now = now ?? DateTime.now;
+       _now = now ?? DateTime.now,
+       _demoMockApi = demoMockApi ?? kDemoMockApi;
 
   static const _lastCheckKey = 'app_update.last_check_at';
 
@@ -36,6 +39,7 @@ class AppUpdateService {
   final String _currentVersion;
   final Duration _checkInterval;
   final DateTime Function() _now;
+  final bool _demoMockApi;
   final _logger = LoggerService();
 
   DateTime? _lastCheck() {
@@ -56,6 +60,7 @@ class AppUpdateService {
   ///     current < latest_version       -> optional
   ///     otherwise                      -> none
   Future<AppUpdateStatus> checkForUpdate() async {
+    if (_demoMockApi) return AppUpdateStatus.none;
     try {
       if (!_dueForCheck) return AppUpdateStatus.none;
 

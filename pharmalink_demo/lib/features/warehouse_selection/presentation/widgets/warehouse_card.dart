@@ -80,7 +80,7 @@ class WarehouseCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _LogoBanner(url: warehouse.logo),
+          _LogoBanner(url: warehouse.logo, seed: warehouse.id),
           Padding(
             padding: const EdgeInsets.fromLTRB(_inset, _inset, _inset, 0),
             child: Column(
@@ -122,10 +122,14 @@ class WarehouseCard extends StatelessWidget {
                     style: OutlinedButton.styleFrom(
                       foregroundColor: AppColors.textOf(context),
                       side: BorderSide(color: AppColors.borderOf(context)),
-                      shape: const RoundedRectangleBorder(borderRadius: AppRadius.small),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: AppRadius.small,
+                      ),
                       // No vertical padding: the minimum size alone sets the
                       // height, so a larger text scale doesn't grow the row.
-                      padding: const EdgeInsets.symmetric(horizontal: AppSizes.spacingSmall),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSizes.spacingSmall,
+                      ),
                       minimumSize: const Size(0, _actionHeight),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
@@ -152,9 +156,10 @@ class WarehouseCard extends StatelessWidget {
 }
 
 class _LogoBanner extends StatelessWidget {
-  const _LogoBanner({required this.url});
+  const _LogoBanner({required this.url, required this.seed});
 
   final String? url;
+  final String seed;
 
   @override
   Widget build(BuildContext context) {
@@ -166,18 +171,8 @@ class _LogoBanner extends StatelessWidget {
           child: AppNetworkImage(
             url: url,
             fit: BoxFit.cover,
-            // A warehouse with no logo yet gets a calm tinted panel rather
-            // than a grey void - the app's text colour at low alpha, so it
-            // reads as a placeholder, not as content, in both themes.
-            fallback: Container(
-              color: AppColors.textOf(context).withValues(alpha: 0.06),
-              alignment: Alignment.center,
-              child: Icon(
-                Icons.local_shipping_outlined,
-                color: AppColors.textOf(context).withValues(alpha: 0.45),
-                size: AppSizes.iconSizeMedium + 4,
-              ),
-            ),
+            placeholderKind: AppImageKind.warehouse,
+            placeholderSeed: seed,
           ),
         ),
         // A hairline that separates the image from the text block without a
@@ -203,7 +198,10 @@ class _CityPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSizes.spacingXSmall + 2, vertical: 2),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSizes.spacingXSmall + 2,
+        vertical: 2,
+      ),
       decoration: BoxDecoration(
         color: AppColors.surfaceOf(context),
         borderRadius: AppRadius.full,

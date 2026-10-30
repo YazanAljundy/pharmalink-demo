@@ -68,13 +68,20 @@ npm.cmd run dev
 ```
 
 Open the local URL printed by Vite (normally `http://localhost:5173`). The
-`.env.example` defaults connect the dashboard API and Socket.IO client to
-`http://localhost:5000`; the Demo badge can be hidden with
+dashboard runs fully offline with bundled fake data by default; its demo role
+chooser opens either panel without API or Socket.IO calls. In the warehouse
+header, **Simulate incoming order** emits a local order-created event for the
+live queue and unread-badge presentation. The Demo badge can be hidden with
 `VITE_SHOW_DEMO_BADGE=false`.
+
+To connect the dashboard to the real backend, set
+`VITE_DEMO_MOCK_API=false` in `web/.env.local` and restart Vite. The API and
+Socket.IO URLs then use the local defaults in `.env.example`.
 
 ## Start the pharmacy app
 
-With an Android emulator running, use the default Android-emulator API address:
+The app starts in fully offline mock mode by default; no backend, Firebase
+configuration, or internet connection is needed:
 
 ```powershell
 Set-Location pharmalink_demo
@@ -82,19 +89,24 @@ flutter pub get
 flutter run
 ```
 
-The app defaults to `http://10.0.2.2:5000/api` on Android emulators. For a
-physical device, connect it and the development computer to the same LAN,
-replace `192.168.1.10` below with the computer's LAN IPv4 address, and allow
-port `5000` through the computer's firewall if prompted:
+To use the real backend instead, disable mock mode and set the API URL. For an
+Android emulator, use `http://10.0.2.2:5000/api`; for a physical device,
+connect it and the development computer to the same LAN, replace
+`192.168.1.10` below with the computer's LAN IPv4 address, and allow port
+`5000` through the computer's firewall if prompted:
 
 ```powershell
-flutter run --dart-define=API_BASE_URL=http://192.168.1.10:5000/api
+flutter run --dart-define=DEMO_MOCK_API=false --dart-define=API_BASE_URL=http://192.168.1.10:5000/api
 ```
 
 `DEMO_AUTO_LOGIN` defaults to `true` and signs the app in as the seeded pharmacy.
 Disable it with `--dart-define=DEMO_AUTO_LOGIN=false` to restore login/register.
 Change the demo account with `--dart-define=DEMO_PHONE=...` and `--dart-define=DEMO_PASSWORD=...`.
 The default pharmacy credentials are `0900000004` and `Demo@12345`.
+
+`DEMO_MOCK_API` defaults to `true` and serves bundled fake data. Use
+`flutter run --dart-define=DEMO_MOCK_API=false` to connect to the real backend;
+set `API_BASE_URL` as shown above for the emulator or physical device.
 
 Login uses phone and password; SMS/OTP delivery is not required. If enabled,
 `SMS_PROVIDER=console` writes OTP codes to the backend console. Firebase push

@@ -142,11 +142,13 @@ void main() {
     expect(find.byType(OutlinedButton), findsOneWidget);
   });
 
-  testWidgets('a warehouse with no logo still draws its placeholder', (tester) async {
+  testWidgets('a warehouse with no logo still draws its placeholder', (
+    tester,
+  ) async {
     await pumpCard(tester, theme: LightTheme.data, locale: const Locale('en'));
 
-    // No network image is attempted for a null logo - the card falls back to
-    // the shipping glyph, which is what a not-yet-branded warehouse shows.
-    expect(find.byIcon(Icons.local_shipping_outlined), findsOneWidget);
+    // The local placeholder identifies the image as a warehouse without
+    // attempting a network request.
+    expect(find.byIcon(Icons.storefront_outlined), findsOneWidget);
   });
 }

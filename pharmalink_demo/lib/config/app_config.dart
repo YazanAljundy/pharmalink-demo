@@ -1,3 +1,7 @@
+const bool kDemoMockApi = bool.fromEnvironment(
+  'DEMO_MOCK_API',
+  defaultValue: true,
+);
 const bool kDemoAutoLogin = bool.fromEnvironment(
   'DEMO_AUTO_LOGIN',
   defaultValue: true,

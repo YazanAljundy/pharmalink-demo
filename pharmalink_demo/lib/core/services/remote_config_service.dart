@@ -1,4 +1,5 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:pharmalink_demo/config/app_config.dart';
 
 // Thin wrapper around Firebase Remote Config for the app-update checker.
 //
@@ -38,6 +39,7 @@ class RemoteConfigService {
   /// previous run. Does NOT hit the network (no fetch here) - that only
   /// happens in [refresh], and only after the caller's own 24h gate.
   Future<void> initialize() async {
+    if (kDemoMockApi) return;
     try {
       await _rc.setConfigSettings(
         RemoteConfigSettings(
@@ -59,6 +61,7 @@ class RemoteConfigService {
   /// `minimumFetchInterval` (24h, set in [initialize]) means this is a no-op
   /// on the network when it was last fetched under 24h ago. Never throws.
   Future<void> refresh() async {
+    if (kDemoMockApi) return;
     try {
       if (!_initialised) await initialize();
       await _rc.fetchAndActivate();
@@ -68,6 +71,7 @@ class RemoteConfigService {
   }
 
   String _string(String key) {
+    if (kDemoMockApi) return _defaults[key] as String? ?? '';
     try {
       final value = _rc.getString(key);
       return value.isNotEmpty ? value : (_defaults[key] as String? ?? '');

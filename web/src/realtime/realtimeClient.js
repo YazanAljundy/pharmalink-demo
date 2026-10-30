@@ -1,4 +1,6 @@
 import { io } from 'socket.io-client';
+import { DEMO_MOCK } from '../demo/demoConfig';
+import { createDemoSocket } from '../demo/demoEvents';
 
 // The dashboard's single Socket.IO connection, kept deliberately free of any
 // React so the parts that are easy to get wrong - one connection, no leaked
@@ -29,7 +31,7 @@ const COALESCE_MS = 400;
 export class RealtimeClient {
   // `factory` and `now` are injection points for tests; production uses the
   // real socket.io-client and Date.now.
-  constructor({ factory = io, url = SOCKET_URL, coalesceMs = COALESCE_MS } = {}) {
+  constructor({ factory = DEMO_MOCK ? createDemoSocket : io, url = SOCKET_URL, coalesceMs = COALESCE_MS } = {}) {
     this._factory = factory;
     this._url = url;
     this._coalesceMs = coalesceMs;

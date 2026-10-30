@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +39,7 @@ import 'package:pharmalink_demo/features/exchange_rate/data/repositories/exchang
 import 'package:pharmalink_demo/features/exchange_rate/data/repositories/exchange_rate_repository_impl.dart';
 import 'package:pharmalink_demo/features/exchange_rate/presentation/managers/exchange_rate_cubit.dart';
 import 'package:pharmalink_demo/features/notifications/data/repositories/notification_repository.dart';
+import 'package:pharmalink_demo/features/notifications/data/models/notification_model.dart';
 import 'package:pharmalink_demo/features/offers/data/repositories/offers_repository.dart';
 import 'package:pharmalink_demo/features/offers/data/repositories/offers_repository_impl.dart';
 import 'package:pharmalink_demo/features/notifications/presentation/managers/notification_cubit.dart';
@@ -52,19 +55,24 @@ import 'package:pharmalink_demo/features/warehouse_selection/presentation/manage
 import 'package:pharmalink_demo/generated/app_localizations.dart';
 import 'package:pharmalink_demo/routes/app_router.dart';
 import 'package:pharmalink_demo/routes/route_paths.dart';
+import 'package:pharmalink_demo/config/app_config.dart';
+import 'package:pharmalink_demo/core/demo/demo_store.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  try {
-    await Firebase.initializeApp();
-    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-  } catch (error, stackTrace) {
-    debugPrint('Firebase is unavailable; continuing without push: $error');
-    debugPrintStack(stackTrace: stackTrace);
+  if (!kDemoMockApi) {
+    try {
+      await Firebase.initializeApp();
+      FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+    } catch (error, stackTrace) {
+      debugPrint('Firebase is unavailable; continuing without push: $error');
+      debugPrintStack(stackTrace: stackTrace);
+    }
   }
 
   final prefs = await SharedPreferences.getInstance();
   final storageService = StorageService(prefs);
+  if (kDemoMockApi) await DemoStore.instance.initialize();
 
   final initialState = await _loadInitialSettings(storageService);
 
@@ -73,7 +81,7 @@ Future<void> main() async {
   // and never hits the network; the once-a-day fetch happens later, inside
   // AppUpdateGate, behind AppUpdateService's own 24h gate.
   final remoteConfigService = RemoteConfigService();
-  await remoteConfigService.initialize();
+  if (!kDemoMockApi) await remoteConfigService.initialize();
   final appUpdateService = AppUpdateService(
     remoteConfigService: remoteConfigService,
     storageService: storageService,
@@ -84,6 +92,19 @@ Future<void> main() async {
   final apiClient = ApiClient(secureStorage: secureStorage);
   final authRepository = AuthRepositoryImpl(apiClient: apiClient);
   final notificationRepository = NotificationRepository(storageService);
+  if (kDemoMockApi) {
+    await notificationRepository.clear();
+    for (final notification in DemoStore.instance.notifications) {
+      await notificationRepository.add(
+        NotificationModel.fromJson(notification),
+      );
+    }
+    DemoStore.instance.onNotification = (notification) {
+      unawaited(
+        notificationRepository.add(NotificationModel.fromJson(notification)),
+      );
+    };
+  }
   // What a sign-out resets, besides the inbox: shared by AuthCubit (which
   // triggers it) and every member below that registers itself.
   final sessionScope = SessionScope();
@@ -93,7 +114,10 @@ Future<void> main() async {
     sessionScope: sessionScope,
   );
   final warehouseRepository = WarehouseRepositoryImpl(apiClient: apiClient);
-  final catalogRepository = CatalogRepositoryImpl(apiClient: apiClient, sessionScope: sessionScope);
+  final catalogRepository = CatalogRepositoryImpl(
+    apiClient: apiClient,
+    sessionScope: sessionScope,
+  );
   final exchangeRateRepository = ExchangeRateRepositoryImpl(
     apiClient: apiClient,
   );
@@ -104,7 +128,9 @@ Future<void> main() async {
   final reviewRepository = ReviewRepositoryImpl(apiClient: apiClient);
   final debtRepository = DebtRepositoryImpl(apiClient: apiClient);
   final bannersRepository = BannersRepositoryImpl(apiClient: apiClient);
-  final advertisementsRepository = AdvertisementsRepositoryImpl(apiClient: apiClient);
+  final advertisementsRepository = AdvertisementsRepositoryImpl(
+    apiClient: apiClient,
+  );
   final offersRepository = OffersRepositoryImpl(apiClient: apiClient);
   final appRouter = AppRouter();
   runApp(
@@ -245,7 +271,9 @@ class MyApp extends StatelessWidget {
         // Read by the shared package -> cart flow to re-fetch a tapped package
         // before it reaches the cart (advertisement_cart_launcher.dart), and
         // by the Offers & Ads tab to list what is running.
-        RepositoryProvider<AdvertisementsRepository>.value(value: advertisementsRepository),
+        RepositoryProvider<AdvertisementsRepository>.value(
+          value: advertisementsRepository,
+        ),
         RepositoryProvider<OffersRepository>.value(value: offersRepository),
       ],
       child: MultiBlocProvider(
@@ -261,7 +289,7 @@ class MyApp extends StatelessWidget {
               authRepository: authRepository,
               secureStorage: secureStorage,
               fcmService: fcmService,
-            notificationRepository: notificationRepository,
+              notificationRepository: notificationRepository,
               sessionScope: sessionScope,
             ),
           ),
@@ -307,7 +335,11 @@ class MyApp extends StatelessWidget {
             isAppShellReady: () {
               try {
                 return appRouter
-                        .router.routerDelegate.currentConfiguration.uri.path !=
+                        .router
+                        .routerDelegate
+                        .currentConfiguration
+                        .uri
+                        .path !=
                     RoutePaths.splash;
               } catch (_) {
                 return true;
@@ -343,7 +375,6 @@ class MyApp extends StatelessWidget {
                   );
                 },
               ),
-              
             ),
           ),
         ),

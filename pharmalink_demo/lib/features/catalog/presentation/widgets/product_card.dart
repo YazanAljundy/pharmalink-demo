@@ -104,20 +104,32 @@ class _GridCard extends StatelessWidget {
           Stack(
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.vertical(top: AppRadius.large.topLeft),
-                child: _ProductImage(url: product.image, aspectRatio: 1.25),
+                borderRadius: BorderRadius.vertical(
+                  top: AppRadius.large.topLeft,
+                ),
+                child: _ProductImage(
+                  url: product.image,
+                  seed: product.id,
+                  aspectRatio: 1.25,
+                ),
               ),
               if (!product.isAvailable)
                 PositionedDirectional(
                   top: AppSizes.spacingSmall,
                   end: AppSizes.spacingSmall,
-                  child: StatusBadge(label: l10n.unavailableLabel, tone: StatusBadgeTone.danger),
+                  child: StatusBadge(
+                    label: l10n.unavailableLabel,
+                    tone: StatusBadgeTone.danger,
+                  ),
                 )
               else if (product.hasActiveOffer)
                 PositionedDirectional(
                   top: AppSizes.spacingSmall,
                   end: AppSizes.spacingSmall,
-                  child: StatusBadge(label: l10n.offerBadgeLabel, tone: StatusBadgeTone.pending),
+                  child: StatusBadge(
+                    label: l10n.offerBadgeLabel,
+                    tone: StatusBadgeTone.pending,
+                  ),
                 ),
             ],
           ),
@@ -135,7 +147,9 @@ class _GridCard extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   manufacturer,
-                  style: context.textTheme.bodySmall?.copyWith(color: AppColors.textSecondaryOf(context)),
+                  style: context.textTheme.bodySmall?.copyWith(
+                    color: AppColors.textSecondaryOf(context),
+                  ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -155,7 +169,10 @@ class _GridCard extends StatelessWidget {
                     ),
                   )
                 else
-                  AddToCartButton(available: product.isAvailable, onTap: onAddTap),
+                  AddToCartButton(
+                    available: product.isAvailable,
+                    onTap: onAddTap,
+                  ),
               ],
             ),
           ),
@@ -192,7 +209,11 @@ class _ListRow extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: AppRadius.small,
-            child: _ProductImage(url: product.image, size: 56),
+            child: _ProductImage(
+              url: product.image,
+              seed: product.id,
+              size: 56,
+            ),
           ),
           const SizedBox(width: AppSizes.spacingMedium),
           Expanded(
@@ -208,7 +229,9 @@ class _ListRow extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   manufacturer,
-                  style: context.textTheme.bodySmall?.copyWith(color: AppColors.textSecondaryOf(context)),
+                  style: context.textTheme.bodySmall?.copyWith(
+                    color: AppColors.textSecondaryOf(context),
+                  ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -219,7 +242,10 @@ class _ListRow extends StatelessWidget {
           ),
           const SizedBox(width: AppSizes.spacingSmall),
           if (!product.isAvailable)
-            StatusBadge(label: l10n.unavailableLabel, tone: StatusBadgeTone.danger)
+            StatusBadge(
+              label: l10n.unavailableLabel,
+              tone: StatusBadgeTone.danger,
+            )
           else if (cartQuantity > 0)
             QuantityStepper(
               quantity: cartQuantity,
@@ -319,9 +345,15 @@ class _PriceDisplay extends StatelessWidget {
 }
 
 class _ProductImage extends StatelessWidget {
-  const _ProductImage({required this.url, this.aspectRatio, this.size});
+  const _ProductImage({
+    required this.url,
+    required this.seed,
+    this.aspectRatio,
+    this.size,
+  });
 
   final String? url;
+  final String seed;
   final double? aspectRatio;
   final double? size;
 
@@ -329,14 +361,15 @@ class _ProductImage extends StatelessWidget {
   Widget build(BuildContext context) {
     // `product.image` is the effective image the server resolves (the
     // warehouse's override, else the catalog's central one - catalog overhaul
-    // Phase 9), always on Cloudinary; AppNetworkImage right-sizes and caches it
-    // and falls back to the icon when there is none.
+    // Phase 9), usually on Cloudinary; AppNetworkImage right-sizes and caches
+    // remote images and uses a deterministic local placeholder when absent.
     final image = AppNetworkImage(
       url: url,
       fit: BoxFit.cover,
       width: size,
       height: size,
-      fallbackIcon: Icons.medication_outlined,
+      placeholderKind: AppImageKind.product,
+      placeholderSeed: seed,
     );
 
     if (size != null) {

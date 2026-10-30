@@ -1,0 +1,139 @@
+{
+  "admin": { "id": "demo-admin-1", "role": "admin", "name": "Demo Administrator", "phone": "0900000001", "status": "active" },
+  "warehouses": [
+    { "id": "demo-wh-1", "role": "warehouse", "name": "North Demo Warehouse", "nameEn": "North Demo Warehouse", "nameAr": "مستودع الشمال التجريبي", "phone": "0900000002", "status": "active", "isApproved": true, "commissionRate": 5 },
+    { "id": "demo-wh-2", "role": "warehouse", "name": "South Demo Warehouse", "nameEn": "South Demo Warehouse", "nameAr": "مستودع الجنوب التجريبي", "phone": "0900000003", "status": "active", "isApproved": true, "commissionRate": 6 }
+  ],
+  "pharmacies": [
+    { "id": "demo-ph-1", "role": "pharmacy", "name": "Cedar Demo Pharmacy", "nameEn": "Cedar Demo Pharmacy", "nameAr": "صيدلية الأرز التجريبية", "phone": "0900000010", "status": "active" },
+    { "id": "demo-ph-2", "role": "pharmacy", "name": "River Demo Pharmacy", "nameEn": "River Demo Pharmacy", "nameAr": "صيدلية النهر التجريبية", "phone": "0900000011", "status": "active" },
+    { "id": "demo-ph-3", "role": "pharmacy", "name": "Garden Demo Pharmacy", "nameEn": "Garden Demo Pharmacy", "nameAr": "صيدلية الحديقة التجريبية", "phone": "0900000012", "status": "active" }
+  ],
+  "categories": [
+    { "id": "cat-1", "nameEn": "Pain relief", "nameAr": "تسكين الألم", "isActive": true },
+    { "id": "cat-2", "nameEn": "Allergy care", "nameAr": "مضادات الحساسية", "isActive": true },
+    { "id": "cat-3", "nameEn": "Digestive health", "nameAr": "صحة الجهاز الهضمي", "isActive": true },
+    { "id": "cat-4", "nameEn": "Vitamins", "nameAr": "الفيتامينات", "isActive": true },
+    { "id": "cat-5", "nameEn": "First aid", "nameAr": "الإسعافات الأولية", "isActive": true },
+    { "id": "cat-6", "nameEn": "Respiratory care", "nameAr": "العناية التنفسية", "isActive": true },
+    { "id": "cat-7", "nameEn": "Skin care", "nameAr": "العناية بالبشرة", "isActive": true },
+    { "id": "cat-8", "nameEn": "Family health", "nameAr": "صحة الأسرة", "isActive": true }
+  ],
+  "manufacturers": [
+    { "id": "maker-1", "nameEn": "Atlas Therapeutics", "nameAr": "أطلس العلاجي", "isActive": true },
+    { "id": "maker-2", "nameEn": "Cedar Health Labs", "nameAr": "مختبرات الأرز الصحية", "isActive": true },
+    { "id": "maker-3", "nameEn": "Northstar Generics", "nameAr": "نورث ستار للأدوية الجنيسة", "isActive": true },
+    { "id": "maker-4", "nameEn": "Riverbend Medical", "nameAr": "ريفربند الطبية", "isActive": true },
+    { "id": "maker-5", "nameEn": "Meadow Care", "nameAr": "ميدو كير", "isActive": true },
+    { "id": "maker-6", "nameEn": "Summit Wellness", "nameAr": "سَمِت للعافية", "isActive": true }
+  ],
+  "products": [
+    { "id": "prod-01", "nameEn": "Acetaminophen 500 mg tablets", "nameAr": "أقراص أسيتامينوفين ٥٠٠ ملغ", "categoryId": "cat-1", "manufacturerId": "maker-1", "priceSyp": 12500, "priceUsd": 1.25, "unit": "box", "stock": 80, "isAvailable": true, "isActive": true },
+    { "id": "prod-02", "nameEn": "Ibuprofen 200 mg tablets", "nameAr": "أقراص إيبوبروفين ٢٠٠ ملغ", "categoryId": "cat-1", "manufacturerId": "maker-2", "priceSyp": 14800, "priceUsd": 1.48, "unit": "box", "stock": 62, "isAvailable": true, "isActive": true },
+    { "id": "prod-03", "nameEn": "Naproxen 250 mg tablets", "nameAr": "أقراص نابروكسين ٢٥٠ ملغ", "categoryId": "cat-1", "manufacturerId": "maker-3", "priceSyp": 19100, "priceUsd": 1.91, "unit": "box", "stock": 0, "isAvailable": false, "isActive": true },
+    { "id": "prod-04", "nameEn": "Cetirizine 10 mg tablets", "nameAr": "أقراص سيتريزين ١٠ ملغ", "categoryId": "cat-2", "manufacturerId": "maker-4", "priceSyp": 13200, "priceUsd": 1.32, "unit": "box", "stock": 45, "isAvailable": true, "isActive": true },
+    { "id": "prod-05", "nameEn": "Loratadine 10 mg tablets", "nameAr": "أقراص لوراتادين ١٠ ملغ", "categoryId": "cat-2", "manufacturerId": "maker-5", "priceSyp": 15600, "priceUsd": 1.56, "unit": "box", "stock": 33, "isAvailable": true, "isActive": true },
+    { "id": "prod-06", "nameEn": "Saline nasal spray", "nameAr": "بخاخ أنفي ملحي", "categoryId": "cat-6", "manufacturerId": "maker-6", "priceSyp": 9800, "priceUsd": 0.98, "unit": "bottle", "stock": 57, "isAvailable": true, "isActive": true },
+    { "id": "prod-07", "nameEn": "Oral rehydration salts", "nameAr": "أملاح الإماهة الفموية", "categoryId": "cat-3", "manufacturerId": "maker-1", "priceSyp": 7400, "priceUsd": 0.74, "unit": "sachet", "stock": 120, "isAvailable": true, "isActive": true },
+    { "id": "prod-08", "nameEn": "Vitamin C 500 mg tablets", "nameAr": "أقراص فيتامين ج ٥٠٠ ملغ", "categoryId": "cat-4", "manufacturerId": "maker-2", "priceSyp": 17300, "priceUsd": 1.73, "unit": "bottle", "stock": 29, "isAvailable": true, "isActive": true },
+    { "id": "prod-09", "nameEn": "Vitamin D3 1000 IU", "nameAr": "فيتامين د٣ ١٠٠٠ وحدة", "categoryId": "cat-4", "manufacturerId": "maker-3", "priceSyp": 22600, "priceUsd": 2.26, "unit": "bottle", "stock": 38, "isAvailable": true, "isActive": true },
+    { "id": "prod-10", "nameEn": "Zinc 25 mg tablets", "nameAr": "أقراص زنك ٢٥ ملغ", "categoryId": "cat-4", "manufacturerId": "maker-4", "priceSyp": 16400, "priceUsd": 1.64, "unit": "bottle", "stock": 20, "isAvailable": true, "isActive": true },
+    { "id": "prod-11", "nameEn": "Antacid chewable tablets", "nameAr": "أقراص مضاد للحموضة للمضغ", "categoryId": "cat-3", "manufacturerId": "maker-5", "priceSyp": 11400, "priceUsd": 1.14, "unit": "pack", "stock": 50, "isAvailable": true, "isActive": true },
+    { "id": "prod-12", "nameEn": "Oral electrolyte solution", "nameAr": "محلول إلكتروليت فموي", "categoryId": "cat-3", "manufacturerId": "maker-6", "priceSyp": 8900, "priceUsd": 0.89, "unit": "bottle", "stock": 0, "isAvailable": false, "isActive": true },
+    { "id": "prod-13", "nameEn": "Sterile gauze pads", "nameAr": "شاش معقم", "categoryId": "cat-5", "manufacturerId": "maker-1", "priceSyp": 6700, "priceUsd": 0.67, "unit": "pack", "stock": 90, "isAvailable": true, "isActive": true },
+    { "id": "prod-14", "nameEn": "Elastic support bandage", "nameAr": "ضماد مرن داعم", "categoryId": "cat-5", "manufacturerId": "maker-2", "priceSyp": 9200, "priceUsd": 0.92, "unit": "piece", "stock": 41, "isAvailable": true, "isActive": true },
+    { "id": "prod-15", "nameEn": "Digital thermometer", "nameAr": "مقياس حرارة رقمي", "categoryId": "cat-5", "manufacturerId": "maker-3", "priceSyp": 28500, "priceUsd": 2.85, "unit": "piece", "stock": 12, "isAvailable": true, "isActive": true },
+    { "id": "prod-16", "nameEn": "Antiseptic skin solution", "nameAr": "محلول مطهر للبشرة", "categoryId": "cat-5", "manufacturerId": "maker-4", "priceSyp": 10500, "priceUsd": 1.05, "unit": "bottle", "stock": 37, "isAvailable": true, "isActive": true },
+    { "id": "prod-17", "nameEn": "Cough relief syrup", "nameAr": "شراب لتخفيف السعال", "categoryId": "cat-6", "manufacturerId": "maker-5", "priceSyp": 18600, "priceUsd": 1.86, "unit": "bottle", "stock": 24, "isAvailable": true, "isActive": true },
+    { "id": "prod-18", "nameEn": "Throat lozenges", "nameAr": "أقراص مص للحلق", "categoryId": "cat-6", "manufacturerId": "maker-6", "priceSyp": 8300, "priceUsd": 0.83, "unit": "pack", "stock": 78, "isAvailable": true, "isActive": true },
+    { "id": "prod-19", "nameEn": "Salbutamol inhaler", "nameAr": "بخاخ سالبوتامول", "categoryId": "cat-6", "manufacturerId": "maker-1", "priceSyp": 31500, "priceUsd": 3.15, "unit": "inhaler", "stock": 16, "isAvailable": true, "isActive": true },
+    { "id": "prod-20", "nameEn": "Moisturizing cream", "nameAr": "كريم مرطب", "categoryId": "cat-7", "manufacturerId": "maker-2", "priceSyp": 14700, "priceUsd": 1.47, "unit": "tube", "stock": 53, "isAvailable": true, "isActive": true },
+    { "id": "prod-21", "nameEn": "Zinc oxide ointment", "nameAr": "مرهم أكسيد الزنك", "categoryId": "cat-7", "manufacturerId": "maker-3", "priceSyp": 12100, "priceUsd": 1.21, "unit": "tube", "stock": 26, "isAvailable": true, "isActive": true },
+    { "id": "prod-22", "nameEn": "Gentle cleansing lotion", "nameAr": "غسول لطيف للبشرة", "categoryId": "cat-7", "manufacturerId": "maker-4", "priceSyp": 19800, "priceUsd": 1.98, "unit": "bottle", "stock": 0, "isAvailable": false, "isActive": true },
+    { "id": "prod-23", "nameEn": "Baby saline drops", "nameAr": "قطرات ملحية للأطفال", "categoryId": "cat-8", "manufacturerId": "maker-5", "priceSyp": 7600, "priceUsd": 0.76, "unit": "bottle", "stock": 66, "isAvailable": true, "isActive": true },
+    { "id": "prod-24", "nameEn": "Infant vitamin drops", "nameAr": "قطرات فيتامين للرضع", "categoryId": "cat-8", "manufacturerId": "maker-6", "priceSyp": 20400, "priceUsd": 2.04, "unit": "bottle", "stock": 18, "isAvailable": true, "isActive": true },
+    { "id": "prod-25", "nameEn": "Calcium 500 mg tablets", "nameAr": "أقراص كالسيوم ٥٠٠ ملغ", "categoryId": "cat-4", "manufacturerId": "maker-1", "priceSyp": 17800, "priceUsd": 1.78, "unit": "bottle", "stock": 31, "isAvailable": true, "isActive": true },
+    { "id": "prod-26", "nameEn": "Magnesium 200 mg tablets", "nameAr": "أقراص مغنيسيوم ٢٠٠ ملغ", "categoryId": "cat-4", "manufacturerId": "maker-2", "priceSyp": 18900, "priceUsd": 1.89, "unit": "bottle", "stock": 27, "isAvailable": true, "isActive": true },
+    { "id": "prod-27", "nameEn": "Folic acid 1 mg tablets", "nameAr": "أقراص حمض الفوليك ١ ملغ", "categoryId": "cat-8", "manufacturerId": "maker-3", "priceSyp": 9900, "priceUsd": 0.99, "unit": "box", "stock": 40, "isAvailable": true, "isActive": true },
+    { "id": "prod-28", "nameEn": "Iron supplement tablets", "nameAr": "أقراص مكمل الحديد", "categoryId": "cat-8", "manufacturerId": "maker-4", "priceSyp": 15800, "priceUsd": 1.58, "unit": "box", "stock": 35, "isAvailable": true, "isActive": true },
+    { "id": "prod-29", "nameEn": "Loperamide 2 mg capsules", "nameAr": "كبسولات لوبيراميد ٢ ملغ", "categoryId": "cat-3", "manufacturerId": "maker-5", "priceSyp": 10800, "priceUsd": 1.08, "unit": "box", "stock": 32, "isAvailable": true, "isActive": true },
+    { "id": "prod-30", "nameEn": "Digestive enzyme tablets", "nameAr": "أقراص إنزيمات هاضمة", "categoryId": "cat-3", "manufacturerId": "maker-6", "priceSyp": 17200, "priceUsd": 1.72, "unit": "box", "stock": 22, "isAvailable": true, "isActive": true },
+    { "id": "prod-31", "nameEn": "Glycerin suppositories", "nameAr": "تحاميل غليسرين", "categoryId": "cat-3", "manufacturerId": "maker-1", "priceSyp": 13600, "priceUsd": 1.36, "unit": "pack", "stock": 14, "isAvailable": true, "isActive": true },
+    { "id": "prod-32", "nameEn": "Hydrocortisone 1% cream", "nameAr": "كريم هيدروكورتيزون ١٪", "categoryId": "cat-7", "manufacturerId": "maker-2", "priceSyp": 16200, "priceUsd": 1.62, "unit": "tube", "stock": 19, "isAvailable": true, "isActive": true },
+    { "id": "prod-33", "nameEn": "Lubricating eye drops", "nameAr": "قطرات مرطبة للعين", "categoryId": "cat-8", "manufacturerId": "maker-3", "priceSyp": 11900, "priceUsd": 1.19, "unit": "bottle", "stock": 44, "isAvailable": true, "isActive": true },
+    { "id": "prod-34", "nameEn": "Medical adhesive tape", "nameAr": "شريط لاصق طبي", "categoryId": "cat-5", "manufacturerId": "maker-4", "priceSyp": 5400, "priceUsd": 0.54, "unit": "roll", "stock": 100, "isAvailable": true, "isActive": true },
+    { "id": "prod-35", "nameEn": "Disposable face masks", "nameAr": "كمامات للاستعمال مرة واحدة", "categoryId": "cat-5", "manufacturerId": "maker-5", "priceSyp": 6100, "priceUsd": 0.61, "unit": "box", "stock": 73, "isAvailable": true, "isActive": true },
+    { "id": "prod-36", "nameEn": "Hand sanitizing gel", "nameAr": "جل معقم لليدين", "categoryId": "cat-5", "manufacturerId": "maker-6", "priceSyp": 8700, "priceUsd": 0.87, "unit": "bottle", "stock": 48, "isAvailable": true, "isActive": true },
+    { "id": "prod-37", "nameEn": "Dextromethorphan syrup", "nameAr": "شراب ديكستروميثورفان", "categoryId": "cat-6", "manufacturerId": "maker-1", "priceSyp": 19300, "priceUsd": 1.93, "unit": "bottle", "stock": 21, "isAvailable": true, "isActive": true },
+    { "id": "prod-38", "nameEn": "Multivitamin tablets", "nameAr": "أقراص متعدد الفيتامينات", "categoryId": "cat-4", "manufacturerId": "maker-2", "priceSyp": 23700, "priceUsd": 2.37, "unit": "bottle", "stock": 30, "isAvailable": true, "isActive": true },
+    { "id": "prod-39", "nameEn": "Antifungal topical cream", "nameAr": "كريم موضعي مضاد للفطريات", "categoryId": "cat-7", "manufacturerId": "maker-3", "priceSyp": 16900, "priceUsd": 1.69, "unit": "tube", "stock": 17, "isAvailable": true, "isActive": true },
+    { "id": "prod-40", "nameEn": "Pregnancy test strips", "nameAr": "شرائط اختبار الحمل", "categoryId": "cat-8", "manufacturerId": "maker-4", "priceSyp": 14200, "priceUsd": 1.42, "unit": "pack", "stock": 25, "isAvailable": true, "isActive": true }
+  ],
+  "offers": [
+    { "id": "offer-1", "title": "Seasonal essentials", "discountPercent": 12, "status": "approved", "version": 1, "warehouseId": "demo-wh-1" },
+    { "id": "offer-2", "title": "Family care bundle", "discountPercent": 8, "status": "pending", "version": 1, "warehouseId": "demo-wh-1" },
+    { "id": "offer-3", "title": "Wellness selection", "discountPercent": 10, "status": "approved", "version": 1, "warehouseId": "demo-wh-2" }
+  ],
+  "discountCodes": [
+    { "id": "code-1", "code": "DEMO10", "type": "percentage", "value": 10, "status": "approved", "version": 1, "ownerRole": "admin", "fundedBy": "platform" },
+    { "id": "code-2", "code": "CARE5", "type": "percentage", "value": 5, "status": "pending", "version": 1, "warehouseId": "demo-wh-1", "ownerRole": "warehouse", "fundedBy": "warehouse" }
+  ],
+  "banners": [
+    { "id": "banner-1", "title": "Everyday care", "status": "approved", "imageUrl": "/images/demo-product.svg", "warehouseId": "demo-wh-1" },
+    { "id": "banner-2", "title": "Wellness week", "status": "pending", "imageUrl": "/images/demo-product.svg", "warehouseId": "demo-wh-2" }
+  ],
+  "advertisements": [
+    { "id": "ad-1", "title": "Family health package", "status": "approved", "isAvailable": true, "warehouseId": "demo-wh-1" },
+    { "id": "ad-2", "title": "Seasonal care package", "status": "pending", "isAvailable": true, "warehouseId": "demo-wh-2" }
+  ],
+  "exchangeRate": { "usdToSyp": 10000, "updatedAt": "2025-01-15T10:00:00.000Z" },
+  "exchangeRateHistory": [{ "id": "rate-1", "usdToSyp": 10000, "createdAt": "2025-01-15T10:00:00.000Z" }],
+  "orders": [
+    { "id": "order-1", "orderNumber": 1001, "status": "pending", "pharmacyId": "demo-ph-1", "warehouseId": "demo-wh-1", "totalSyp": 92500, "items": [] },
+    { "id": "order-2", "orderNumber": 1002, "status": "confirmed", "pharmacyId": "demo-ph-2", "warehouseId": "demo-wh-1", "totalSyp": 68300, "items": [] },
+    { "id": "order-3", "orderNumber": 1003, "status": "preparing", "pharmacyId": "demo-ph-3", "warehouseId": "demo-wh-1", "totalSyp": 124000, "items": [] },
+    { "id": "order-4", "orderNumber": 1004, "status": "out_for_delivery", "pharmacyId": "demo-ph-1", "warehouseId": "demo-wh-2", "totalSyp": 56700, "items": [] },
+    { "id": "order-5", "orderNumber": 1005, "status": "delivered", "pharmacyId": "demo-ph-2", "warehouseId": "demo-wh-2", "totalSyp": 152000, "items": [] },
+    { "id": "order-6", "orderNumber": 1006, "status": "delivered", "pharmacyId": "demo-ph-3", "warehouseId": "demo-wh-1", "totalSyp": 88000, "items": [] },
+    { "id": "order-7", "orderNumber": 1007, "status": "cancelled", "pharmacyId": "demo-ph-1", "warehouseId": "demo-wh-1", "totalSyp": 43800, "items": [] },
+    { "id": "order-8", "orderNumber": 1008, "status": "pending", "pharmacyId": "demo-ph-2", "warehouseId": "demo-wh-2", "totalSyp": 79100, "items": [] }
+  ],
+  "returns": [
+    { "id": "return-1", "orderId": "order-5", "status": "approved", "reason": "Package damaged", "amountSyp": 12000, "creditSyp": 12000 },
+    { "id": "return-2", "orderId": "order-6", "status": "pending", "reason": "Incorrect quantity", "amountSyp": 8000 }
+  ],
+  "complaints": [
+    { "id": "complaint-1", "title": "Delivery timing", "subject": "Delivery timing", "message": "Please review the delivery window.", "context": "order", "status": "pending", "orderId": "order-6", "pharmacyId": "demo-ph-1", "warehouseId": "demo-wh-1" }
+  ],
+  "reviews": [
+    { "id": "review-1", "orderId": "order-5", "rating": 5, "comment": "Clear packing and timely delivery.", "status": "published" },
+    { "id": "review-2", "orderId": "order-6", "rating": 4, "comment": "Helpful service.", "status": "published" }
+  ],
+  "payments": [
+    { "id": "payment-1", "pharmacyId": "demo-ph-2", "warehouseId": "demo-wh-2", "amountSyp": 30000, "method": "cash", "status": "completed", "reference": "DEMO-PAY-01" },
+    { "id": "payment-2", "pharmacyId": "demo-ph-1", "warehouseId": "demo-wh-1", "amountSyp": 18000, "method": "cash", "status": "reversed", "reference": "DEMO-PAY-02", "reversalReason": "Duplicate demo entry" }
+  ],
+  "ledgerEntries": [
+    { "id": "ledger-1", "pharmacyId": "demo-ph-2", "warehouseId": "demo-wh-2", "type": "debit", "amountSyp": 152000, "orderId": "order-5", "createdAt": "2025-01-12T10:00:00.000Z" },
+    { "id": "ledger-2", "pharmacyId": "demo-ph-2", "warehouseId": "demo-wh-2", "type": "credit", "amountSyp": 30000, "paymentId": "payment-1", "createdAt": "2025-01-13T10:00:00.000Z" },
+    { "id": "ledger-3", "pharmacyId": "demo-ph-3", "warehouseId": "demo-wh-1", "type": "debit", "amountSyp": 88000, "orderId": "order-6", "createdAt": "2025-01-14T10:00:00.000Z" },
+    { "id": "ledger-4", "pharmacyId": "demo-ph-1", "warehouseId": "demo-wh-1", "type": "credit", "amountSyp": 18000, "paymentId": "payment-2", "createdAt": "2025-01-15T10:00:00.000Z" },
+    { "id": "ledger-5", "pharmacyId": "demo-ph-1", "warehouseId": "demo-wh-1", "type": "debit", "amountSyp": 18000, "paymentId": "payment-2", "isReversal": true, "createdAt": "2025-01-15T10:05:00.000Z" },
+    { "id": "ledger-6", "pharmacyId": "demo-ph-2", "warehouseId": "demo-wh-2", "type": "credit", "amountSyp": 12000, "returnId": "return-1", "createdAt": "2025-01-16T10:00:00.000Z" }
+  ],
+  "catalogRequests": [{ "id": "request-1", "nameEn": "Herbal throat lozenges", "nameAr": "أقراص أعشاب للحلق", "manufacturerAr": "أطلس العلاجي", "manufacturerEn": "Atlas Therapeutics", "priceUsd": 1.65, "unit": "box", "bonuses": [], "status": "pending", "warehouseId": "demo-wh-1" }],
+  "duplicates": [{
+    "id": "duplicate-1",
+    "reasons": ["similar_names"],
+    "items": [
+      { "id": "catalog-dup-a", "nameEn": "Vitamin C 500 mg tablets", "nameAr": "أقراص فيتامين ج ٥٠٠ ملغ", "manufacturerAr": "أطلس العلاجي", "products": [{ "productId": "prod-08", "warehouseId": "demo-wh-1", "warehouseNameAr": "مستودع الشمال التجريبي", "priceUsd": 1.73 }] },
+      { "id": "catalog-dup-b", "nameEn": "Ascorbic acid 500 mg tablets", "nameAr": "أقراص حمض الأسكوربيك ٥٠٠ ملغ", "manufacturerAr": "نورث ستار للأدوية الجنيسة", "products": [{ "productId": "prod-38", "warehouseId": "demo-wh-2", "warehouseNameAr": "مستودع الجنوب التجريبي", "priceUsd": 2.37 }] }
+    ]
+  }],
+  "notifications": [],
+  "settings": { "commissionRate": 5, "nameEn": "North Demo Warehouse", "nameAr": "مستودع الشمال التجريبي" }
+  ,"manufacturerDiscounts": [
+    { "id": "manufacturer-discount-1", "manufacturerAr": "أطلس العلاجي", "discountPercentage": 5, "createdAt": "2025-01-10T10:00:00.000Z" },
+    { "id": "manufacturer-discount-2", "manufacturerAr": "مختبرات الأرز الصحية", "discountPercentage": 8, "createdAt": "2025-01-11T10:00:00.000Z" }
+  ]
+}

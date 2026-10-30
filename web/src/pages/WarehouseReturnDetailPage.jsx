@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { api } from '../api/client';
+import { DEMO_MOCK } from '../demo/demoConfig';
 import { displayName } from '../utils/displayName';
 import { formatSyp } from '../utils/currency';
 
@@ -27,6 +28,7 @@ function toWhatsAppNumber(phone) {
 }
 
 function handleCallPharmacyViaWhatsApp(phone) {
+  if (DEMO_MOCK) return;
   const number = toWhatsAppNumber(phone);
   if (!number) return;
   window.open(`https://wa.me/${number}`, '_blank', 'noreferrer');
